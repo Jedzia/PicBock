@@ -17,3 +17,13 @@ md5sum:
     646efaebbb78f77994a21073c3dd443d *Innenminister_Flipped.png
 ---
 am 3. März 2018, Jedzia
+
+## Log ##
+
+    Sa, 03 Mrz 2018 20:35:31
+    -----------------------------------------------------------------------------------------------------
+    Verdammte png Prüfsummen ... die von Github/Twitter beim anzeigen des Bildes überprüft werden *g*. 
+    Nehmen wir halt ein anderes Format. Und ich sag noch: "Du kannst doch nicht einfach willkürlich
+    eine Add nehmen und ...." DOCH geht.:P Lokal auf jedenfall.
+    Scheiss Vorführeffekt, grrrr:)
+    000E2360 E1 -> E0
