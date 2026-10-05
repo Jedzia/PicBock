@@ -1,0 +1,74 @@
+%% Usage: \usepackage{tradwife-einheitenwandler}
+
+\ProvidesPackage{tradwife-einheitenwandler}[2026/10/06 Tradwife Rezepteinheiten-Konverter]
+\RequirePackage{luacode}
+
+\begin{luacode*}
+local function uebersetze_einheiten(text)
+    -- RICHTIGE ÜBERSETZUNG: Ersetzt "tb" oder "tbsp" (mit Leerzeichen oder ~) durch "EL"
+    text = string.gsub(text, "([%d/]+)[%s~]*tbsp?", "%1 EL")
+    -- Ersetzt "tb" oder "tbsp" nach einer Zahl durch "EL"
+    text = string.gsub(text, "(%d+)%s*tbsp?", "%1 EL")
+    -- RICHTIGE ÜBERSETZUNG: Ersetzt "tb" oder "tbsp" (mit Leerzeichen oder ~) durch "EL"
+    -- text = string.gsub(text, "([%d/]+)[%s~]*tb", "%1 EL")
+    text = string.gsub(text, "([%d/]+)[%s~]*tb", "%1 Esslöfel")
+    
+    
+    -- Ersetzt "ts" oder "tsp" nach einer Zahl/einem Bruch durch "TL"
+    text = string.gsub(text, "([%d/]+)%s*tsp?", "%1 TL")    
+    -- Ersetzt "tsp" nach einer Zahl durch "TL"
+    text = string.gsub(text, "(%d+)%s*tsp", "%1 TL")
+    -- Ersetzt "Yield:" oder "yield:"
+    text = string.gsub(text, "[Yy]ield:", "Ergibt:")
+    -- Ersetzt "Servings:" oder "servings:" durch "Portionen:"
+    text = string.gsub(text, "[Ss]ervings", "Portionen")
+    -- Ersetzt "bn" nach einer Zahl durch "Bund"
+    text = string.gsub(text, "(%d+)%s*bn", "%1 Bund")
+    
+    text = string.gsub(text, "[Cc]ategories:", "Kategorien:")
+
+	-- Ersetzt "ct" oder "cn" (Can) nach einer Zahl durch "Dose"
+    text = string.gsub(text, "(%d+)%s*[Cc][tn]", "%1 Dose")
+    -- Ersetzt das Bindewort "or" (umgeben von Leerzeichen) durch "oder"
+    text = string.gsub(text, "%s+or%s+", " oder ")
+
+    -- 1) Bereinigt das Format "4 sl (-8)" zu "4-8 sl"
+    text = string.gsub(text, "(%d+)%s*sl%s*%(%-(%d+)%)", "%1-%2 sl")
+    -- 2) Ersetzt Zahlenbereiche "4-8 sl" durch "4-8 Scheiben"
+    text = string.gsub(text, "(%d+)%-(%d+)%s*sl", "%1-%2 Scheiben")
+    -- 3) Ersetzt einzelne "4 sl" durch "4 Scheiben"
+    text = string.gsub(text, "(%d+)%s*sl", "%1 Scheiben")
+        
+    -- Ersetzt "sm" nach einer Zahl durch "kleine"
+    text = string.gsub(text, "(%d+)%s*[Ss]m", "%1 kleine")
+    -- Ersetzt "lg" nach einer Zahl durch "große"
+    text = string.gsub(text, "(%d+)%s*[Ll]g", "%1 große")
+
+    
+    
+
+    -- AUTOMATISCHE DL-UMRECHNUNG IN ML:
+    -- 1) Gemischte Brüche (z.B. "1 1/4 dl" -> 125 ml)
+    text = string.gsub(text, "(%d+)%s+(%d+)/(%d+)%s*dl", function(ganz, zaehler, nenner)
+        local wert = tonumber(ganz) + (tonumber(zaehler) / tonumber(nenner))
+        return string.format("%g ml", wert * 100)
+    end)
+    
+    -- 2) Reine Brüche (z.B. "1/2 dl" -> 50 ml)
+    text = string.gsub(text, "(%d+)/(%d+)%s*dl", function(zaehler, nenner)
+        local wert = tonumber(zaehler) / tonumber(nenner)
+        return string.format("%g ml", wert * 100)
+    end)
+    
+    -- 3) Ganze Zahlen und Dezimalzahlen (z.B. "2 dl" -> 200 ml, "1.5 dl" -> 150 ml)
+    text = string.gsub(text, "(%d+%.?%d*)%s*dl", function(zahl)
+        local wert = tonumber(zahl)
+        return string.format("%g ml", wert * 100)
+    end)    
+    
+    
+    return text
+end
+
+luatexbase.add_to_callback("process_input_buffer", uebersetze_einheiten, "TradwifeEinheitenUebersetzer")
+\end{luacode*}

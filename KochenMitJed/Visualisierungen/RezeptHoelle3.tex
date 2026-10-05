@@ -72,19 +72,7 @@
 
 %----------- Riviera ist schuld -----------
 
-\usepackage{luacode}
-\begin{luacode*}
-local function uebersetze_einheiten(text)
-    -- Ersetzt "tb" nach einer Zahl durch "EL"
-    text = string.gsub(text, "(%d+)%s*tb", "%1 EL")
-    -- Ersetzt "tsp" nach einer Zahl durch "TL"
-    text = string.gsub(text, "(%d+)%s*tsp", "%1 TL")
-    return text
-end
-
--- Aktiviert die Ersetzung für das gesamte Dokument
-luatexbase.add_to_callback("process_input_buffer", uebersetze_einheiten, "Uebersetzer")
-\end{luacode*}
+\usepackage{tradwife-einheitenwandler}
 
 \makeatother
 

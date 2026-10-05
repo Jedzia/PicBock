@@ -1,0 +1,18 @@
+#% Do not delete the line below; configure depends on this
+# \DeclareLyXModule{Tradwife Einheitenwandler}
+# DescriptionName: Tradwife Einheitenwandler (LuaLaTeX)
+# Description: Wandelt beim Kompilieren mit LuaLaTeX automatisch angloamerikanische Rezeptangaben ("2 tb", "3 tsp") in traditionelle deutsche Einheiten ("2 EL", "3 TL") um.
+
+Format 60
+
+Preamble
+\usepackage{luacode}
+\begin{luacode*}
+local function uebersetze_einheiten(text)
+    text = string.gsub(text, "(%d+)%s*tbsp?", "%1 EL")
+    text = string.gsub(text, "(%d+)%s*tsp", "%1 TL")
+    return text
+end
+luatexbase.add_to_callback("process_input_buffer", uebersetze_einheiten, "TradwifeEinheitenUebersetzer")
+\end{luacode*}
+EndPreamble
