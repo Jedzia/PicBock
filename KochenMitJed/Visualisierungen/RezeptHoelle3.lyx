@@ -1,0 +1,2505 @@
+#LyX 2.5 created this file. For more info see https://www.lyx.org/
+\lyxformat 643
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass maa-monthly-todo
+\begin_preamble
+\RequirePackage{scrextend}
+
+\usepackage[
+    colorlinks=true,    % Aktiviert farbigen Text (schaltet die Rahmen ab)
+    linkcolor=blue,     % Farbe für interne Links (z. B. Inhaltsverzeichnis, Abbildungen)
+    citecolor=blue,     % Farbe für Literaturzitate im Text
+    urlcolor=blue,      % Farbe für URLs/Webseiten im Literaturverzeichnis
+    breaklinks=true     % Erlaubt Links, am Zeilenende umzubrechen
+]{hyperref}
+\usepackage{url}
+
+\usepackage{esint}
+\usepackage{lipsum}
+
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+
+\usepackage{siunitx}
+\sisetup{locale = DE} % Uses comma as decimal separator
+%\sisetup{inter-unit-product = \cdot} % Mittelpunkt zwischen Einheiten
+% Das Leerzeichen komplett entfernen
+%\sisetup{inter-unit-product = {}, separate-uncertainty = true} 
+%\sisetup{inter-unit-product = \,} % Standard (schmales Leerzeichen)
+
+% \DeclareSIUnit\kwh{kWh} % Eigendefinition: Die Energie beträgt \qty{0,6}{\kwh}.
+
+\usepackage{booktabs}
+
+\usepackage{wasysym}
+
+%% List of urls
+\usepackage{tocloft}
+\usepackage{xurl}
+
+% Define a custom list structure for links
+\newcommand{\listlinksname}{List of Links}
+\newlistof{links}{lnks}{\listlinksname}
+
+% Intercept the standard \href command used by LyX's Hyperlink inset
+\let\oldhref\href
+\renewcommand{\href}[2]{\oldhref{#1}{#2}\addcontentsline{lnks}{figure}{#2: \url{#1}}}
+
+
+%----------- Riviera ist schuld -----------
+
+\usepackage{luacode}
+\begin{luacode*}
+local function uebersetze_einheiten(text)
+    -- Ersetzt "tb" nach einer Zahl durch "EL"
+    text = string.gsub(text, "(%d+)%s*tb", "%1 EL")
+    -- Ersetzt "tsp" nach einer Zahl durch "TL"
+    text = string.gsub(text, "(%d+)%s*tsp", "%1 TL")
+    return text
+end
+
+-- Aktiviert die Ersetzung für das gesamte Dokument
+luatexbase.add_to_callback("process_input_buffer", uebersetze_einheiten, "Uebersetzer")
+\end{luacode*}
+\end_preamble
+\options year=2024, month=April
+\use_default_options true
+\begin_modules
+theorems-ams
+eqs-within-sections
+figs-within-sections
+todonotes
+enotez
+\end_modules
+\maintain_unincluded_children no
+\language ngerman
+\language_package default
+\inputencoding utf8
+\fontencoding auto
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts true
+\font_sc false
+\font_roman_osf false
+\font_sans_osf false
+\font_typewriter_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format pdf5
+\output_sync 0
+\bibtex_command default
+\index_command default
+\float_placement class
+\float_alignment class
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\pdf_bookmarks true
+\pdf_bookmarksnumbered false
+\pdf_bookmarksopen false
+\pdf_bookmarksopenlevel 1
+\pdf_breaklinks false
+\pdf_pdfborder true
+\pdf_colorlinks false
+\pdf_backref false
+\pdf_pdfusetitle true
+\papersize a4
+\use_geometry false
+\use_package amsmath 2
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 0
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine natbib
+\cite_engine_type authoryear
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification default
+\crossref_package refstyle
+\use_formatted_ref 0
+\use_minted 0
+\use_lineno 0
+\backgroundcolor none
+\fontcolor none
+\notefontcolor lightgray
+\boxbgcolor red
+\table_border_color default
+\table_odd_row_color default
+\table_even_row_color default
+\table_alt_row_colors_start 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 1cm
+\topmargin 2cm
+\rightmargin 1cm
+\bottommargin 1cm
+\headheight 1cm
+\headsep 1cm
+\footskip 1cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style german
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tablestyle Formal_without_Footline
+\tracking_changes false
+\output_changes false
+\change_bars false
+\postpone_fragile_content true
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\docbook_table_output 0
+\docbook_mathml_prefix 1
+\docbook_mathml_version 0
+\end_header
+
+\begin_body
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+\backslash
+makeatletter
+\end_layout
+
+\begin_layout Plain Layout
+% Holt die globalen Optionen der article-Klasse und prüft,
+ ob "twoside" drinsteht
+\end_layout
+
+\begin_layout Plain Layout
+
+\backslash
+@ifclasswith{article}{twoside}{%
+\end_layout
+
+\begin_layout Plain Layout
+  % Dieser Code wird ausgeführt,
+ wenn twoside in den Dokumentenklassen-Optionen aktiv ist
+\end_layout
+
+\begin_layout Plain Layout
+  
+\backslash
+newcommand{
+\backslash
+twosidedmode}{1} 
+\end_layout
+
+\begin_layout Plain Layout
+}{%
+\end_layout
+
+\begin_layout Plain Layout
+  % Dieser Code wird ausgeführt,
+ wenn twoside NICHT aktiv ist
+\end_layout
+
+\begin_layout Plain Layout
+  
+\backslash
+newcommand{
+\backslash
+twosidedmode}{0} 
+\end_layout
+
+\begin_layout Plain Layout
+}
+\end_layout
+
+\begin_layout Plain Layout
+
+\backslash
+makeatother
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\backslash
+renewcommand
+\backslash
+textHeadAssoc{Käthe Kolwitz}
+\end_layout
+
+\begin_layout Plain Layout
+
+\backslash
+renewcommand
+\backslash
+textHeadJournal{Jedzia Monthly}
+\end_layout
+
+\begin_layout Plain Layout
+
+\backslash
+renewcommand
+\backslash
+textFootAssoc{Mälscher Brieh}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+% Setzt das Jahr (z.B.
+ 2024)
+\end_layout
+
+\begin_layout Plain Layout
+
+\backslash
+setcounter{annual}{2026}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+% Setzt den Monat (1=January,
+ 2=February,
+ 3=March,
+ 4=April,
+ ...)
+\end_layout
+
+\begin_layout Plain Layout
+
+\backslash
+setcounter{issue}{10} 
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\backslash
+makeatletter
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+% Forces a larger base font size (e.g.,
+ 14pt) and scales everything up
+\end_layout
+
+\begin_layout Plain Layout
+
+\backslash
+changefontsizes[16pt]{14pt} % 12pt document size,
+ 14pt line spacing
+\end_layout
+
+\begin_layout Plain Layout
+%
+\backslash
+changefontsizes[12pt]{11pt} % 12pt document size,
+ 14pt line spacing
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+% Wenn zweiseitig mit angepasstem Layout und Randnoten
+\end_layout
+
+\begin_layout Plain Layout
+
+\backslash
+ifnum
+\backslash
+twosidedmode=1
+\end_layout
+
+\begin_layout Plain Layout
+ % Wenn 1:
+ Aktivierte das zweiseitige Layout und passe die Ränder an
+\end_layout
+
+\begin_layout Plain Layout
+  %
+\backslash
+geometry{twoside,
+ outer=4cm,
+ inner=2cm,
+ marginparwidth=3cm,
+ marginparsep=3mm}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+%
+\backslash
+hsize26pc
+\backslash
+textwidth26pc
+\end_layout
+
+\begin_layout Plain Layout
+%
+\backslash
+hsize152mm
+\end_layout
+
+\begin_layout Plain Layout
+%
+\backslash
+setlength
+\backslash
+textwidth{139mm}      % 210mm - 2*26mm = 158mm Textbreite
+\end_layout
+
+\begin_layout Plain Layout
+
+\backslash
+setlength
+\backslash
+oddsidemargin  {2mm}
+\end_layout
+
+\begin_layout Plain Layout
+
+\backslash
+setlength
+\backslash
+evensidemargin {18mm}
+\end_layout
+
+\begin_layout Plain Layout
+% Seitenrand
+\end_layout
+
+\begin_layout Plain Layout
+%
+\backslash
+setlength{
+\backslash
+marginparsep}{3mm} % Verringert den Abstand zum Text auf 3 Millimeter
+\end_layout
+
+\begin_layout Plain Layout
+
+\backslash
+setlength{
+\backslash
+marginparsep}{5mm} % Verringert den Abstand zum Text auf 3 Millimeter
+\end_layout
+
+\begin_layout Plain Layout
+% Todo Notes
+\end_layout
+
+\begin_layout Plain Layout
+
+\backslash
+renewcommand{
+\backslash
+@todonotes@textwidth}{2cm}
+\end_layout
+
+\begin_layout Plain Layout
+% 1.
+ Die physische Breite für alle Randnotizen (
+\backslash
+marginpar) auf 4cm setzen
+\end_layout
+
+\begin_layout Plain Layout
+
+\backslash
+setlength{
+\backslash
+marginparwidth}{2cm}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+%
+\backslash
+else
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+%
+\backslash
+setlength{
+\backslash
+marginparsep}{3mm} % Verringert den Abstand zum Text auf 3 Millimeter
+\end_layout
+
+\begin_layout Plain Layout
+
+\backslash
+fi
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+% nach section neue Zeile
+\end_layout
+
+\begin_layout Plain Layout
+
+\backslash
+renewcommand
+\backslash
+section{
+\backslash
+@startsection{section}{1}{
+\backslash
+z@}%
+\end_layout
+
+\begin_layout Plain Layout
+  {-3.5ex 
+\backslash
+@plus -1ex 
+\backslash
+@minus -.2ex}% % Abstand vor der Überschrift
+\end_layout
+
+\begin_layout Plain Layout
+  {2.3ex 
+\backslash
+@plus .2ex}%                 % Wert > 0 erzwingt den Zeilenumbruch danach
+\end_layout
+
+\begin_layout Plain Layout
+  {
+\backslash
+normalfont
+\backslash
+Large
+\backslash
+bfseries}}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+% nach subsection neue Zeile
+\end_layout
+
+\begin_layout Plain Layout
+
+\backslash
+renewcommand
+\backslash
+subsection{
+\backslash
+@startsection{subsection}{2}{
+\backslash
+z@}%
+\end_layout
+
+\begin_layout Plain Layout
+  {-3.25ex
+\backslash
+@plus -1ex 
+\backslash
+@minus -.2ex}%
+\end_layout
+
+\begin_layout Plain Layout
+  {1.5ex 
+\backslash
+@plus .2ex}% % Dieser Wert > 0 erzwingt den Zeilenumbruch
+\end_layout
+
+\begin_layout Plain Layout
+  {
+\backslash
+normalfont
+\backslash
+large
+\backslash
+bfseries}}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+%
+\backslash
+renewcommand
+\backslash
+subsubsection{
+\backslash
+@startsection{subsubsection}{3}{
+\backslash
+z@}%
+\end_layout
+
+\begin_layout Plain Layout
+%  {-12pt 
+\backslash
+@plus -2pt 
+\backslash
+@minus -2pt}%
+\end_layout
+
+\begin_layout Plain Layout
+%  {1.5ex 
+\backslash
+@plus .2ex}% % Dieser Wert > 0 erzwingt den Zeilenumbruch
+\end_layout
+
+\begin_layout Plain Layout
+%  {
+\backslash
+normalfont
+\backslash
+small
+\backslash
+itshape}}
+\end_layout
+
+\begin_layout Plain Layout
+
+\backslash
+renewcommand
+\backslash
+subsubsection{
+\backslash
+@startsection{subsubsection}{3}{
+\backslash
+z@}%
+\end_layout
+
+\begin_layout Plain Layout
+                                     {-12pt 
+\backslash
+@plus -2pt 
+\backslash
+@minus -2pt}%
+\end_layout
+
+\begin_layout Plain Layout
+                                     {-1.5em}%
+\end_layout
+
+\begin_layout Plain Layout
+%                                     {
+\backslash
+normalfont
+\backslash
+normalsize
+\backslash
+itshape}}
+\end_layout
+
+\begin_layout Plain Layout
+  {
+\backslash
+normalfont
+\backslash
+normalsize
+\backslash
+bfseries
+\backslash
+itshape}}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\backslash
+renewcommand
+\backslash
+paragraph{
+\backslash
+@startsection{paragraph}{3}{
+\backslash
+z@}%
+\end_layout
+
+\begin_layout Plain Layout
+  {-12pt 
+\backslash
+@plus -2pt 
+\backslash
+@minus -2pt}%
+\end_layout
+
+\begin_layout Plain Layout
+  {-.5em}%
+\end_layout
+
+\begin_layout Plain Layout
+  {
+\backslash
+normalfont
+\backslash
+normalsize
+\backslash
+itshape}}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\backslash
+renewcommand
+\backslash
+subparagraph{
+\backslash
+@startsection{subparagraph}{3}{5mm}%
+\end_layout
+
+\begin_layout Plain Layout
+  %{-12pt 
+\backslash
+@plus -2pt 
+\backslash
+@minus -2pt}%
+\end_layout
+
+\begin_layout Plain Layout
+  %{-3pt 
+\backslash
+@plus -1pt 
+\backslash
+@minus -1pt}% <-- Hier wird der Abstand nach oben verringert
+\end_layout
+
+\begin_layout Plain Layout
+  {-0pt 
+\backslash
+@plus  0pt 
+\backslash
+@minus  0pt}% ganz abschalten
+\end_layout
+
+\begin_layout Plain Layout
+  {-.5em}%
+\end_layout
+
+\begin_layout Plain Layout
+  {
+\backslash
+normalfont
+\backslash
+normalsize
+\backslash
+itshape}}
+\end_layout
+
+\begin_layout Plain Layout
+%
+\backslash
+renewcommand
+\backslash
+subparagraph{
+\backslash
+@startsection{subparagraph}{5}{
+\backslash
+z@}%
+\end_layout
+
+\begin_layout Plain Layout
+%  {3.25ex 
+\backslash
+@plus1ex 
+\backslash
+@minus.2ex}%
+\end_layout
+
+\begin_layout Plain Layout
+%  {-1em}%
+\end_layout
+
+\begin_layout Plain Layout
+%  {
+\backslash
+normalfont
+\backslash
+small
+\backslash
+itshape}}
+\end_layout
+
+\begin_layout Plain Layout
+%
+\backslash
+renewcommand
+\backslash
+subparagraph{
+\backslash
+@startsection{subparagraph}{5}{5mm}%
+\end_layout
+
+\begin_layout Plain Layout
+%  {-12pt 
+\backslash
+@plus -3pt 
+\backslash
+@minus -2pt}% <-- Abstand VOR der Überschrift
+\end_layout
+
+\begin_layout Plain Layout
+%  {-0.5em}%                          <-- Abstand NACH der Überschrift (Inline)
+\end_layout
+
+\begin_layout Plain Layout
+%  {
+\backslash
+normalfont
+\backslash
+small
+\backslash
+itshape}}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\backslash
+makeatother
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+% Endnotes Einstellungen
+\end_layout
+
+\begin_layout Plain Layout
+
+\backslash
+makeatletter
+\end_layout
+
+\begin_layout Plain Layout
+% --- VARIABLEN-DEFINITION ---
+\end_layout
+
+\begin_layout Plain Layout
+
+\backslash
+newcommand{
+\backslash
+jinfo}{
+\backslash
+textcircled{
+\backslash
+small i}}
+\end_layout
+
+\begin_layout Plain Layout
+% Hier das gewünschte Zeichen eintragen (z.
+ B.
+ e,
+ n,
+ oder x)
+\end_layout
+
+\begin_layout Plain Layout
+%
+\backslash
+newcommand{
+\backslash
+enoteprefix}{A}
+\end_layout
+
+\begin_layout Plain Layout
+%
+\backslash
+newcommand{
+\backslash
+enoteprefix}{
+\backslash
+bell}
+\end_layout
+
+\begin_layout Plain Layout
+
+\backslash
+newcommand{
+\backslash
+enoteprefix}{
+\backslash
+jinfo}
+\end_layout
+
+\begin_layout Plain Layout
+% ----------------------------
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+% Ein eigenes Makro definieren,
+ das das 'e' mit in das Argument zieht
+\end_layout
+
+\begin_layout Plain Layout
+% 1.
+ Formatierung für den Fließtext (hochgestellt & verlinkt)
+\end_layout
+
+\begin_layout Plain Layout
+% Verwendet die Variable 
+\backslash
+enoteprefix vor dem Argument #1
+\end_layout
+
+\begin_layout Plain Layout
+
+\backslash
+newcommand{
+\backslash
+mycustommark}[1]{
+\backslash
+textsuperscript{
+\backslash
+enoteprefix#1}}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\backslash
+setenotez{
+\end_layout
+
+\begin_layout Plain Layout
+  % Weist enotez an,
+ unser Makro anstelle von 
+\backslash
+textsuperscript zu nutzen
+\end_layout
+
+\begin_layout Plain Layout
+  %mark-cs = 
+\backslash
+mycustommark,
+ 
+\end_layout
+
+\begin_layout Plain Layout
+  mark-format = Anm:
+\backslash
+ ,
+\end_layout
+
+\begin_layout Plain Layout
+  %counter-format = Alph
+\end_layout
+
+\begin_layout Plain Layout
+}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+% 2.
+ Formatierung für das Verzeichnis (Explizite Definition mit 1 Parameter)
+\end_layout
+
+\begin_layout Plain Layout
+%
+\backslash
+renewcommand{
+\backslash
+enmark}[1]{
+\backslash
+enoteprefix#1
+\backslash
+quad}
+\end_layout
+
+\begin_layout Plain Layout
+
+\backslash
+makeatother
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+% Rule with Text
+\end_layout
+
+\begin_layout Plain Layout
+
+\backslash
+makeatletter
+\end_layout
+
+\begin_layout Plain Layout
+
+\backslash
+newcommand{
+\backslash
+linewithtext}[1]{%
+\end_layout
+
+\begin_layout Plain Layout
+  
+\backslash
+par
+\backslash
+noindent
+\backslash
+raisebox{.5ex}{
+\backslash
+makebox[
+\backslash
+linewidth]{
+\backslash
+hrulefill
+\backslash
+hspace{1ex}
+\backslash
+raisebox{-.5ex}{#1}
+\backslash
+hspace{1ex}
+\backslash
+hrulefill}}
+\backslash
+par
+\end_layout
+
+\begin_layout Plain Layout
+}
+\end_layout
+
+\begin_layout Plain Layout
+
+\backslash
+makeatother
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Title
+Muscheln
+\end_layout
+
+\begin_layout Author
+von Stefanie Heinzmann
+\end_layout
+
+\begin_layout Date
+3.
+ Oktober 2026
+\end_layout
+
+\begin_layout Abbreviated Title
+Schalentiere
+\end_layout
+
+\begin_layout Abstract
+Test.
+\begin_inset Flex TODO Note (Margin)
+status open
+
+\begin_layout Plain Layout
+Idee von Riviera.
+ *Überkompliziert* aber gut
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Claim
+MMMMM----- Recipe via Meal-Master (tm) v8.06,
+ 
+\begin_inset Quotes gld
+\end_inset
+
+Netzmarder
+\begin_inset Quotes grd
+\end_inset
+
+ wird hier nicht als Wort verändert!
+\end_layout
+
+\begin_layout Claim
+Sondern alle 
+\begin_inset Quotes gld
+\end_inset
+
+tb
+\begin_inset Quotes grd
+\end_inset
+
+'s in Essloeffel transferiert!
+ (EL).
+\end_layout
+
+\begin_layout Section
+Muscheln in Wuerzsud
+\end_layout
+
+\begin_layout Standard
+Categories:
+ Weichtier,
+ Salzwasser,
+ Muschel
+\end_layout
+
+\begin_layout Standard
+Yield:
+ 4 Servings
+\end_layout
+
+\begin_layout Standard
+3 kg Muscheln
+\end_layout
+
+\begin_layout Standard
+250 g Zwiebeln
+\end_layout
+
+\begin_layout Standard
+3 Knoblauchzehen
+\end_layout
+
+\begin_layout Standard
+2 Fleischtomaten;
+ enthaeutet
+\end_layout
+
+\begin_layout Standard
+2 bn Petersilie
+\end_layout
+
+\begin_layout Standard
+40 g Butter
+\end_layout
+
+\begin_layout Standard
+Cayennepfeffer
+\end_layout
+
+\begin_layout Standard
+1/4 l Weisswein
+\end_layout
+
+\begin_layout Standard
+1 Zitrone;
+ Saft
+\end_layout
+
+\begin_layout Standard
+Muscheln in reichlich kaltes Wasser geben,
+ einige Stunden darin liegen
+\end_layout
+
+\begin_layout Standard
+lassen;
+ das Wasser ab und zu erneuern,
+ die Muscheln anschliessend
+\end_layout
+
+\begin_layout Standard
+gruendlich buersten.
+ Bartbueschel entfernen,
+ so lange spuelen bis das
+\end_layout
+
+\begin_layout Standard
+Wasser vollkommen klar bleibt.
+\end_layout
+
+\begin_layout Standard
+Muscheln die sich beim Waessern und Buersten oeffnen,
+ sind
+\end_layout
+
+\begin_layout Standard
+ungeniessbar,
+ nur geschlossene Muscheln verwenden.
+\end_layout
+
+\begin_layout Standard
+Zwiebeln in Scheiben schneiden,
+ Knoblauchzehen wuerfeln,
+ enthaeutete
+\end_layout
+
+\begin_layout Standard
+Fleischtomaten grob zerkleinern (die Stengelansaetze herausschneiden),
+\end_layout
+
+\begin_layout Standard
+Petersilie fein hacken.
+\end_layout
+
+\begin_layout Standard
+Butter in einem grossen breiten Topf zerlassen;
+ Zwiebel und Knoblauch
+\end_layout
+
+\begin_layout Standard
+darin anduensten,
+ Tomatenstuecke und Petersilie unterruehren.
+\end_layout
+
+\begin_layout Standard
+Cayennepfeffer,
+ Weisswein,
+ Zitronensaft hinzugiessen,
+ erhitzen,
+ die
+\end_layout
+
+\begin_layout Standard
+Muscheln hinzufuegen,
+ zugedeckt bei starker Hitze zum kochen bringen.
+\end_layout
+
+\begin_layout Standard
+10-12 Minuten kochen lassen,
+ dabei den Topf kraeftig ruetteln,
+ damit
+\end_layout
+
+\begin_layout Standard
+die Muscheln gleichmaessig garen.
+\end_layout
+
+\begin_layout Standard
+Erfasst und gepostet von Klaus Wehnert@2:2457/145.10,
+ 29.04.94,
+\end_layout
+
+\begin_layout Standard
+textlich etwas angepasst
+\end_layout
+
+\begin_layout Section
+Miesmuschelnsuppe 'Chez Benoit'
+\end_layout
+
+\begin_layout Standard
+Categories:
+ Suppen
+\end_layout
+
+\begin_layout Standard
+Yield:
+ 4 Servings
+\end_layout
+
+\begin_layout Standard
+1 kg Frische Miesmuscheln
+\end_layout
+
+\begin_layout Standard
+1 1/4 dl Weisswein,
+ trocken (z.B.
+\end_layout
+
+\begin_layout Standard
+-- Muscadet)
+\end_layout
+
+\begin_layout Standard
+1 1/4 dl Rahm
+\end_layout
+
+\begin_layout Standard
+2 tb Butter
+\end_layout
+
+\begin_layout Standard
+1 lg Zwiebel,
+ in duennen Ringe
+\end_layout
+
+\begin_layout Standard
+2 sm Moehren,
+ in duennen Scheiben
+\end_layout
+
+\begin_layout Standard
+2 Stuecke Lauch (nur den
+\end_layout
+
+\begin_layout Standard
+-- weissen Teil nehmen),
+\end_layout
+
+\begin_layout Standard
+-- in duennen Ringen
+\end_layout
+
+\begin_layout Standard
+100 g Speck,
+ fein geschnitten
+\end_layout
+
+\begin_layout Standard
+100 g Geraeuchertes Schinken,
+\end_layout
+
+\begin_layout Standard
+-- fein geschnitten
+\end_layout
+
+\begin_layout Standard
+5 dl Fisch- oder Gefluegelfond
+\end_layout
+
+\begin_layout Standard
+100 g Blanchierte Bohnen,
+ schraeg
+\end_layout
+
+\begin_layout Standard
+-- geschnitten,
+ Stuecke von
+\end_layout
+
+\begin_layout Standard
+-- ca.
+ 15 mm Laenge (1)
+\end_layout
+
+\begin_layout Standard
+Blanchieren:
+ Die Bohnen 4 Minuten in reichlich kochendem Salzwasser
+\end_layout
+
+\begin_layout Standard
+erwaermen,
+ anschliessend mit kaltem Wasser so lange abspuelen,
+ bis die
+\end_layout
+
+\begin_layout Standard
+Bohnen kalt sind.
+\end_layout
+
+\begin_layout Standard
+Die Muscheln gut buersten und waschen,
+ entbarten (nicht im
+\end_layout
+
+\begin_layout Standard
+voraus entbarten,
+ sonst sterben die Muscheln ab!!).
+\end_layout
+
+\begin_layout Standard
+Weisswein und Rahm in einer Pfanne tun,
+ Muscheln zugeben und
+\end_layout
+
+\begin_layout Standard
+aufkochen (die Muscheln sollten knapp gedeckt sein:
+ falls nicht der
+\end_layout
+
+\begin_layout Standard
+Fall,
+ Wein und Rahm zu gleichen Mengen zugeben).
+ Dabei den Topf
+\end_layout
+
+\begin_layout Standard
+immer gut ruetteln;
+ nur so lange kochen,
+ bis die Muscheln auf
+\end_layout
+
+\begin_layout Standard
+sind (ca.
+ 3 bis 4 Minuten;
+ nicht zu lange kochen,
+ sonst werden die
+\end_layout
+
+\begin_layout Standard
+Muscheln zaeh).
+\end_layout
+
+\begin_layout Standard
+Muscheln abtropfen lassen (Kochfluessigkeit auffangen),
+ die
+\end_layout
+
+\begin_layout Standard
+noch geschlossenen Muscheln WEGWERFEN.
+ Die Kochfluessigkeit sehr gut
+\end_layout
+
+\begin_layout Standard
+filtrieren und beiseite tun.
+ Muschelfleisch aus den Schalen nehmen,
+\end_layout
+
+\begin_layout Standard
+beiseite tun.
+\end_layout
+
+\begin_layout Standard
+Butter in einer Pfanne aufschmelzen,
+ Zwiebel,
+ Moehren,
+ Lauch,
+\end_layout
+
+\begin_layout Standard
+Speck und Schinken darin duensten,
+ ca.
+ 5 Minuten (die Zwiebeln
+\end_layout
+
+\begin_layout Standard
+duerfen nicht braun werden !).
+ Fischfond zugeben,
+ koecheln lassen,
+\end_layout
+
+\begin_layout Standard
+bis die Gemuese sehr weich sind (ca.
+ 45 Minuten).
+\end_layout
+
+\begin_layout Standard
+Muscheln-Kochfluessigkeit zugeben,
+ aufkochen.
+\end_layout
+
+\begin_layout Standard
+5 Minuten vor dem Servieren,
+ Muschelfleisch und Bohnen zugeben,
+\end_layout
+
+\begin_layout Standard
+koecheln lassen,
+ bis wieder warm und mit Salz und Pfeffer
+\end_layout
+
+\begin_layout Standard
+abschmecken.
+ Sofort servieren.
+\end_layout
+
+\begin_layout Standard
+Aus:
+ Patricia Wells,
+ Bistro cooking,
+ Arrow London 1992,
+ ISBN
+\end_layout
+
+\begin_layout Standard
+0-09-992340-8
+\end_layout
+
+\begin_layout Standard
+09.12.1993
+\end_layout
+
+\begin_layout Section
+Toskanische Fischsuppe (Cacciucco alla toscana)
+\end_layout
+
+\begin_layout Standard
+Categories:
+ Suppen,
+ Fisch
+\end_layout
+
+\begin_layout Standard
+Yield:
+ 99 Servings
+\end_layout
+
+\begin_layout Standard
+1 1/2 kg Seefische,
+ wie Makrelen,
+\end_layout
+
+\begin_layout Standard
+-- Seehecht,
+ Goldbrassen,
+\end_layout
+
+\begin_layout Standard
+-- Merlan,
+ Schellfisch,
+\end_layout
+
+\begin_layout Standard
+-- Barsch,
+ Sardinen
+\end_layout
+
+\begin_layout Standard
+10 Krebse oder Garnelen
+\end_layout
+
+\begin_layout Standard
+1 kg Muscheln
+\end_layout
+
+\begin_layout Standard
+3 Knoblauchzehen (oder mehr)
+\end_layout
+
+\begin_layout Standard
+1 Zwiebel
+\end_layout
+
+\begin_layout Standard
+1 sm Peperoni
+\end_layout
+
+\begin_layout Standard
+500 g Dosen-Tomaten (keine
+\end_layout
+
+\begin_layout Standard
+-- Hollandtomaten)
+\end_layout
+
+\begin_layout Standard
+1/4 l Weisswein z.B.
+ Frascati
+\end_layout
+
+\begin_layout Standard
+1 ct Fleischsuppe oder die
+\end_layout
+
+\begin_layout Standard
+-- entsprechende Menge Fond
+\end_layout
+
+\begin_layout Standard
+1/2 ts Paprika
+\end_layout
+
+\begin_layout Standard
+1/4 ts Thymian,
+ am besten frisch
+\end_layout
+
+\begin_layout Standard
+-- (ca.
+ ein Zweig)
+\end_layout
+
+\begin_layout Standard
+Olivenoel
+\end_layout
+
+\begin_layout Standard
+4 sl (-8) Weissbrot oder Baguette
+\end_layout
+
+\begin_layout Standard
+Die Fischsorten - moeglichst 4-6 verschiedene - kuechenfertig
+\end_layout
+
+\begin_layout Standard
+vorbereiten und in Stuecke schneiden.
+ Die Muscheln und Krebse
+\end_layout
+
+\begin_layout Standard
+unter fliessend Wasser gruendlich abbuersten.
+ In einem grossen Topf
+\end_layout
+
+\begin_layout Standard
+ca.
+ 8 EL Olivenoel erhitzen.
+ Eine Knoblauchzehe,
+ die Zwiebel,
+ die
+\end_layout
+
+\begin_layout Standard
+Petersilie und die entkernte Peperoni feinhacken und in dem Oel
+\end_layout
+
+\begin_layout Standard
+anduensten.
+ Wenn frische Tomaten verwendet werden diese
+\end_layout
+
+\begin_layout Standard
+ueberbrueht und enthaeutet.
+ Die Tomaten puerieren -
+\end_layout
+
+\begin_layout Standard
+moeglichst ohne Kerne durch ein Sieb passieren - und in den Topf
+\end_layout
+
+\begin_layout Standard
+geben.
+ Die Fleischbruehe - man kann auch Fischfond nehmen -
+\end_layout
+
+\begin_layout Standard
+und den Wein dazugiessen.
+ Alles ca.
+ 15 min kochen lassen.
+\end_layout
+
+\begin_layout Standard
+Nun die Fischstuecke dazugeben,
+ die Muscheln und Krebse zuerst.
+\end_layout
+
+\begin_layout Standard
+Jetzt das ganze nochmal ca.
+ 15 bis 20 min kochen lassen und dann mit
+\end_layout
+
+\begin_layout Standard
+Peffer,
+ Salz,
+ Thymian und Paprika abschmecken.
+ Die
+\end_layout
+
+\begin_layout Standard
+Weissbrotscheiben mit den durchgeschnittenen Knoblauchzehen
+\end_layout
+
+\begin_layout Standard
+einreiben,
+ in heissem Olivenoel goldbraun backen oder im Backofen
+\end_layout
+
+\begin_layout Standard
+ohne Fett roesten.
+ Die Scheiben in tiefe Suppenteller oder eine
+\end_layout
+
+\begin_layout Standard
+grosse Terrine legen und darueber die Fischsuppe geben.
+\end_layout
+
+\begin_layout Standard
+Beilagen :
+ Fruchtiger Weisswein
+\end_layout
+
+\begin_layout Standard
+07.01.1994
+\end_layout
+
+\begin_layout Section
+Sommersalat mit Meeresfruechten
+\end_layout
+
+\begin_layout Standard
+Categories:
+ Salate,
+ Fisch
+\end_layout
+
+\begin_layout Standard
+Yield:
+ 4 Servings
+\end_layout
+
+\begin_layout Standard
+1 Eisbergsalat
+\end_layout
+
+\begin_layout Standard
+4 Feste Tomaten
+\end_layout
+
+\begin_layout Standard
+4 Hartegekochte Eier
+\end_layout
+
+\begin_layout Standard
+1 Zwiebel
+\end_layout
+
+\begin_layout Standard
+1 Gruene Paprika
+\end_layout
+
+\begin_layout Standard
+1 cn Thunfisch in Oel
+\end_layout
+
+\begin_layout Standard
+1 cn Miesmuscheln
+\end_layout
+
+\begin_layout Standard
+75 g Krabbenfleisch
+\end_layout
+
+\begin_layout Standard
+50 g Doppelrahm-Frischkaese
+\end_layout
+
+\begin_layout Standard
+1 Eigelb
+\end_layout
+
+\begin_layout Standard
+4 tb Heisses Wasser
+\end_layout
+
+\begin_layout Standard
+8 tb Oel
+\end_layout
+
+\begin_layout Standard
+2 tb Weinessig
+\end_layout
+
+\begin_layout Standard
+1 tb Senf
+\end_layout
+
+\begin_layout Standard
+1 Knoblauchzehe
+\end_layout
+
+\begin_layout Standard
+Pfeffer
+\end_layout
+
+\begin_layout Standard
+Salz
+\end_layout
+
+\begin_layout Standard
+Eisbergsalat putzen und in ca.
+ 4 cm grosse Stuecke schneiden,
+ dann
+\end_layout
+
+\begin_layout Standard
+eine flache Salatschuessel damit auslegen.
+ Tomaten in Spalten
+\end_layout
+
+\begin_layout Standard
+schneiden und die Eier achteln.
+ Zwiebeln hacken,
+ Paprika in Streifen
+\end_layout
+
+\begin_layout Standard
+schneiden,
+ alles in das Salatbett geben und den zerbroeckelten
+\end_layout
+
+\begin_layout Standard
+Thunfisch,
+ abgetropfte Muscheln und Krabben darueber verteilen.
+\end_layout
+
+\begin_layout Standard
+Den Frischkaese mit einer Gabel fein zerdruecken.
+ Alle
+\end_layout
+
+\begin_layout Standard
+weiteren Zutaten nach und nach hinzufuegen und zu einer cremigen
+\end_layout
+
+\begin_layout Standard
+Sosse verruehren.
+\end_layout
+
+\begin_layout Standard
+Pro Portion:
+ ca.
+ 2390 kj/570 kcal
+\end_layout
+
+\begin_layout Standard
+Beilage :
+ Baguette
+\end_layout
+
+\begin_layout Standard
+07.01.1994
+\end_layout
+
+\begin_layout Section
+Gefuellte Gebackene Muscheln
+\end_layout
+
+\begin_layout Standard
+Categories:
+ Vorspeisen,
+ Fisch
+\end_layout
+
+\begin_layout Standard
+Yield:
+ 8 Servings
+\end_layout
+
+\begin_layout Standard
+20 Frische Zehen Knoblauch,
+\end_layout
+
+\begin_layout Standard
+-- oder mehr (!)
+\end_layout
+
+\begin_layout Standard
+3 cn Muscheln a' 180 g,
+\end_layout
+
+\begin_layout Standard
+-- abgegossen und gehackt
+\end_layout
+
+\begin_layout Standard
+1 1/2 c Frische Muscheln,
+ gekocht
+\end_layout
+
+\begin_layout Standard
+-- und gehackt
+\end_layout
+
+\begin_layout Standard
+150 g Weiche Butter
+\end_layout
+
+\begin_layout Standard
+1 tb Oregano
+\end_layout
+
+\begin_layout Standard
+2 tb Spinat,
+ gekocht und
+\end_layout
+
+\begin_layout Standard
+-- ausgedrueckt
+\end_layout
+
+\begin_layout Standard
+4 tb Sherry
+\end_layout
+
+\begin_layout Standard
+150 g Semmelbroesel
+\end_layout
+
+\begin_layout Standard
+1 bn Petersilie,
+ fein gehackt
+\end_layout
+
+\begin_layout Standard
+2 tb Zitronensaft
+\end_layout
+
+\begin_layout Standard
+2 tb Pinienkerne oder gehackte
+\end_layout
+
+\begin_layout Standard
+-- Walnuesse
+\end_layout
+
+\begin_layout Standard
+Muskat
+\end_layout
+
+\begin_layout Standard
+Cayenne-Pfeffer
+\end_layout
+
+\begin_layout Standard
+Salz
+\end_layout
+
+\begin_layout Standard
+Pfeffer aus der Muehle
+\end_layout
+
+\begin_layout Standard
+Den Knoblauch fein hacken,
+ durch die Presse geben und in einer
+\end_layout
+
+\begin_layout Standard
+Schuessel mit allen Zutaten bis auf die Pinienkerne und den
+\end_layout
+
+\begin_layout Standard
+Cayenne-Pfeffer mischen.
+ Die Masse in eine grosse,
+ ofenfeste Form
+\end_layout
+
+\begin_layout Standard
+oder portioniert in kleine Formen oder Muschelschalen fuellen,
+ mit
+\end_layout
+
+\begin_layout Standard
+den Pinienkernen (oder Nuessen) sowie Cayenne-Pfeffer bestreuen
+\end_layout
+
+\begin_layout Standard
+und bei 180 Grad im Backofen ueberbacken,
+ bis alles eine
+\end_layout
+
+\begin_layout Standard
+goldbraune Farbe annimmt.
+\end_layout
+
+\begin_layout Standard
+Man kann die Muscheln mit Zitronenschnitzeln und Dill dekoriert
+\end_layout
+
+\begin_layout Standard
+heiss (!) servieren.
+\end_layout
+
+\begin_layout Standard
+08.01.1994
+\end_layout
+
+\begin_layout Section
+
+\color red
+Allgemeines zu Miesmuscheln
+\end_layout
+
+\begin_layout Standard
+Categories:
+ Weichtiere
+\end_layout
+
+\begin_layout Standard
+Yield:
+ 1 Anleitung
+\end_layout
+
+\begin_layout Standard
+Muscheln muessen frisch sein,
+ das heisst noch leben,
+ wenn sie in
+\end_layout
+
+\begin_layout Standard
+den Topf kommen.
+ Zoologisch handelt es sich bei Miesmuscheln um
+\end_layout
+
+\begin_layout Standard
+Weichtiere.
+ Aus Italien sind die Muscheln als Cozze oder Vongole
+\end_layout
+
+\begin_layout Standard
+bekannt,
+ in Frankreich heissen sie Moules,
+ in Deutschland und in
+\end_layout
+
+\begin_layout Standard
+der Schweiz (Erntegebiet ist dort die Nordseekueste von Daenemark
+\end_layout
+
+\begin_layout Standard
+bis Holland) sind sie als Miesmuscheln auf dem Markt.
+\end_layout
+
+\begin_layout Standard
+Im Gegensatz zu ihren "Luxusschwestern" - den Austern - werden
+\end_layout
+
+\begin_layout Standard
+die Muscheln selten roh gegessen.
+\end_layout
+
+\begin_layout Standard
+Verdorbene Muscheln sind gluecklicherweise leicht zu erkennen:
+\end_layout
+
+\begin_layout Standard
+Muscheln,
+ die bereits offen sind,
+ sowie Tiere mit beschaedigten
+\end_layout
+
+\begin_layout Standard
+Schalen wegwerfen.
+ Ebenfalls ungeniessbar sind Muscheln,
+ die sich
+\end_layout
+
+\begin_layout Standard
+in der Pfanne nicht von selbst oeffnen.
+ In diesen Faellen sind die
+\end_layout
+
+\begin_layout Standard
+Tiere wahrscheinlich bereits auf dem Transport gestorben:
+ gesunde
+\end_layout
+
+\begin_layout Standard
+Muscheln bleiben mit der Fluessigkeit,
+ die sie im Inneren
+\end_layout
+
+\begin_layout Standard
+speichern koennen,
+ so lange am Leben,
+ bis sie verzehrt werden.
+\end_layout
+
+\begin_layout Standard
+Miesmuscheln werden haeufig kuechenfertig gereinigt angeboten:
+\end_layout
+
+\begin_layout Standard
+die Schalen sind entsandet und der sogenannte Byssusfaden,
+ ein
+\end_layout
+
+\begin_layout Standard
+schnuratiges Gebilde,
+ mit dem sich die Muschel am Untergrund
+\end_layout
+
+\begin_layout Standard
+festhaelt,
+ ist bereits weggeschnitten.
+ Sie sollten dann auf dem
+\end_layout
+
+\begin_layout Standard
+Laden nicht viel aelter als 24 Stunden sein.
+ Ist der Faden noch
+\end_layout
+
+\begin_layout Standard
+dran,
+ mit einem Messer abschneiden ("entbaerten") und unter
+\end_layout
+
+\begin_layout Standard
+fliessendem kaltem Wasser gut reinigen.
+ Und dann sofort:
+ ab in die
+\end_layout
+
+\begin_layout Standard
+Pfanne !
+\end_layout
+
+\begin_layout Standard
+12.01.1994
+\end_layout
+
+\begin_layout Section
+Moules a la mariniere (Grundrezept)
+\end_layout
+
+\begin_layout Standard
+Categories:
+ Weichtiere
+\end_layout
+
+\begin_layout Standard
+Yield:
+ 4 Servings
+\end_layout
+
+\begin_layout Standard
+2 kg Miesmuscheln
+\end_layout
+
+\begin_layout Standard
+2 tb Olivenoel
+\end_layout
+
+\begin_layout Standard
+1 lg Zwiebel,
+ kleingeschnitten
+\end_layout
+
+\begin_layout Standard
+1 Lorbeerblatt
+\end_layout
+
+\begin_layout Standard
+2 1/2 dl Weisswein
+\end_layout
+
+\begin_layout Standard
+Rosmarin
+\end_layout
+
+\begin_layout Standard
+Thymian
+\end_layout
+
+\begin_layout Standard
+Salz
+\end_layout
+
+\begin_layout Standard
+Pfeffer
+\end_layout
+
+\begin_layout Standard
+MMMMM-------------------------SERVIEREN------------------------------
+\end_layout
+
+\begin_layout Standard
+50 g Butter
+\end_layout
+
+\begin_layout Standard
+Zitronenspalten
+\end_layout
+
+\begin_layout Standard
+Knoblauchbrot
+\end_layout
+
+\begin_layout Standard
+Miesmuscheln vorbereiten:
+ siehe Anleitung.
+\end_layout
+
+\begin_layout Standard
+Olivenoel in einer hohen Pfanne erhitzen,
+ Zwiebel,
+\end_layout
+
+\begin_layout Standard
+Lorbeerblatt und Kraeuter beigeben,
+ sanft durchdaempfen.
+\end_layout
+
+\begin_layout Standard
+Miesmuscheln zugeben und mit dem Weisswein abloeschen.
+ Mit Salz
+\end_layout
+
+\begin_layout Standard
+und Pfeffer leicht wuerzen und unter sorgfaeltigem Wenden mit
+\end_layout
+
+\begin_layout Standard
+einer Holzkelle oder unter sanftem Schuetteln und Ruehren etwa 8
+\end_layout
+
+\begin_layout Standard
+Minuten auf kleiner Flamme zugedeckt kochen lassen,
+ bis sich die
+\end_layout
+
+\begin_layout Standard
+Muscheln geoeffnet haben (die Muscheln,
+ die sich nicht
+\end_layout
+
+\begin_layout Standard
+oeffnen,
+ wegwerfen).
+\end_layout
+
+\begin_layout Standard
+Die Muscheln in ein Sieb schuetteln,
+ den Sud fuer allfaellige
+\end_layout
+
+\begin_layout Standard
+Weiter- zubereitung auffangen.
+\end_layout
+
+\begin_layout Standard
+Als Moules marinieres servieren:
+\end_layout
+
+\begin_layout Standard
+Die Muscheln in grossen,
+ vorgewaermten Tellern anrichten,
+\end_layout
+
+\begin_layout Standard
+Kraeuter entfernen.
+ Die kalte Butter in kleinen Stueckchen mit dem
+\end_layout
+
+\begin_layout Standard
+Schwingbesen im Fonds ruehren und die Sauce ueber die Muscheln
+\end_layout
+
+\begin_layout Standard
+anrichten.
+ Mit Zitronen- spalten garnieren und mit knusprigem
+\end_layout
+
+\begin_layout Standard
+Knoblauchbrot servieren.
+\end_layout
+
+\begin_layout Standard
+12.01.1994
+\end_layout
+
+\begin_layout Section
+Muschelrisotto mit Fenchel
+\end_layout
+
+\begin_layout Standard
+Categories:
+ Weichtiere,
+ Gemuese
+\end_layout
+
+\begin_layout Standard
+Yield:
+ 4 Servings
+\end_layout
+
+\begin_layout Standard
+2 kg Moules a la mariniere,
+ siehe
+\end_layout
+
+\begin_layout Standard
+-- Grundrezept
+\end_layout
+
+\begin_layout Standard
+750 g Fenchel,
+ geputzt,
+ klein
+\end_layout
+
+\begin_layout Standard
+-- gewuerfelt
+\end_layout
+
+\begin_layout Standard
+-- Etwas Fenchelkraut hacken
+\end_layout
+
+\begin_layout Standard
+2 tb Olivenoel
+\end_layout
+
+\begin_layout Standard
+250 g Reis (Arborio,
+ Vialone)
+\end_layout
+
+\begin_layout Standard
+5 dl Bouillon (MENGE ANPASSEN)
+\end_layout
+
+\begin_layout Standard
+50 g Butter
+\end_layout
+
+\begin_layout Standard
+50 g Parmesan,
+ gerieben
+\end_layout
+
+\begin_layout Standard
+Weisser Pfeffer
+\end_layout
+
+\begin_layout Standard
+Die Miesmuscheln nach dem Grundrezept,
+ aber ohne Butter
+\end_layout
+
+\begin_layout Standard
+zubereiten.
+ Die Muscheln in ein Sieb schuetten,
+ den Sud auffangen.
+\end_layout
+
+\begin_layout Standard
+Olivenoel in einer Pfanne erhitzen,
+ Fenchelwuerfel und Reis darin
+\end_layout
+
+\begin_layout Standard
+glasig duensten,
+ dabei ruehren.
+ Muschelsud durch ein Haarsieb
+\end_layout
+
+\begin_layout Standard
+giessen und den Reis damit abloeschen.
+ Den Risotto waehrend ca.
+\end_layout
+
+\begin_layout Standard
+18 Minuten immer wieder sanft ruehren.
+\end_layout
+
+\begin_layout Standard
+Inzwischen die Muscheln,
+ bis auf 12 Stueck,
+ aus den Schalen loesen.
+\end_layout
+
+\begin_layout Standard
+Das Muschelfleisch vor dem Servieren unter der heissen
+\end_layout
+
+\begin_layout Standard
+Risotto mischen;
+ Parmesan,
+ die Butter und das gehackte
+\end_layout
+
+\begin_layout Standard
+Fenchelkraut sanft darunterruehren und auf einer heissen Platte
+\end_layout
+
+\begin_layout Standard
+anrichten.
+ Beiseite gelegte Muscheln in der Schale darauf legen und
+\end_layout
+
+\begin_layout Standard
+sofort servieren.
+ 
+\end_layout
+
+\begin_layout Standard
+12.01.1994
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex TODO Note (inline)
+status open
+
+\begin_layout Plain Layout
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+color=yellow
+\end_layout
+
+\end_inset
+
+Das Ende ...
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset line
+LatexCommand rule
+offset "0.5ex"
+width "100col%"
+height "2pt"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+\backslash
+notizenxl
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout List of TODOs
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FloatList endnote
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage clearpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+\backslash
+hspace{2cm}
+\backslash
+linewithtext{Ende des eigentlichen Textes}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection*
+Notizen:
+\end_layout
+
+\begin_layout Standard
+Test Test Test,
+ 
+\end_layout
+
+\end_body
+\end_document

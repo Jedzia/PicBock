@@ -1,0 +1,809 @@
+%% LyX 2.5.2 created this file.  For more info, see https://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
+\documentclass[a4paper,ngerman,year=2024, month=April]{article}
+\PassOptionsToPackage{obeyFinal}{todonotes}
+\usepackage{fontspec}
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{3}
+\usepackage{enotez}
+\usepackage{todonotes}
+\usepackage[authoryear]{natbib}
+
+\makeatletter
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LyX specific LaTeX commands.
+% Backwards compatibility for LuaTeX < 0.90
+\@ifundefined{pageheight}{\let\pageheight\pdfpageheight}{}
+\@ifundefined{pagewidth}{\let\pagewidth\pdfpagewidth}{}
+\pageheight\paperheight
+\pagewidth\paperwidth
+
+\providecommand\textquotedblplain{%
+  \bgroup\addfontfeatures{RawFeature=-tlig}\char34\egroup}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Textclass specific LaTeX commands.
+\usepackage{maa-monthly-todo}
+\numberwithin{equation}{section}
+\numberwithin{figure}{section}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
+\RequirePackage{scrextend}
+
+\usepackage[
+    colorlinks=true,    % Aktiviert farbigen Text (schaltet die Rahmen ab)
+    linkcolor=blue,     % Farbe für interne Links (z. B. Inhaltsverzeichnis, Abbildungen)
+    citecolor=blue,     % Farbe für Literaturzitate im Text
+    urlcolor=blue,      % Farbe für URLs/Webseiten im Literaturverzeichnis
+    breaklinks=true     % Erlaubt Links, am Zeilenende umzubrechen
+]{hyperref}
+\usepackage{url}
+
+\usepackage{esint}
+\usepackage{lipsum}
+
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+
+\usepackage{siunitx}
+\sisetup{locale = DE} % Uses comma as decimal separator
+%\sisetup{inter-unit-product = \cdot} % Mittelpunkt zwischen Einheiten
+% Das Leerzeichen komplett entfernen
+%\sisetup{inter-unit-product = {}, separate-uncertainty = true} 
+%\sisetup{inter-unit-product = \,} % Standard (schmales Leerzeichen)
+
+% \DeclareSIUnit\kwh{kWh} % Eigendefinition: Die Energie beträgt \qty{0,6}{\kwh}.
+
+\usepackage{booktabs}
+
+\usepackage{wasysym}
+
+%% List of urls
+\usepackage{tocloft}
+\usepackage{xurl}
+
+% Define a custom list structure for links
+\newcommand{\listlinksname}{List of Links}
+\newlistof{links}{lnks}{\listlinksname}
+
+% Intercept the standard \href command used by LyX's Hyperlink inset
+\let\oldhref\href
+\renewcommand{\href}[2]{\oldhref{#1}{#2}\addcontentsline{lnks}{figure}{#2: \url{#1}}}
+
+
+%----------- Riviera ist schuld -----------
+
+\usepackage{luacode}
+\begin{luacode*}
+local function uebersetze_einheiten(text)
+    -- Ersetzt "tb" nach einer Zahl durch "EL"
+    text = string.gsub(text, "(%d+)%s*tb", "%1 EL")
+    -- Ersetzt "tsp" nach einer Zahl durch "TL"
+    text = string.gsub(text, "(%d+)%s*tsp", "%1 TL")
+    return text
+end
+
+-- Aktiviert die Ersetzung für das gesamte Dokument
+luatexbase.add_to_callback("process_input_buffer", uebersetze_einheiten, "Uebersetzer")
+\end{luacode*}
+
+\makeatother
+
+\providecommand\theoremname{Theorem}
+\theoremstyle{plain}
+\newtheorem{thm}{\protect\theoremname}
+\providecommand\claimname{Behauptung}
+\theoremstyle{remark}
+\newtheorem{claim}[thm]{\protect\claimname}
+\usepackage{polyglossia}
+\setdefaultlanguage[variant=german,spelling=new,babelshorthands=true]{german}
+\begin{document}
+\makeatletter
+% Holt die globalen Optionen der article-Klasse und prüft, ob "twoside" drinsteht
+\@ifclasswith{article}{twoside}{%
+  % Dieser Code wird ausgeführt, wenn twoside in den Dokumentenklassen-Optionen aktiv ist
+  \newcommand{\twosidedmode}{1} 
+}{%
+  % Dieser Code wird ausgeführt, wenn twoside NICHT aktiv ist
+  \newcommand{\twosidedmode}{0} 
+}
+\makeatother
+
+
+\renewcommand\textHeadAssoc{Käthe Kolwitz}
+\renewcommand\textHeadJournal{Jedzia Monthly}
+\renewcommand\textFootAssoc{Mälscher Brieh}
+
+% Setzt das Jahr (z.B. 2024)
+\setcounter{annual}{2026}
+
+% Setzt den Monat (1=January, 2=February, 3=March, 4=April, ...)
+\setcounter{issue}{10} 
+
+\makeatletter
+
+% Forces a larger base font size (e.g., 14pt) and scales everything up
+\changefontsizes[16pt]{14pt} % 12pt document size, 14pt line spacing
+%\changefontsizes[12pt]{11pt} % 12pt document size, 14pt line spacing
+
+% Wenn zweiseitig mit angepasstem Layout und Randnoten
+\ifnum\twosidedmode=1
+ % Wenn 1: Aktivierte das zweiseitige Layout und passe die Ränder an
+  %\geometry{twoside, outer=4cm, inner=2cm, marginparwidth=3cm, marginparsep=3mm}
+
+%\hsize26pc\textwidth26pc
+%\hsize152mm
+%\setlength\textwidth{139mm}      % 210mm - 2*26mm = 158mm Textbreite
+\setlength\oddsidemargin  {2mm}
+\setlength\evensidemargin {18mm}
+% Seitenrand
+%\setlength{\marginparsep}{3mm} % Verringert den Abstand zum Text auf 3 Millimeter
+\setlength{\marginparsep}{5mm} % Verringert den Abstand zum Text auf 3 Millimeter
+% Todo Notes
+\renewcommand{\@todonotes@textwidth}{2cm}
+% 1. Die physische Breite für alle Randnotizen (\marginpar) auf 4cm setzen
+\setlength{\marginparwidth}{2cm}
+
+
+
+%\else
+
+%\setlength{\marginparsep}{3mm} % Verringert den Abstand zum Text auf 3 Millimeter
+\fi
+
+
+
+
+% nach section neue Zeile
+\renewcommand\section{\@startsection{section}{1}{\z@}%
+  {-3.5ex \@plus -1ex \@minus -.2ex}% % Abstand vor der Überschrift
+  {2.3ex \@plus .2ex}%                 % Wert > 0 erzwingt den Zeilenumbruch danach
+  {\normalfont\Large\bfseries}}
+
+% nach subsection neue Zeile
+\renewcommand\subsection{\@startsection{subsection}{2}{\z@}%
+  {-3.25ex\@plus -1ex \@minus -.2ex}%
+  {1.5ex \@plus .2ex}% % Dieser Wert > 0 erzwingt den Zeilenumbruch
+  {\normalfont\large\bfseries}}
+
+%\renewcommand\subsubsection{\@startsection{subsubsection}{3}{\z@}%
+%  {-12pt \@plus -2pt \@minus -2pt}%
+%  {1.5ex \@plus .2ex}% % Dieser Wert > 0 erzwingt den Zeilenumbruch
+%  {\normalfont\small\itshape}}
+\renewcommand\subsubsection{\@startsection{subsubsection}{3}{\z@}%
+                                     {-12pt \@plus -2pt \@minus -2pt}%
+                                     {-1.5em}%
+%                                     {\normalfont\normalsize\itshape}}
+  {\normalfont\normalsize\bfseries\itshape}}
+
+\renewcommand\paragraph{\@startsection{paragraph}{3}{\z@}%
+  {-12pt \@plus -2pt \@minus -2pt}%
+  {-.5em}%
+  {\normalfont\normalsize\itshape}}
+
+\renewcommand\subparagraph{\@startsection{subparagraph}{3}{5mm}%
+  %{-12pt \@plus -2pt \@minus -2pt}%
+  %{-3pt \@plus -1pt \@minus -1pt}% <-- Hier wird der Abstand nach oben verringert
+  {-0pt \@plus  0pt \@minus  0pt}% ganz abschalten
+  {-.5em}%
+  {\normalfont\normalsize\itshape}}
+%\renewcommand\subparagraph{\@startsection{subparagraph}{5}{\z@}%
+%  {3.25ex \@plus1ex \@minus.2ex}%
+%  {-1em}%
+%  {\normalfont\small\itshape}}
+%\renewcommand\subparagraph{\@startsection{subparagraph}{5}{5mm}%
+%  {-12pt \@plus -3pt \@minus -2pt}% <-- Abstand VOR der Überschrift
+%  {-0.5em}%                          <-- Abstand NACH der Überschrift (Inline)
+%  {\normalfont\small\itshape}}
+
+\makeatother
+
+
+% Endnotes Einstellungen
+\makeatletter
+% --- VARIABLEN-DEFINITION ---
+\newcommand{\jinfo}{\textcircled{\small i}}
+% Hier das gewünschte Zeichen eintragen (z. B. e, n, oder x)
+%\newcommand{\enoteprefix}{A}
+%\newcommand{\enoteprefix}{\bell}
+\newcommand{\enoteprefix}{\jinfo}
+% ----------------------------
+
+
+% Ein eigenes Makro definieren, das das 'e' mit in das Argument zieht
+% 1. Formatierung für den Fließtext (hochgestellt & verlinkt)
+% Verwendet die Variable \enoteprefix vor dem Argument #1
+\newcommand{\mycustommark}[1]{\textsuperscript{\enoteprefix#1}}
+
+\setenotez{
+  % Weist enotez an, unser Makro anstelle von \textsuperscript zu nutzen
+  %mark-cs = \mycustommark, 
+  mark-format = Anm:\ ,
+  %counter-format = Alph
+}
+
+% 2. Formatierung für das Verzeichnis (Explizite Definition mit 1 Parameter)
+%\renewcommand{\enmark}[1]{\enoteprefix#1\quad}
+\makeatother
+
+
+% Rule with Text
+\makeatletter
+\newcommand{\linewithtext}[1]{%
+  \par\noindent\raisebox{.5ex}{\makebox[\linewidth]{\hrulefill\hspace{1ex}\raisebox{-.5ex}{#1}\hspace{1ex}\hrulefill}}\par
+}
+\makeatother
+
+\title{Muscheln}
+\author{von Stefanie Heinzmann}
+\date{3. Oktober 2026}
+\markright{Schalentiere}
+\maketitle
+\begin{abstract}
+Test.\todo{Idee von Riviera. {*}Überkompliziert{*} aber gut}
+\end{abstract}
+\begin{claim}
+MMMMM-{}-{}-{}-{}- Recipe via Meal-Master (tm) v8.06, „Netzmarder“
+wird hier nicht als Wort verändert!
+
+Sondern alle „tb“'s in Essloeffel transferiert! (EL).
+\end{claim}
+
+
+\section{Muscheln in Wuerzsud}
+
+Categories: Weichtier, Salzwasser, Muschel
+
+Yield: 4 Servings
+
+3 kg Muscheln
+
+250 g Zwiebeln
+
+3 Knoblauchzehen
+
+2 Fleischtomaten; enthaeutet
+
+2 bn Petersilie
+
+40 g Butter
+
+Cayennepfeffer
+
+1/4 l Weisswein
+
+1 Zitrone; Saft
+
+Muscheln in reichlich kaltes Wasser geben, einige Stunden darin liegen
+
+lassen; das Wasser ab und zu erneuern, die Muscheln anschliessend
+
+gruendlich buersten. Bartbueschel entfernen, so lange spuelen bis
+das
+
+Wasser vollkommen klar bleibt.
+
+Muscheln die sich beim Waessern und Buersten oeffnen, sind
+
+ungeniessbar, nur geschlossene Muscheln verwenden.
+
+Zwiebeln in Scheiben schneiden, Knoblauchzehen wuerfeln, enthaeutete
+
+Fleischtomaten grob zerkleinern (die Stengelansaetze herausschneiden),
+
+Petersilie fein hacken.
+
+Butter in einem grossen breiten Topf zerlassen; Zwiebel und Knoblauch
+
+darin anduensten, Tomatenstuecke und Petersilie unterruehren.
+
+Cayennepfeffer, Weisswein, Zitronensaft hinzugiessen, erhitzen, die
+
+Muscheln hinzufuegen, zugedeckt bei starker Hitze zum kochen bringen.
+
+10-12 Minuten kochen lassen, dabei den Topf kraeftig ruetteln, damit
+
+die Muscheln gleichmaessig garen.
+
+Erfasst und gepostet von Klaus Wehnert@2:2457/145.10, 29.04.94,
+
+textlich etwas angepasst
+
+\section{Miesmuschelnsuppe 'Chez Benoit'}
+
+Categories: Suppen
+
+Yield: 4 Servings
+
+1 kg Frische Miesmuscheln
+
+1 1/4 dl Weisswein, trocken (z.B.
+
+-{}- Muscadet)
+
+1 1/4 dl Rahm
+
+2 tb Butter
+
+1 lg Zwiebel, in duennen Ringe
+
+2 sm Moehren, in duennen Scheiben
+
+2 Stuecke Lauch (nur den
+
+-{}- weissen Teil nehmen),
+
+-{}- in duennen Ringen
+
+100 g Speck, fein geschnitten
+
+100 g Geraeuchertes Schinken,
+
+-{}- fein geschnitten
+
+5 dl Fisch- oder Gefluegelfond
+
+100 g Blanchierte Bohnen, schraeg
+
+-{}- geschnitten, Stuecke von
+
+-{}- ca. 15 mm Laenge (1)
+
+Blanchieren: Die Bohnen 4 Minuten in reichlich kochendem Salzwasser
+
+erwaermen, anschliessend mit kaltem Wasser so lange abspuelen, bis
+die
+
+Bohnen kalt sind.
+
+Die Muscheln gut buersten und waschen, entbarten (nicht im
+
+voraus entbarten, sonst sterben die Muscheln ab!!).
+
+Weisswein und Rahm in einer Pfanne tun, Muscheln zugeben und
+
+aufkochen (die Muscheln sollten knapp gedeckt sein: falls nicht der
+
+Fall, Wein und Rahm zu gleichen Mengen zugeben). Dabei den Topf
+
+immer gut ruetteln; nur so lange kochen, bis die Muscheln auf
+
+sind (ca. 3 bis 4 Minuten; nicht zu lange kochen, sonst werden die
+
+Muscheln zaeh).
+
+Muscheln abtropfen lassen (Kochfluessigkeit auffangen), die
+
+noch geschlossenen Muscheln WEGWERFEN. Die Kochfluessigkeit sehr gut
+
+filtrieren und beiseite tun. Muschelfleisch aus den Schalen nehmen,
+
+beiseite tun.
+
+Butter in einer Pfanne aufschmelzen, Zwiebel, Moehren, Lauch,
+
+Speck und Schinken darin duensten, ca. 5 Minuten (die Zwiebeln
+
+duerfen nicht braun werden !). Fischfond zugeben, koecheln lassen,
+
+bis die Gemuese sehr weich sind (ca. 45 Minuten).
+
+Muscheln-Kochfluessigkeit zugeben, aufkochen.
+
+5 Minuten vor dem Servieren, Muschelfleisch und Bohnen zugeben,
+
+koecheln lassen, bis wieder warm und mit Salz und Pfeffer
+
+abschmecken. Sofort servieren.
+
+Aus: Patricia Wells, Bistro cooking, Arrow London 1992, ISBN
+
+0-09-992340-8
+
+09.12.1993
+
+\section{Toskanische Fischsuppe (Cacciucco alla toscana)}
+
+Categories: Suppen, Fisch
+
+Yield: 99 Servings
+
+1 1/2 kg Seefische, wie Makrelen,
+
+-{}- Seehecht, Goldbrassen,
+
+-{}- Merlan, Schellfisch,
+
+-{}- Barsch, Sardinen
+
+10 Krebse oder Garnelen
+
+1 kg Muscheln
+
+3 Knoblauchzehen (oder mehr)
+
+1 Zwiebel
+
+1 sm Peperoni
+
+500 g Dosen-Tomaten (keine
+
+-{}- Hollandtomaten)
+
+1/4 l Weisswein z.B. Frascati
+
+1 ct Fleischsuppe oder die
+
+-{}- entsprechende Menge Fond
+
+1/2 ts Paprika
+
+1/4 ts Thymian, am besten frisch
+
+-{}- (ca. ein Zweig)
+
+Olivenoel
+
+4 sl (-8) Weissbrot oder Baguette
+
+Die Fischsorten - moeglichst 4-6 verschiedene - kuechenfertig
+
+vorbereiten und in Stuecke schneiden. Die Muscheln und Krebse
+
+unter fliessend Wasser gruendlich abbuersten. In einem grossen Topf
+
+ca. 8 EL Olivenoel erhitzen. Eine Knoblauchzehe, die Zwiebel, die
+
+Petersilie und die entkernte Peperoni feinhacken und in dem Oel
+
+anduensten. Wenn frische Tomaten verwendet werden diese
+
+ueberbrueht und enthaeutet. Die Tomaten puerieren -
+
+moeglichst ohne Kerne durch ein Sieb passieren - und in den Topf
+
+geben. Die Fleischbruehe - man kann auch Fischfond nehmen -
+
+und den Wein dazugiessen. Alles ca. 15 min kochen lassen.
+
+Nun die Fischstuecke dazugeben, die Muscheln und Krebse zuerst.
+
+Jetzt das ganze nochmal ca. 15 bis 20 min kochen lassen und dann mit
+
+Peffer, Salz, Thymian und Paprika abschmecken. Die
+
+Weissbrotscheiben mit den durchgeschnittenen Knoblauchzehen
+
+einreiben, in heissem Olivenoel goldbraun backen oder im Backofen
+
+ohne Fett roesten. Die Scheiben in tiefe Suppenteller oder eine
+
+grosse Terrine legen und darueber die Fischsuppe geben.
+
+Beilagen : Fruchtiger Weisswein
+
+07.01.1994
+
+\section{Sommersalat mit Meeresfruechten}
+
+Categories: Salate, Fisch
+
+Yield: 4 Servings
+
+1 Eisbergsalat
+
+4 Feste Tomaten
+
+4 Hartegekochte Eier
+
+1 Zwiebel
+
+1 Gruene Paprika
+
+1 cn Thunfisch in Oel
+
+1 cn Miesmuscheln
+
+75 g Krabbenfleisch
+
+50 g Doppelrahm-Frischkaese
+
+1 Eigelb
+
+4 tb Heisses Wasser
+
+8 tb Oel
+
+2 tb Weinessig
+
+1 tb Senf
+
+1 Knoblauchzehe
+
+Pfeffer
+
+Salz
+
+Eisbergsalat putzen und in ca. 4 cm grosse Stuecke schneiden, dann
+
+eine flache Salatschuessel damit auslegen. Tomaten in Spalten
+
+schneiden und die Eier achteln. Zwiebeln hacken, Paprika in Streifen
+
+schneiden, alles in das Salatbett geben und den zerbroeckelten
+
+Thunfisch, abgetropfte Muscheln und Krabben darueber verteilen.
+
+Den Frischkaese mit einer Gabel fein zerdruecken. Alle
+
+weiteren Zutaten nach und nach hinzufuegen und zu einer cremigen
+
+Sosse verruehren.
+
+Pro Portion: ca. 2390 kj/570 kcal
+
+Beilage : Baguette
+
+07.01.1994
+
+\section{Gefuellte Gebackene Muscheln}
+
+Categories: Vorspeisen, Fisch
+
+Yield: 8 Servings
+
+20 Frische Zehen Knoblauch,
+
+-{}- oder mehr (!)
+
+3 cn Muscheln a' 180 g,
+
+-{}- abgegossen und gehackt
+
+1 1/2 c Frische Muscheln, gekocht
+
+-{}- und gehackt
+
+150 g Weiche Butter
+
+1 tb Oregano
+
+2 tb Spinat, gekocht und
+
+-{}- ausgedrueckt
+
+4 tb Sherry
+
+150 g Semmelbroesel
+
+1 bn Petersilie, fein gehackt
+
+2 tb Zitronensaft
+
+2 tb Pinienkerne oder gehackte
+
+-{}- Walnuesse
+
+Muskat
+
+Cayenne-Pfeffer
+
+Salz
+
+Pfeffer aus der Muehle
+
+Den Knoblauch fein hacken, durch die Presse geben und in einer
+
+Schuessel mit allen Zutaten bis auf die Pinienkerne und den
+
+Cayenne-Pfeffer mischen. Die Masse in eine grosse, ofenfeste Form
+
+oder portioniert in kleine Formen oder Muschelschalen fuellen, mit
+
+den Pinienkernen (oder Nuessen) sowie Cayenne-Pfeffer bestreuen
+
+und bei 180 Grad im Backofen ueberbacken, bis alles eine
+
+goldbraune Farbe annimmt.
+
+Man kann die Muscheln mit Zitronenschnitzeln und Dill dekoriert
+
+heiss (!) servieren.
+
+08.01.1994
+
+\section{\textcolor{red}{Allgemeines zu Miesmuscheln}}
+
+Categories: Weichtiere
+
+Yield: 1 Anleitung
+
+Muscheln muessen frisch sein, das heisst noch leben, wenn sie in
+
+den Topf kommen. Zoologisch handelt es sich bei Miesmuscheln um
+
+Weichtiere. Aus Italien sind die Muscheln als Cozze oder Vongole
+
+bekannt, in Frankreich heissen sie Moules, in Deutschland und in
+
+der Schweiz (Erntegebiet ist dort die Nordseekueste von Daenemark
+
+bis Holland) sind sie als Miesmuscheln auf dem Markt.
+
+Im Gegensatz zu ihren \textquotedbl Luxusschwestern\textquotedbl{}
+- den Austern - werden
+
+die Muscheln selten roh gegessen.
+
+Verdorbene Muscheln sind gluecklicherweise leicht zu erkennen:
+
+Muscheln, die bereits offen sind, sowie Tiere mit beschaedigten
+
+Schalen wegwerfen. Ebenfalls ungeniessbar sind Muscheln, die sich
+
+in der Pfanne nicht von selbst oeffnen. In diesen Faellen sind die
+
+Tiere wahrscheinlich bereits auf dem Transport gestorben: gesunde
+
+Muscheln bleiben mit der Fluessigkeit, die sie im Inneren
+
+speichern koennen, so lange am Leben, bis sie verzehrt werden.
+
+Miesmuscheln werden haeufig kuechenfertig gereinigt angeboten:
+
+die Schalen sind entsandet und der sogenannte Byssusfaden, ein
+
+schnuratiges Gebilde, mit dem sich die Muschel am Untergrund
+
+festhaelt, ist bereits weggeschnitten. Sie sollten dann auf dem
+
+Laden nicht viel aelter als 24 Stunden sein. Ist der Faden noch
+
+dran, mit einem Messer abschneiden (\textquotedbl entbaerten\textquotedbl )
+und unter
+
+fliessendem kaltem Wasser gut reinigen. Und dann sofort: ab in die
+
+Pfanne !
+
+12.01.1994
+
+\section{Moules a la mariniere (Grundrezept)}
+
+Categories: Weichtiere
+
+Yield: 4 Servings
+
+2 kg Miesmuscheln
+
+2 tb Olivenoel
+
+1 lg Zwiebel, kleingeschnitten
+
+1 Lorbeerblatt
+
+2 1/2 dl Weisswein
+
+Rosmarin
+
+Thymian
+
+Salz
+
+Pfeffer
+
+MMMMM-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-SERVIEREN-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-
+
+50 g Butter
+
+Zitronenspalten
+
+Knoblauchbrot
+
+Miesmuscheln vorbereiten: siehe Anleitung.
+
+Olivenoel in einer hohen Pfanne erhitzen, Zwiebel,
+
+Lorbeerblatt und Kraeuter beigeben, sanft durchdaempfen.
+
+Miesmuscheln zugeben und mit dem Weisswein abloeschen. Mit Salz
+
+und Pfeffer leicht wuerzen und unter sorgfaeltigem Wenden mit
+
+einer Holzkelle oder unter sanftem Schuetteln und Ruehren etwa 8
+
+Minuten auf kleiner Flamme zugedeckt kochen lassen, bis sich die
+
+Muscheln geoeffnet haben (die Muscheln, die sich nicht
+
+oeffnen, wegwerfen).
+
+Die Muscheln in ein Sieb schuetteln, den Sud fuer allfaellige
+
+Weiter- zubereitung auffangen.
+
+Als Moules marinieres servieren:
+
+Die Muscheln in grossen, vorgewaermten Tellern anrichten,
+
+Kraeuter entfernen. Die kalte Butter in kleinen Stueckchen mit dem
+
+Schwingbesen im Fonds ruehren und die Sauce ueber die Muscheln
+
+anrichten. Mit Zitronen- spalten garnieren und mit knusprigem
+
+Knoblauchbrot servieren.
+
+12.01.1994
+
+\section{Muschelrisotto mit Fenchel}
+
+Categories: Weichtiere, Gemuese
+
+Yield: 4 Servings
+
+2 kg Moules a la mariniere, siehe
+
+-{}- Grundrezept
+
+750 g Fenchel, geputzt, klein
+
+-{}- gewuerfelt
+
+-{}- Etwas Fenchelkraut hacken
+
+2 tb Olivenoel
+
+250 g Reis (Arborio, Vialone)
+
+5 dl Bouillon (MENGE ANPASSEN)
+
+50 g Butter
+
+50 g Parmesan, gerieben
+
+Weisser Pfeffer
+
+Die Miesmuscheln nach dem Grundrezept, aber ohne Butter
+
+zubereiten. Die Muscheln in ein Sieb schuetten, den Sud auffangen.
+
+Olivenoel in einer Pfanne erhitzen, Fenchelwuerfel und Reis darin
+
+glasig duensten, dabei ruehren. Muschelsud durch ein Haarsieb
+
+giessen und den Reis damit abloeschen. Den Risotto waehrend ca.
+
+18 Minuten immer wieder sanft ruehren.
+
+Inzwischen die Muscheln, bis auf 12 Stueck, aus den Schalen loesen.
+
+Das Muschelfleisch vor dem Servieren unter der heissen
+
+Risotto mischen; Parmesan, die Butter und das gehackte
+
+Fenchelkraut sanft darunterruehren und auf einer heissen Platte
+
+anrichten. Beiseite gelegte Muscheln in der Schale darauf legen und
+
+sofort servieren. 
+
+12.01.1994
+
+\todo[inline, color=yellow]{Das Ende ...}
+
+\rule[0.5ex]{1\columnwidth}{2pt}
+
+\notizenxl
+
+\listoftodos{}
+
+\printendnotes
+
+\clearpage{}
+
+\hspace{2cm}\linewithtext{Ende des eigentlichen Textes}
+
+\subsubsection*{Notizen:}
+
+Test Test Test, 
+\end{document}
