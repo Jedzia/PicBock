@@ -136,13 +136,8 @@ enotez
 \shortcut idx
 \color #008000
 \end_index
-\leftmargin 1cm
-\topmargin 2cm
-\rightmargin 1cm
-\bottommargin 1cm
-\headheight 1cm
-\headsep 1cm
-\footskip 1cm
+\leftmargin 5cm
+\rightmargin 5cm
 \secnumdepth 3
 \tocdepth 3
 \paragraph_separation indent
@@ -152,7 +147,7 @@ enotez
 \quotes_style german
 \dynamic_quotes 0
 \papercolumns 1
-\papersides 1
+\papersides 2
 \paperpagestyle default
 \tablestyle Formal_without_Footline
 \tracking_changes false
@@ -171,7 +166,7 @@ enotez
 
 \begin_layout Standard
 \begin_inset ERT
-status collapsed
+status open
 
 \begin_layout Plain Layout
 
@@ -259,7 +254,19 @@ textHeadJournal{Jedzia Monthly}
 \backslash
 renewcommand
 \backslash
-textFootAssoc{Mälscher Brieh}
+textFootAssoc{Jed Monthly}
+\end_layout
+
+\begin_layout Plain Layout
+
+\backslash
+renewcommand
+\backslash
+textFootCopyright{Kochen mit Wut}
+\end_layout
+
+\begin_layout Plain Layout
+
 \end_layout
 
 \begin_layout Plain Layout
@@ -292,7 +299,7 @@ setcounter{annual}{2026}
 \begin_layout Plain Layout
 
 \backslash
-setcounter{issue}{10} 
+setcounter{issue}{8} 
 \end_layout
 
 \begin_layout Plain Layout
@@ -317,14 +324,14 @@ makeatletter
 \begin_layout Plain Layout
 
 \backslash
-changefontsizes[16pt]{14pt} % 12pt document size,
+changefontsizes[14pt]{12pt} % 12pt document size,
  14pt line spacing
 \end_layout
 
 \begin_layout Plain Layout
 %
 \backslash
-changefontsizes[12pt]{11pt} % 12pt document size,
+changefontsizes[8pt]{7pt} % 12pt document size,
  14pt line spacing
 \end_layout
 
@@ -390,7 +397,7 @@ textwidth{139mm}      % 210mm - 2*26mm = 158mm Textbreite
 \backslash
 setlength
 \backslash
-oddsidemargin  {2mm}
+oddsidemargin  {-2mm}
 \end_layout
 
 \begin_layout Plain Layout
@@ -1101,17 +1108,6 @@ Schalentiere
 
 \begin_layout Abstract
 Test.
-\begin_inset Flex TODO Note (Margin)
-status open
-
-\begin_layout Plain Layout
-Idee von Riviera.
- *Überkompliziert* aber gut
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Claim
@@ -2392,7 +2388,21 @@ sofort servieren.
 \end_layout
 
 \begin_layout Standard
-12.01.1994
+12.01.1994 
+\end_layout
+
+\begin_layout Abstract
+\begin_inset Flex TODO Note (Margin)
+status collapsed
+
+\begin_layout Plain Layout
+Idee von Riviera.
+ *Überkompliziert* aber gut
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
