@@ -4,7 +4,7 @@
 \begin_header
 \save_transient_properties true
 \origin unavailable
-\textclass maa-monthly-todo
+\textclass jedzia-kocht
 \begin_preamble
 \RequirePackage{scrextend}
 
@@ -88,7 +88,7 @@ enotez
 \index_command default
 \float_placement class
 \float_alignment class
-\paperfontsize default
+\paperfontsize 18
 \spacing single
 \use_hyperref false
 \pdf_bookmarks true
@@ -101,7 +101,7 @@ enotez
 \pdf_backref false
 \pdf_pdfusetitle true
 \papersize a4
-\use_geometry false
+\use_geometry true
 \use_package amsmath 2
 \use_package amssymb 1
 \use_package cancel 1
@@ -136,8 +136,8 @@ enotez
 \shortcut idx
 \color #008000
 \end_index
-\leftmargin 5cm
-\rightmargin 5cm
+\leftmargin 22mm
+\rightmargin 22mm
 \secnumdepth 3
 \tocdepth 3
 \paragraph_separation indent
@@ -322,7 +322,7 @@ makeatletter
 \end_layout
 
 \begin_layout Plain Layout
-
+%
 \backslash
 changefontsizes[14pt]{12pt} % 12pt document size,
  14pt line spacing
@@ -333,6 +333,19 @@ changefontsizes[14pt]{12pt} % 12pt document size,
 \backslash
 changefontsizes[8pt]{7pt} % 12pt document size,
  14pt line spacing
+\end_layout
+
+\begin_layout Plain Layout
+%
+\backslash
+changefontsizes[18pt]{16pt} % 12pt document size,
+ 14pt line spacing
+\end_layout
+
+\begin_layout Plain Layout
+%
+\backslash
+changefontsizes[24pt]{16pt} %
 \end_layout
 
 \begin_layout Plain Layout
@@ -373,28 +386,6 @@ geometry{twoside,
 \begin_layout Plain Layout
 %
 \backslash
-hsize26pc
-\backslash
-textwidth26pc
-\end_layout
-
-\begin_layout Plain Layout
-%
-\backslash
-hsize152mm
-\end_layout
-
-\begin_layout Plain Layout
-%
-\backslash
-setlength
-\backslash
-textwidth{139mm}      % 210mm - 2*26mm = 158mm Textbreite
-\end_layout
-
-\begin_layout Plain Layout
-
-\backslash
 setlength
 \backslash
 oddsidemargin  {-2mm}
@@ -405,7 +396,7 @@ oddsidemargin  {-2mm}
 \backslash
 setlength
 \backslash
-evensidemargin {18mm}
+evensidemargin {12mm}
 \end_layout
 
 \begin_layout Plain Layout
@@ -417,15 +408,79 @@ evensidemargin {18mm}
 \backslash
 setlength{
 \backslash
-marginparsep}{3mm} % Verringert den Abstand zum Text auf 3 Millimeter
+marginparsep}{-5mm} % Verringert den Abstand zum Text auf 3 Millimeter
+\end_layout
+
+\begin_layout Plain Layout
+
 \end_layout
 
 \begin_layout Plain Layout
 
 \backslash
+let
+\backslash
+alt@addmarginpar
+\backslash
+@addmarginpar
+\end_layout
+
+\begin_layout Plain Layout
+
+\backslash
+def
+\backslash
+@addmarginpar{%
+\end_layout
+
+\begin_layout Plain Layout
+    
+\backslash
+ifodd
+\backslash
+c@page
+\end_layout
+
+\begin_layout Plain Layout
+      
+\backslash
 setlength{
 \backslash
-marginparsep}{5mm} % Verringert den Abstand zum Text auf 3 Millimeter
+marginparsep}{5mm}%
+\end_layout
+
+\begin_layout Plain Layout
+    
+\backslash
+else
+\end_layout
+
+\begin_layout Plain Layout
+      
+\backslash
+setlength{
+\backslash
+marginparsep}{-18mm}%
+\end_layout
+
+\begin_layout Plain Layout
+    
+\backslash
+fi
+\end_layout
+
+\begin_layout Plain Layout
+  
+\backslash
+alt@addmarginpar
+\end_layout
+
+\begin_layout Plain Layout
+}
+\end_layout
+
+\begin_layout Plain Layout
+
 \end_layout
 
 \begin_layout Plain Layout
@@ -437,7 +492,7 @@ marginparsep}{5mm} % Verringert den Abstand zum Text auf 3 Millimeter
 \backslash
 renewcommand{
 \backslash
-@todonotes@textwidth}{2cm}
+@todonotes@textwidth}{2.8cm}
 \end_layout
 
 \begin_layout Plain Layout
@@ -448,11 +503,11 @@ marginpar) auf 4cm setzen
 \end_layout
 
 \begin_layout Plain Layout
-
+%
 \backslash
 setlength{
 \backslash
-marginparwidth}{2cm}
+marginparwidth}{4cm}
 \end_layout
 
 \begin_layout Plain Layout
@@ -465,15 +520,15 @@ marginparwidth}{2cm}
 
 \begin_layout Plain Layout
 
-\end_layout
-
-\begin_layout Plain Layout
-%
 \backslash
 else
 \end_layout
 
 \begin_layout Plain Layout
+%MOOOOOOOOOOOOOO
+\end_layout
+
+\begin_layout Plain Layout
 
 \end_layout
 
@@ -482,7 +537,7 @@ else
 \backslash
 setlength{
 \backslash
-marginparsep}{3mm} % Verringert den Abstand zum Text auf 3 Millimeter
+marginparsep}{-53mm} % Verringert den Abstand zum Text auf 3 Millimeter
 \end_layout
 
 \begin_layout Plain Layout
@@ -1090,7 +1145,7 @@ makeatother
 \end_layout
 
 \begin_layout Title
-Muscheln
+Oraler LD50
 \end_layout
 
 \begin_layout Author
@@ -1103,7 +1158,66 @@ von Stefanie Heinzmann
 \end_layout
 
 \begin_layout Abbreviated Title
-Schalentiere
+Kochwut
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+\backslash
+makeatletter
+\end_layout
+
+\begin_layout Plain Layout
+
+\backslash
+renewcommand{
+\backslash
+tableofcontents}{
+\backslash
+@starttoc{toc}}
+\end_layout
+
+\begin_layout Plain Layout
+
+\backslash
+makeatother
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\backslash
+setcounter{secnumdepth}{3} % Aktiviert Nummern für Section,
+ Subsection,
+ Subsubsection
+\end_layout
+
+\begin_layout Plain Layout
+
+\backslash
+setcounter{tocdepth}{3}    % Zeigt diese Ebenen auch nummeriert im Inhaltsverzeichnis an
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\backslash
+tableofcontents
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Abstract
@@ -1134,9 +1248,32 @@ tb
 
 's in Essloeffel transferiert!
  (EL).
+\begin_inset Flex TODO Note (inline)
+status open
+
+\begin_layout Plain Layout
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+color=yellow
+\end_layout
+
+\end_inset
+
+Der Anfang ...
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section
+Muscheln
+\end_layout
+
+\begin_layout Subsection
 Muscheln in Wuerzsud
 \end_layout
 
@@ -1150,6 +1287,17 @@ Categories:
 \begin_layout Standard
 Yield:
  4 Servings
+\begin_inset Flex TODO Note (Margin)
+status open
+
+\begin_layout Plain Layout
+Riviera ist schuld.
+ *Überkompliziert* aber gut
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -1277,7 +1425,7 @@ Erfasst und gepostet von Klaus Wehnert@2:2457/145.10,
 textlich etwas angepasst
 \end_layout
 
-\begin_layout Section
+\begin_layout Subsection
 Miesmuschelnsuppe 'Chez Benoit'
 \end_layout
 
@@ -1310,6 +1458,16 @@ Yield:
 
 \begin_layout Standard
 2 tb Butter
+\begin_inset Flex TODO Note (Margin)
+status open
+
+\begin_layout Plain Layout
+Noch eine Randnotiz der Marke PostIt
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -1364,6 +1522,17 @@ Yield:
 \begin_layout Standard
 -- ca.
  15 mm Laenge (1)
+\begin_inset Flex TODO Note (Margin)
+status open
+
+\begin_layout Plain Layout
+Helter Skelter,
+ wenn er reitet dann fällt er.
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -1503,7 +1672,7 @@ Aus:
 09.12.1993
 \end_layout
 
-\begin_layout Section
+\begin_layout Subsection
 Toskanische Fischsuppe (Cacciucco alla toscana)
 \end_layout
 
@@ -1518,91 +1687,95 @@ Yield:
  99 Servings
 \end_layout
 
-\begin_layout Standard
+\begin_layout Ingredients
 1 1/2 kg Seefische,
  wie Makrelen,
 \end_layout
 
-\begin_layout Standard
+\begin_deeper
+\begin_layout Itemize
 -- Seehecht,
  Goldbrassen,
 \end_layout
 
-\begin_layout Standard
+\begin_layout Itemize
 -- Merlan,
  Schellfisch,
 \end_layout
 
-\begin_layout Standard
+\begin_layout Itemize
 -- Barsch,
  Sardinen
 \end_layout
 
-\begin_layout Standard
+\end_deeper
+\begin_layout Ingredients
 10 Krebse oder Garnelen
 \end_layout
 
-\begin_layout Standard
+\begin_layout Ingredients
 1 kg Muscheln
 \end_layout
 
-\begin_layout Standard
+\begin_layout Ingredients
 3 Knoblauchzehen (oder mehr)
 \end_layout
 
-\begin_layout Standard
+\begin_layout Ingredients
 1 Zwiebel
 \end_layout
 
-\begin_layout Standard
+\begin_layout Ingredients
 1 sm Peperoni
 \end_layout
 
-\begin_layout Standard
-500 g Dosen-Tomaten (keine
+\begin_layout Ingredients
+500 g Dosen-Tomaten (keine Hollandtomaten)
 \end_layout
 
-\begin_layout Standard
--- Hollandtomaten)
-\end_layout
-
-\begin_layout Standard
+\begin_layout Ingredients
 1/4 l Weisswein z.B.
  Frascati
 \end_layout
 
-\begin_layout Standard
+\begin_layout Ingredients
 1 ct Fleischsuppe oder die
 \end_layout
 
-\begin_layout Standard
+\begin_deeper
+\begin_layout Itemize
 -- entsprechende Menge Fond
 \end_layout
 
-\begin_layout Standard
+\end_deeper
+\begin_layout Ingredients
 1/2 ts Paprika
 \end_layout
 
-\begin_layout Standard
+\begin_layout Ingredients
 1/4 ts Thymian,
  am besten frisch
 \end_layout
 
-\begin_layout Standard
+\begin_deeper
+\begin_layout Itemize
 -- (ca.
  ein Zweig)
 \end_layout
 
-\begin_layout Standard
+\end_deeper
+\begin_layout Ingredients
 Olivenoel
 \end_layout
 
-\begin_layout Standard
+\begin_layout Ingredients
 4 sl (-8) Weissbrot oder Baguette
 \end_layout
 
 \begin_layout Standard
-Die Fischsorten - moeglichst 4-6 verschiedene - kuechenfertig
+Die Fischsorten - moeglichst 4-6 verschiedene - 
+\series bold
+kuechenfertig
 \end_layout
 
 \begin_layout Standard
@@ -1696,7 +1869,7 @@ Beilagen :
 07.01.1994
 \end_layout
 
-\begin_layout Section
+\begin_layout Subsection
 Sommersalat mit Meeresfruechten
 \end_layout
 
@@ -1834,7 +2007,7 @@ Beilage :
 07.01.1994
 \end_layout
 
-\begin_layout Section
+\begin_layout Subsection
 Gefuellte Gebackene Muscheln
 \end_layout
 
@@ -1977,7 +2150,7 @@ heiss (!) servieren.
 08.01.1994
 \end_layout
 
-\begin_layout Section
+\begin_layout Subsection
 
 \color red
 Allgemeines zu Miesmuscheln
@@ -2112,7 +2285,7 @@ Pfanne !
 12.01.1994
 \end_layout
 
-\begin_layout Section
+\begin_layout Subsection
 Moules a la mariniere (Grundrezept)
 \end_layout
 
@@ -2262,7 +2435,7 @@ Knoblauchbrot servieren.
 12.01.1994
 \end_layout
 
-\begin_layout Section
+\begin_layout Subsection
 Muschelrisotto mit Fenchel
 \end_layout
 
@@ -2323,7 +2496,18 @@ Yield:
 \end_layout
 
 \begin_layout Standard
-Weisser Pfeffer
+Weisser Pfeffer 
+\begin_inset Flex TODO Note (Margin)
+status open
+
+\begin_layout Plain Layout
+Notiz.
+ Test Test
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -2391,18 +2575,1957 @@ sofort servieren.
 12.01.1994 
 \end_layout
 
-\begin_layout Abstract
-\begin_inset Flex TODO Note (Margin)
-status collapsed
-
-\begin_layout Plain Layout
-Idee von Riviera.
- *Überkompliziert* aber gut
+\begin_layout Section
+Zeusch mit Bohnenkraut ...
+ weil's reinhaut!
 \end_layout
 
-\end_inset
+\begin_layout Subsection
+Linsensuppe mit Kartoffeln und Kraeutern
+\end_layout
 
+\begin_layout Standard
+Categories:
+ Suppen
+\end_layout
 
+\begin_layout Standard
+Yield:
+ 2 - 4 port.
+\end_layout
+
+\begin_layout Standard
+1 sm Zwiebel
+\end_layout
+
+\begin_layout Standard
+1 ts Weizenkeimoel
+\end_layout
+
+\begin_layout Standard
+75 g Schwarze Linsen
+\end_layout
+
+\begin_layout Standard
+3/4 l Gemuesebruehe
+\end_layout
+
+\begin_layout Standard
+300 g Kartoffeln
+\end_layout
+
+\begin_layout Standard
+150 g Sahne
+\end_layout
+
+\begin_layout Standard
+Salz
+\end_layout
+
+\begin_layout Standard
+Schwarzer Pfeffer;
+ frisch
+\end_layout
+
+\begin_layout Standard
+- gemahlen
+\end_layout
+
+\begin_layout Standard
+1 bn Bohnenkraut
+\end_layout
+
+\begin_layout Standard
+1 bn Schnittlauch
+\end_layout
+
+\begin_layout Standard
+Zwiebel schaelen,
+ fein hacken und im Oel mit den Linsen unter Ruehren
+\end_layout
+
+\begin_layout Standard
+einige Sekunden anbraten.
+ Gemuesebruehe dazu,
+ aufkochen lassen und
+\end_layout
+
+\begin_layout Standard
+zugedeckt bei schwacher Hitze 20-30 Min.
+ garen,
+ bis die Linsen
+\end_layout
+
+\begin_layout Standard
+halbweich sind.
+ Dann die gewuerfelten Kartoffeln dazu geben und
+\end_layout
+
+\begin_layout Standard
+erneut aufkochen und weitere 10-15 min garen bis Linsen und
+\end_layout
+
+\begin_layout Standard
+Kartoffeln gar sind.
+ Nun die Sahne hinzugiessen und bis knapp unter
+\end_layout
+
+\begin_layout Standard
+den Siedepunkt erhitzen.
+ Die Suppe mit Salz und Pfeffer abschmecken.
+\end_layout
+
+\begin_layout Standard
+Mit Schnittlauch und Bohnenkraut bestreuen.
+\end_layout
+
+\begin_layout Standard
+15.04.1994 (MS)
+\end_layout
+
+\begin_layout Subsection
+Spaghetti mit Schinken und Bohnen
+\end_layout
+
+\begin_layout Standard
+Categories:
+ Teigwaren,
+ Italien
+\end_layout
+
+\begin_layout Standard
+Yield:
+ 4 Servings
+\end_layout
+
+\begin_layout Standard
+400 g Spaghetti
+\end_layout
+
+\begin_layout Standard
+2 lg Fleischtomaten
+\end_layout
+
+\begin_layout Standard
+1 md Zwiebel
+\end_layout
+
+\begin_layout Standard
+1 cn Bohnen,
+ dick (750 g)
+\end_layout
+
+\begin_layout Standard
+20 g Margarine
+\end_layout
+
+\begin_layout Standard
+3/8 l Huehnerbruehe
+\end_layout
+
+\begin_layout Standard
+1 tb Senf,
+ mittelscharf
+\end_layout
+
+\begin_layout Standard
+1/2 ct Schlagsahne (100 g)
+\end_layout
+
+\begin_layout Standard
+200 g Katenschinken
+\end_layout
+
+\begin_layout Standard
+3 tb Sossenbinder,
+ hell
+\end_layout
+
+\begin_layout Standard
+1/2 ts Bohnenkraut,
+ getrocknet
+\end_layout
+
+\begin_layout Standard
+;Salz
+\end_layout
+
+\begin_layout Standard
+Petersilie;
+ (zum Garnieren)
+\end_layout
+
+\begin_layout Standard
+Die Spaghetti im kochenden Salzwasser 12 Minuten garen.
+\end_layout
+
+\begin_layout Standard
+Tomaten kurz in kochendes Wasser geben.
+ Abschrecken,
+ die Haut
+\end_layout
+
+\begin_layout Standard
+abziehen und die Tomaten wuerfeln.
+ Zwiebel schaelen und fein hacken.
+\end_layout
+
+\begin_layout Standard
+Bohnen auf einem Sieb abtropfen lassen.
+ Fett in einem Topf erhitzen,
+\end_layout
+
+\begin_layout Standard
+und die Zwiebel- und Tomatenwuerfel darin anduensten.
+ Die
+\end_layout
+
+\begin_layout Standard
+Huehnerbruehe zugiessen und aufkochen lassen.
+ Bohnen,
+ Senf und Sahne
+\end_layout
+
+\begin_layout Standard
+zufuegen und alles 5 Minuten bei schwacher Hitze garen.
+\end_layout
+
+\begin_layout Standard
+In der Zwischenzeit Schinken in Wuerfel schneiden.
+ Saucenbinder unter
+\end_layout
+
+\begin_layout Standard
+Ruehren in die Sauce einstreuen und aufkochen lassen.
+ Mit Salz,
+\end_layout
+
+\begin_layout Standard
+Pfeffer und Bohnenkraut abschmecken.
+ Schinkenwuerfel zum Gemuese
+\end_layout
+
+\begin_layout Standard
+geben.
+ Spaghetti mit dem Bohnengemuese zusammen auf einer Platte
+\end_layout
+
+\begin_layout Standard
+anrichten und servieren.
+ Mit Petersilie garnieren.
+\end_layout
+
+\begin_layout Standard
+Portion 3190 Joule
+\end_layout
+
+\begin_layout Standard
+Tip:
+ Schinken laesst sich leichter und schneller wuerfeln,
+ wenn Sie
+\end_layout
+
+\begin_layout Standard
+ihn vorher leicht anfrieren.
+ Dann in Streifen und danach in Wuerfel
+\end_layout
+
+\begin_layout Standard
+schneiden.
+\end_layout
+
+\begin_layout Standard
+Source:
+ Neue Revue 2/94
+\end_layout
+
+\begin_layout Standard
+Gepostet von:
+ Joachim M.
+ Meng @ 2:245/6606.6 am 16.04.94
+\end_layout
+
+\begin_layout Section
+Ihr KRAUTS!
+\end_layout
+
+\begin_layout Subsection
+Fraenkischer Reiberdatschi
+\end_layout
+
+\begin_layout Standard
+Categories:
+ Eintopf,
+ Regional
+\end_layout
+
+\begin_layout Standard
+Yield:
+ 1 Rezept
+\end_layout
+
+\begin_layout Standard
+18 md Kartoffeln
+\end_layout
+
+\begin_layout Standard
+750 g Schweinefleisch oder
+\end_layout
+
+\begin_layout Standard
+- Surfleisch
+\end_layout
+
+\begin_layout Standard
+1 Ei
+\end_layout
+
+\begin_layout Standard
+2 tb Kartoffelmehl;
+ (gehaeufte
+\end_layout
+
+\begin_layout Standard
+- EL)
+\end_layout
+
+\begin_layout Standard
+1 tb Creme fraiche;
+ oder die
+\end_layout
+
+\begin_layout Standard
+- doppelte Menge
+\end_layout
+
+\begin_layout Standard
+Salz
+\end_layout
+
+\begin_layout Standard
+Pfeffer
+\end_layout
+
+\begin_layout Standard
+Das Fleisch in kleine,
+ fingergrosse Wuerfel schneiden,
+ gleichmaessig
+\end_layout
+
+\begin_layout Standard
+auf eine Raine verteilen,
+ salzen und pfeffern,
+ nach Geschmack bei
+\end_layout
+
+\begin_layout Standard
+sehr magerem Fleisch ein wenig Butterfett oder Oel dazugeben.
+\end_layout
+
+\begin_layout Standard
+Die Kartoffeln reiben,
+ Ei,
+ Mehl,
+ Creme fraiche und das Salz darunter-
+\end_layout
+
+\begin_layout Standard
+ruehren.
+ Diese Masse auf das Fleisch verteilen und glattstreichen.
+\end_layout
+
+\begin_layout Standard
+Bei 200 bis 220 Grad im E-Herd goldgelb backen,
+ ca.
+ 1 Stunde lang.
+\end_layout
+
+\begin_layout Standard
+Falls sich Blaeschen bilden,
+ diese aufstechen.
+\end_layout
+
+\begin_layout Standard
+Dieses Gericht serviert man in Portionsstuecken,
+ pur,
+ mit Salat,
+\end_layout
+
+\begin_layout Standard
+Sauerkraut oder Apfelmus.
+\end_layout
+
+\begin_layout Standard
+Quelle:
+ BAYERNTEXT (KOCH- U.
+ BACKKUENSTE DER LANDFRAUEN DES
+\end_layout
+
+\begin_layout Standard
+PARKSTEINER LANDES)
+\end_layout
+
+\begin_layout Standard
+Erfasst und gepostet von Ulli Fetzer @ 2:246/1401.62 am 11.04.1994
+\end_layout
+
+\begin_layout Subsection
+Hessischer Edelsaecker
+\end_layout
+
+\begin_layout Standard
+Categories:
+ Einfach,
+ Fleisch,
+ Regional
+\end_layout
+
+\begin_layout Standard
+Yield:
+ 4 Servings
+\end_layout
+
+\begin_layout Standard
+1 1/2 kg Ausgeloestes Kotelettstueck
+\end_layout
+
+\begin_layout Standard
+100 g Gekochtes Sauerkraut
+\end_layout
+
+\begin_layout Standard
+4 Gewuerfelte Gewuerzgurken
+\end_layout
+
+\begin_layout Standard
+200 g Gewuerfelter Raeucherspeck
+\end_layout
+
+\begin_layout Standard
+2 Gewuerfelte Zwiebeln
+\end_layout
+
+\begin_layout Standard
+2 ts Senf
+\end_layout
+
+\begin_layout Standard
+;Salz
+\end_layout
+
+\begin_layout Standard
+;Pfeffer
+\end_layout
+
+\begin_layout Standard
+100 g Mehl
+\end_layout
+
+\begin_layout Standard
+100 g Fett
+\end_layout
+
+\begin_layout Standard
+1/8 l Fleischbruehe
+\end_layout
+
+\begin_layout Standard
+Das Fleisch tief einschneiden,
+ damit eine grosse Tasche entsteht.
+ Eine
+\end_layout
+
+\begin_layout Standard
+Fuellung bereiten aus Sauerkraut,
+ Gewuerzgurken,
+ Raeucherspeck,
+\end_layout
+
+\begin_layout Standard
+Zwiebeln,
+ Senf und Gewuerzen.
+ Alles gut miteinander durchkneten,
+ in
+\end_layout
+
+\begin_layout Standard
+die Fleischtasche geben und mit Zwirnsfaden zunaehen.
+ Den Edelsaecker
+\end_layout
+
+\begin_layout Standard
+in Mehl wenden und knusprig in heissem Fett backen.
+ Mit Fleischbruehe
+\end_layout
+
+\begin_layout Standard
+angiessen.
+ Den Deckel schliessen und das Fleisch 1 1/2 Stunden
+\end_layout
+
+\begin_layout Standard
+schmoren.
+\end_layout
+
+\begin_layout Standard
+Source:
+ Leichte Kueche Rhein
+\end_layout
+
+\begin_layout Standard
+Gepostet von:
+ Joachim M.
+ Meng @ 2:245/6606.6 am 16.04.94
+\end_layout
+
+\begin_layout Subsection
+Perlhuhn mit Sektkraut
+\end_layout
+
+\begin_layout Standard
+Categories:
+ Gourmet,
+ Gefluegel,
+ Huhn
+\end_layout
+
+\begin_layout Standard
+Yield:
+ 4 Servings
+\end_layout
+
+\begin_layout Standard
+1 Perlhuhn
+\end_layout
+
+\begin_layout Standard
+80 g Schweineschmalz
+\end_layout
+
+\begin_layout Standard
+1 Zwiebel;
+ gewuerfelt
+\end_layout
+
+\begin_layout Standard
+6 Wacholderbeeren
+\end_layout
+
+\begin_layout Standard
+100 g Raeucherspeck;
+ gewuerfelt
+\end_layout
+
+\begin_layout Standard
+;Salz
+\end_layout
+
+\begin_layout Standard
+;Pfeffer
+\end_layout
+
+\begin_layout Standard
+1/8 l Suesse Sahne
+\end_layout
+
+\begin_layout Standard
+500 g Sauerkraut
+\end_layout
+
+\begin_layout Standard
+1 Lorbeerblatt
+\end_layout
+
+\begin_layout Standard
+2 Wacholderbeeren
+\end_layout
+
+\begin_layout Standard
+50 g Schweineschmalz
+\end_layout
+
+\begin_layout Standard
+1/2 l Bruehe
+\end_layout
+
+\begin_layout Standard
+1/4 l Sekt
+\end_layout
+
+\begin_layout Standard
+Zuerst das Schweineschmalz fuer das Sauerkraut erhitzen.
+ Kraut mit
+\end_layout
+
+\begin_layout Standard
+Lorbeerblatt und Wacholderbeeren zufuegen,
+ leicht anschmoren.
+\end_layout
+
+\begin_layout Standard
+Die Bruehe aufgiessen,
+ den Deckel schliessen und etwa 40 bis 50
+\end_layout
+
+\begin_layout Standard
+Minuten duensten.
+ 10 Minuten vor Garende den Sekt zufuegen.
+\end_layout
+
+\begin_layout Standard
+In der Zwischenzeit das Perlhuhn mit der Zwiebel und dem
+\end_layout
+
+\begin_layout Standard
+Raeucherspeck im heissen Schmalz anbraten.
+ Gewuerze und
+\end_layout
+
+\begin_layout Standard
+Wacholderbeeren zugeben und zugedeckt 50 Minuten schmoren.
+ Danach die
+\end_layout
+
+\begin_layout Standard
+Sosse abschmecken und mit Sahne verfeinern.
+ Das gekochte Sauerkraut
+\end_layout
+
+\begin_layout Standard
+auf eine Platte legen.
+ Das Perlhuhn vierteln,
+ daraufsetzen und mit
+\end_layout
+
+\begin_layout Standard
+der Sosse uebergiessen.
+\end_layout
+
+\begin_layout Standard
+Source:
+ Leichte Kueche Rhein
+\end_layout
+
+\begin_layout Standard
+Gepostet von:
+ Joachim M.
+ Meng @ 2:245/6606.6 am 16.04.94
+\end_layout
+
+\begin_layout Subsection
+Elsaessischer Sauerkrautauflauf
+\end_layout
+
+\begin_layout Standard
+Categories:
+ Auflauf,
+ Fleisch,
+ Schwein,
+ Regional
+\end_layout
+
+\begin_layout Standard
+Yield:
+ 4 Servings
+\end_layout
+
+\begin_layout Standard
+2 kg Eisbein (gut gepoekelt)
+\end_layout
+
+\begin_layout Standard
+5 Nelken
+\end_layout
+
+\begin_layout Standard
+3 Lorbeerblaetter
+\end_layout
+
+\begin_layout Standard
+3 Zwiebel
+\end_layout
+
+\begin_layout Standard
+250 g Butter
+\end_layout
+
+\begin_layout Standard
+1 kg Sauerkraut
+\end_layout
+
+\begin_layout Standard
+1/8 l Lieblicher Weisswein
+\end_layout
+
+\begin_layout Standard
+600 g Kartoffeln
+\end_layout
+
+\begin_layout Standard
+70 g Scharfer Senf
+\end_layout
+
+\begin_layout Standard
+1 pn Pfeffer
+\end_layout
+
+\begin_layout Standard
+1 pn Salz
+\end_layout
+
+\begin_layout Standard
+1 pn Muskat
+\end_layout
+
+\begin_layout Standard
+300 g Creme fraiche
+\end_layout
+
+\begin_layout Standard
+Fleisch
+\end_layout
+
+\begin_layout Standard
+1 Zwiebel mit Lorbeer und 5 Nelken spicken,
+ mit 2 gut durchgepoekelten
+\end_layout
+
+\begin_layout Standard
+Eisbeinen (a 1 kg) in ungesalzenes Wasser - ca.
+ 2 Stunden kochen.
+ 2
+\end_layout
+
+\begin_layout Standard
+Stunden Kochen.
+ Herausnehmen und das Fleisch vom Fett und Knochen
+\end_layout
+
+\begin_layout Standard
+loesen,
+ in nussgrosse Stuecke zerteilen.
+ Knochen und Fett entsorgen.
+\end_layout
+
+\begin_layout Standard
+Sauerkraut
+\end_layout
+
+\begin_layout Standard
+2 mittlere Zwiebeln in Streifen schneiden,
+ in 50 g.
+ Butter
+\end_layout
+
+\begin_layout Standard
+anduensten,
+ 1kg.
+ Sauerkraut dazu,
+ mit 1/8 l.
+ lieblichem Weisswein
+\end_layout
+
+\begin_layout Standard
+auffuellen,
+ zugedeckt ca.
+ 10 min.
+ kochen lassen und dann 125 g.
+ kalte
+\end_layout
+
+\begin_layout Standard
+Butter unterruehren.
+\end_layout
+
+\begin_layout Standard
+Kartoffelbrei
+\end_layout
+
+\begin_layout Standard
+600 g.
+ Kartoffeln kochen und danach durchpressen oder stampfen.
+ Mit
+\end_layout
+
+\begin_layout Standard
+75 g.
+ kalter Butter,
+ 50-75 g scharfem Senf,
+ Pfeffer,
+ Salz und Muskat
+\end_layout
+
+\begin_layout Standard
+verruehren.
+ 200-300 g.
+ Creme fraiche dazu.
+\end_layout
+
+\begin_layout Standard
+Nun alles in eine Auflaufform geben und zwar zuerst das Sauerkraut,
+\end_layout
+
+\begin_layout Standard
+dann eine Lage mit dem fettfreien Fleisch und dann den Kartoffelbrei.
+\end_layout
+
+\begin_layout Standard
+Bei 250 oC fuer etwa 25 min.
+ ueberbacken.
+\end_layout
+
+\begin_layout Standard
+Bon appetit
+\end_layout
+
+\begin_layout Standard
+Gepostet:
+ Peter Zoll @ 2:244/1502.9 am 18.04.94
+\end_layout
+
+\begin_layout Subsection
+Bayerische Grillhaxe
+\end_layout
+
+\begin_layout Standard
+Categories:
+ Fleisch,
+ Schwein,
+ Regional
+\end_layout
+
+\begin_layout Standard
+Yield:
+ 1 Servings
+\end_layout
+
+\begin_layout Standard
+1 Grillhaxe;
+ vorgebraten
+\end_layout
+
+\begin_layout Standard
+1 tb Estragon
+\end_layout
+
+\begin_layout Standard
+1 tb Rosmarin
+\end_layout
+
+\begin_layout Standard
+1 tb Thymian
+\end_layout
+
+\begin_layout Standard
+500 g Sauerkraut
+\end_layout
+
+\begin_layout Standard
+300 g Semmelknoedel
+\end_layout
+
+\begin_layout Standard
+Bier
+\end_layout
+
+\begin_layout Standard
+Die Grillhaxe auftauen und mit Estragon,
+ Rosmarin und Thymian
+\end_layout
+
+\begin_layout Standard
+einreiben,
+ auf den Rost legen und im vorgeheizten Backofen bei 200 oC
+\end_layout
+
+\begin_layout Standard
+ca.
+ 30 Minuten erhitzen.
+ Zwischendurch immer wieder mit Bier
+\end_layout
+
+\begin_layout Standard
+bestreichen.
+ Servieren sie dazu zuenftiges Sauerkraut und
+\end_layout
+
+\begin_layout Standard
+Semmelknoedel.
+\end_layout
+
+\begin_layout Standard
+Gepostet von Joachim M.
+ Meng @ 2:245/6606.6 am 23.04.94
+\end_layout
+
+\begin_layout Subsection
+Sauerkrautsuppe
+\end_layout
+
+\begin_layout Standard
+Categories:
+ Suppen
+\end_layout
+
+\begin_layout Standard
+Yield:
+ 10 Servings
+\end_layout
+
+\begin_layout Standard
+500 g Sauerkraut
+\end_layout
+
+\begin_layout Standard
+250 g Zwiebeln
+\end_layout
+
+\begin_layout Standard
+250 g Durchwachsener Speck
+\end_layout
+
+\begin_layout Standard
+1 cn (gross) geschaelte Tomaten
+\end_layout
+
+\begin_layout Standard
+8 tb Oel
+\end_layout
+
+\begin_layout Standard
+750 g Gemischtes Mett
+\end_layout
+
+\begin_layout Standard
+3 l Klare Bruehe
+\end_layout
+
+\begin_layout Standard
+1 ts (-2) Kuemmel
+\end_layout
+
+\begin_layout Standard
+Schwarzer Pfeffer
+\end_layout
+
+\begin_layout Standard
+Majoran
+\end_layout
+
+\begin_layout Standard
+Thymian
+\end_layout
+
+\begin_layout Standard
+2 tb (-3) edelsuesser Paprika
+\end_layout
+
+\begin_layout Standard
+1/4 ts Chillipfeffer
+\end_layout
+
+\begin_layout Standard
+Salz
+\end_layout
+
+\begin_layout Standard
+Zucker
+\end_layout
+
+\begin_layout Standard
+1 bn (-2) Petersilie,
+ gehackt
+\end_layout
+
+\begin_layout Standard
+Die Menge reicht u.U.
+ nicht fuer 10 Personen.
+\end_layout
+
+\begin_layout Standard
+Das Sauerkraut zerpfluecken.
+ Die Zwiebeln in Ringe schneiden und den
+\end_layout
+
+\begin_layout Standard
+Speck wuerfeln.
+ Die Tomaten abtropfen lassen.
+ Speck und
+\end_layout
+
+\begin_layout Standard
+Zwiebeln in Oel braeunen und dann herausnehmen.
+ Das Mett
+\end_layout
+
+\begin_layout Standard
+braeuenen und ebenfalls herausnehmen.
+ Das Sauerkraut anduensten
+\end_layout
+
+\begin_layout Standard
+(evtl.
+ Oel nachgeben),
+ den Saft der Tomaten,
+ Speck und Zwiebeln,
+\end_layout
+
+\begin_layout Standard
+das Mett und die Bruehe zufuegen.
+ Wuerzen,
+ die Tomaten zugeben
+\end_layout
+
+\begin_layout Standard
+und alles bei geringer Hitze 10 Minuten garen,
+ dann abschmecken.
+\end_layout
+
+\begin_layout Section
+Die Hexe Schlotterbeck
+\end_layout
+
+\begin_layout Subsection
+Kaesekuchen mit Streusel
+\end_layout
+
+\begin_layout Standard
+Categories:
+ Kuchen,
+ Kaese
+\end_layout
+
+\begin_layout Standard
+Yield:
+ 12 Servings
+\end_layout
+
+\begin_layout Standard
+MMMMM--------------------------HEFETEIG-------------------------------
+\end_layout
+
+\begin_layout Standard
+500 g Mehl
+\end_layout
+
+\begin_layout Standard
+40 g Hefe
+\end_layout
+
+\begin_layout Standard
+250 ml Milch
+\end_layout
+
+\begin_layout Standard
+100 g Zucker
+\end_layout
+
+\begin_layout Standard
+100 g Butter
+\end_layout
+
+\begin_layout Standard
+1 Ei
+\end_layout
+
+\begin_layout Standard
+Salz
+\end_layout
+
+\begin_layout Standard
+MMMMM---------------------------BELAG--------------------------------
+\end_layout
+
+\begin_layout Standard
+1000 g Weisskaese
+\end_layout
+
+\begin_layout Standard
+60 g Butter
+\end_layout
+
+\begin_layout Standard
+3 Eier
+\end_layout
+
+\begin_layout Standard
+125 g Zucker
+\end_layout
+
+\begin_layout Standard
+15 g Weizenmehl
+\end_layout
+
+\begin_layout Standard
+15 g Kartoffelmehl
+\end_layout
+
+\begin_layout Standard
+70 g Korinthen
+\end_layout
+
+\begin_layout Standard
+MMMMM--------------------------STREUSEL-------------------------------
+\end_layout
+
+\begin_layout Standard
+400 g Mehl
+\end_layout
+
+\begin_layout Standard
+200 g Butter
+\end_layout
+
+\begin_layout Standard
+200 g Zucker
+\end_layout
+
+\begin_layout Standard
+Der Hefeteig wird hergestellt.
+ Waehrend er aufgeht,
+ streicht
+\end_layout
+
+\begin_layout Standard
+man den Weisskaese durch ein Sieb,
+ mischt ihn mit den uebrigen
+\end_layout
+
+\begin_layout Standard
+Zutaten und bereitet die Streusel.
+ Den auf gefettetem Blech
+\end_layout
+
+\begin_layout Standard
+ausgerollten Teig bestreicht man mit der Quarkmasse,
+ bedeckt sie
+\end_layout
+
+\begin_layout Standard
+mit Streusel und laesst den Kuchen aufgehen.
+\end_layout
+
+\begin_layout Standard
+Bei Mittelhitze braucht er 30 bis 40 Minuten Backzeit.
+\end_layout
+
+\begin_layout Standard
+Eugenie Erlewein,
+ Hauswirtschaftslehre (1952)
+\end_layout
+
+\begin_layout Standard
+16.11.1993
+\end_layout
+
+\begin_layout Subsection
+Schokoladen-Kaesekuchen
+\end_layout
+
+\begin_layout Standard
+Categories:
+ Kuchen
+\end_layout
+
+\begin_layout Standard
+Yield:
+ 1 Servings
+\end_layout
+
+\begin_layout Standard
+MMMMM-----------------------FUER DEN BODEN----------------------------
+\end_layout
+
+\begin_layout Standard
+125 g Butter
+\end_layout
+
+\begin_layout Standard
+150 g Zucker
+\end_layout
+
+\begin_layout Standard
+1 Ei
+\end_layout
+
+\begin_layout Standard
+1/2 pk Vanillezucker
+\end_layout
+
+\begin_layout Standard
+2 tb Schokoladenpulver
+\end_layout
+
+\begin_layout Standard
+1 tb Nougatcreme
+\end_layout
+
+\begin_layout Standard
+1 Zitrone,
+ Saft
+\end_layout
+
+\begin_layout Standard
+350 g Mehl
+\end_layout
+
+\begin_layout Standard
+1/2 pk Backpulver
+\end_layout
+
+\begin_layout Standard
+MMMMM-----------------------FUER DEN BELAG----------------------------
+\end_layout
+
+\begin_layout Standard
+750 g Quark
+\end_layout
+
+\begin_layout Standard
+1 Zitrone,
+ Saft
+\end_layout
+
+\begin_layout Standard
+4 Eier
+\end_layout
+
+\begin_layout Standard
+200 g Zucker
+\end_layout
+
+\begin_layout Standard
+25 g Feinen Weizengriess
+\end_layout
+
+\begin_layout Standard
+1/2 pk Vanillezucker
+\end_layout
+
+\begin_layout Standard
+Butter,
+ Zucker,
+ Vanillezucker und Ei schaumig ruehren.
+\end_layout
+
+\begin_layout Standard
+Schokoladenpulver,
+ Nougatcreme und Zitronensaft nacheinander zugeben.
+\end_layout
+
+\begin_layout Standard
+Mehl und Backpulver vermischen,
+ daruebersieben und alles zu einem
+\end_layout
+
+\begin_layout Standard
+festen Teig verarbeiten.
+\end_layout
+
+\begin_layout Standard
+Teig in eine gefettete Springform druecken,
+ einen kleinen Rand
+\end_layout
+
+\begin_layout Standard
+hochziehen.
+\end_layout
+
+\begin_layout Standard
+Quark,
+ Zitronensaft und Eigelb glattruehren,
+ nach und nach
+\end_layout
+
+\begin_layout Standard
+Zucker,
+ Vanillezucker und Griess zugeben.
+\end_layout
+
+\begin_layout Standard
+Eiweiss zu Schnee schlagen und unterziehen.
+\end_layout
+
+\begin_layout Standard
+Creme auf den Teig geben,
+ sofort bei 175 Grad ca.
+ 60 min
+\end_layout
+
+\begin_layout Standard
+backen.
+ Der Kaesekuchen soll hell bleiben,
+ damit der Kontrast
+\end_layout
+
+\begin_layout Standard
+zum dunklen Boden erhalten bleibt.
+\end_layout
+
+\begin_layout Standard
+Eventuell mit etwas Schokoblaetter verzieren.
+\end_layout
+
+\begin_layout Standard
+17.11.1993
+\end_layout
+
+\begin_layout Subsection
+Feuerwehrkuchen (Klassiker aus de.rec.mampf)
+\end_layout
+
+\begin_layout Standard
+MMMMM----- Meal-Master Rezept eingelesen von Koch-Baer v1.02
+\end_layout
+
+\begin_layout Standard
+Categories:
+ Kuchen,
+ Backen,
+ Kirschen,
+ Sahne
+\end_layout
+
+\begin_layout Standard
+Yield:
+ 12 Portionen
+\end_layout
+
+\begin_layout Standard
+MMMMM------------------------MUERBETEIG-------------------------------
+\end_layout
+
+\begin_layout Standard
+200 g Weizenmehl
+\end_layout
+
+\begin_layout Standard
+1 TL Backpulver
+\end_layout
+
+\begin_layout Standard
+100 g Butter;
+ weich
+\end_layout
+
+\begin_layout Standard
+100 g Zucker
+\end_layout
+
+\begin_layout Standard
+1 Pck.
+ Vanillezucker
+\end_layout
+
+\begin_layout Standard
+1 Ei (Groesse M)
+\end_layout
+
+\begin_layout Standard
+MMMMM-------------------FUELLUNG & STREUSEL--------------------------
+\end_layout
+
+\begin_layout Standard
+1 Glas Schattenmorellen;
+ ca.
+ 350g Abtropfgewicht
+\end_layout
+
+\begin_layout Standard
+250 ml Kirschsaft (vom Glas aufgefangen)
+\end_layout
+
+\begin_layout Standard
+1 Pck.
+ Vanillepuddingpulver;
+ zum Kochen
+\end_layout
+
+\begin_layout Standard
+110 g Weizenmehl
+\end_layout
+
+\begin_layout Standard
+100 g Zucker
+\end_layout
+
+\begin_layout Standard
+90 g Butter;
+ weich
+\end_layout
+
+\begin_layout Standard
+100 g Mandeln;
+ gemahlen
+\end_layout
+
+\begin_layout Standard
+1 TL Zimt;
+ gemahlen
+\end_layout
+
+\begin_layout Standard
+MMMMM------------------------BELAG-----------------------------------
+\end_layout
+
+\begin_layout Standard
+400 g Schlagsahne
+\end_layout
+
+\begin_layout Standard
+2 Pck.
+ Sahnesteif
+\end_layout
+
+\begin_layout Standard
+1 Pck.
+ Vanillezucker
+\end_layout
+
+\begin_layout Standard
+Kakaopulver;
+ ungesuesst,
+ zum Bestaeuben
+\end_layout
+
+\begin_layout Standard
+Schokoraspeln;
+ zum Bestreuen
+\end_layout
+
+\begin_layout Standard
+From:
+ Fundus de.rec.mampf
+\end_layout
+
+\begin_layout Standard
+Date:
+ Tue,
+ 06 Oct 2026
+\end_layout
+
+\begin_layout Standard
+Newsgroups:
+ de.rec.mampf
+\end_layout
+
+\begin_layout Standard
+ZUBEREITUNG:
+\end_layout
+
+\begin_layout Standard
+1.
+ Fuer den Muerbeteig Mehl und Backpulver mischen.
+ Mit Butter,
+ Zucker,
+ 
+\end_layout
+
+\begin_layout Standard
+Vanillezucker und dem Ei rasch zu einem glatten Teig verkneten.
+ In 
+\end_layout
+
+\begin_layout Standard
+Frischhaltefolie gewickelt fuer ca.
+ 30 Minuten kalt stellen.
+\end_layout
+
+\begin_layout Standard
+2.
+ Eine Springform (26 cm Durchmesser) einfetten.
+ Den Muerbeteig auf 
+\end_layout
+
+\begin_layout Standard
+einer leicht bemehlten Arbeitsflaeche ausrollen,
+ in die Form legen 
+\end_layout
+
+\begin_layout Standard
+und dabei einen ca.
+ 3 cm hohen Rand hochdruecken.
+\end_layout
+
+\begin_layout Standard
+3.
+ Die Schattenmorellen in einem Sieb gut abtropfen lassen,
+ dabei 250 ml 
+\end_layout
+
+\begin_layout Standard
+des Kirschsafts auffangen.
+ Das Puddingpulver mit ca.
+ 4 EL des Safts 
+\end_layout
+
+\begin_layout Standard
+glattruehren.
+ Den restlichen Saft aufkochen,
+ das angeruehrte Pulver 
+\end_layout
+
+\begin_layout Standard
+einruehren und kurz aufkochen lassen.
+ Die Kirschen unterheben und die 
+\end_layout
+
+\begin_layout Standard
+Masse gleichmaessig auf dem Teigboden verteilen.
+\end_layout
+
+\begin_layout Standard
+4.
+ Aus Mehl,
+ Zucker,
+ weicher Butter,
+ gemahlenen Mandeln und Zimt mit den 
+\end_layout
+
+\begin_layout Standard
+Haenden gleichmaessige Streusel reiben.
+ Diese locker ueber der 
+\end_layout
+
+\begin_layout Standard
+Kirschmasse verteilen.
+\end_layout
+
+\begin_layout Standard
+5.
+ Den Kuchen im vorgeheizten Backofen bei 175 Grad Ober-/Unterhitze 
+\end_layout
+
+\begin_layout Standard
+(Umluft:
+ 160 Grad) auf mittlerer Schiene etwa 50 bis 60 Minuten 
+\end_layout
+
+\begin_layout Standard
+backen,
+ bis die Streusel goldbraun sind.
+ Danach vollstaendig in der 
+\end_layout
+
+\begin_layout Standard
+Form auskuehlen lassen.
+\end_layout
+
+\begin_layout Standard
+6.
+ Fuer den Belag die Schlagsahne mit Sahnesteif und Vanillezucker steif 
+\end_layout
+
+\begin_layout Standard
+schlagen.
+ Die Sahne wellenfoermig oder in Tupfen auf dem kalten 
+\end_layout
+
+\begin_layout Standard
+Kuchen verstreichen.
+ Vor dem Servieren dick mit Kakaopulver 
+\end_layout
+
+\begin_layout Standard
+bestaeuben und mit Schokoraspeln verzieren.
+ Bis zum Anschneiden 
+\end_layout
+
+\begin_layout Standard
+kuehl stellen.
+\end_layout
+
+\begin_layout Subsection
+Linzer Torte (Klassische Usenet-Variante)
+\end_layout
+
+\begin_layout Verse
+Die Linzer Torte gilt als das älteste überlieferte Tortenrezept der Welt und schmeckt am besten,
+ wenn sie nach dem Backen ein paar Tage in Alufolie durchziehen darf.
+\end_layout
+
+\begin_layout Standard
+Categories:
+ Kuchen,
+ Backen,
+ Nuesse,
+ Klassiker
+\end_layout
+
+\begin_layout Standard
+Yield:
+ 12 Portionen
+\end_layout
+
+\begin_layout Standard
+MMMMM--------------------------TEIG----------------------------------
+\end_layout
+
+\begin_layout Standard
+250 g Weizenmehl
+\end_layout
+
+\begin_layout Standard
+250 g Butter;
+ kalt,
+ in Stuecken
+\end_layout
+
+\begin_layout Standard
+250 g Zucker
+\end_layout
+
+\begin_layout Standard
+250 g Mandeln;
+ oder Haselnuesse,
+ gemahlen
+\end_layout
+
+\begin_layout Standard
+1 Ei (Groesse M)
+\end_layout
+
+\begin_layout Standard
+1 Eigelb (Groesse M)
+\end_layout
+
+\begin_layout Standard
+1 TL Zimt;
+ gemahlen
+\end_layout
+
+\begin_layout Standard
+1 Msp.
+ Nelkenpulver
+\end_layout
+
+\begin_layout Standard
+1 EL Kakao;
+ ungesuesst (fuer die Farbe)
+\end_layout
+
+\begin_layout Standard
+1 Pris Salz
+\end_layout
+
+\begin_layout Standard
+1 TL Zitronenschale;
+ abgerieben
+\end_layout
+
+\begin_layout Standard
+MMMMM------------------------FUELLUNG---------------------------------
+\end_layout
+
+\begin_layout Standard
+300 g Johannisbeergelee;
+ rot (alternativ Pflaumenmus)
+\end_layout
+
+\begin_layout Standard
+MMMMM------------------------FINISH----------------------------------
+\end_layout
+
+\begin_layout Standard
+1 Eigelb;
+ zum Bestreichen
+\end_layout
+
+\begin_layout Standard
+1 EL Milch;
+ zum Bestreichen
+\end_layout
+
+\begin_layout Standard
+Gehobelte Mandeln;
+ zum Bestreuen (optional)
+\end_layout
+
+\begin_layout Standard
+From:
+ Fundus de.rec.mampf
+\end_layout
+
+\begin_layout Standard
+Date:
+ Tue,
+ 06 Oct 2026
+\end_layout
+
+\begin_layout Standard
+Newsgroups:
+ de.rec.mampf
+\end_layout
+
+\begin_layout Standard
+ZUBEREITUNG:
+\end_layout
+
+\begin_layout Standard
+1.
+ Das Mehl mit Zucker,
+ gemahlenen Nuessen,
+ Gewuerzen (Zimt,
+ Nelken,
+ Salz,
+\end_layout
+
+\begin_layout Standard
+Zitronenschale) und Kakao auf der Arbeitsflaeche mischen.
+ Die kalte 
+\end_layout
+
+\begin_layout Standard
+Butter in Stueckchen dazugeben.
+ Ei und Eigelb in die Mitte geben und 
+\end_layout
+
+\begin_layout Standard
+alles rasch zu einem geschmeidigen Muerbeteig verkneten.
+ Den Teig in 
+\end_layout
+
+\begin_layout Standard
+Frischhaltefolie gewickelt fuer mindestens 1 Stunde kalt stellen.
+\end_layout
+
+\begin_layout Standard
+2.
+ Eine Springform (26 cm Durchmesser) einfetten und bemehlen.
+ Etwa 2/3 
+\end_layout
+
+\begin_layout Standard
+des Teiges auf dem Formboden ausrollen,
+ dabei einen kleinen Rand von 
+\end_layout
+
+\begin_layout Standard
+ca.
+ 2 cm Hoehe formen.
+\end_layout
+
+\begin_layout Standard
+3.
+ Das rote Johannisbeergelee glattruehren und gleichmaessig auf dem 
+\end_layout
+
+\begin_layout Standard
+Teigboden verstreichen.
+\end_layout
+
+\begin_layout Standard
+4.
+ Den restlichen Teig nochmals kurz durchkneten und auf einer bemehlten 
+\end_layout
+
+\begin_layout Standard
+Arbeitsflaeche ausrollen.
+ In ca.
+ 1 cm breite Streifen schneiden.
+ Die 
+\end_layout
+
+\begin_layout Standard
+Streifen gitterfoermig auf die Marmeladenschicht legen.
+ Aus dem Rest 
+\end_layout
+
+\begin_layout Standard
+einen langen Streifen formen und als Rand um das Gitter legen.
+\end_layout
+
+\begin_layout Standard
+5.
+ Das verbliebene Eigelb mit der Milch verquirlen und die Teigstreifen 
+\end_layout
+
+\begin_layout Standard
+sowie den Rand vorsichtig damit bestreichen.
+ Wer moechte,
+ bestreut den 
+\end_layout
+
+\begin_layout Standard
+Rand noch mit gehobelten Mandeln.
+\end_layout
+
+\begin_layout Standard
+6.
+ Im vorgeheizten Backofen bei 180 Grad Ober-/Unterhitze (Umluft:
+ 160 
+\end_layout
+
+\begin_layout Standard
+Grad) auf der untersten Schiene ca.
+ 40 bis 45 Minuten backen.
+\end_layout
+
+\begin_layout Standard
+7.
+ Den Kuchen vollstaendig in der Form auskuehlen lassen.
+ Danach gut in 
+\end_layout
+
+\begin_layout Standard
+Alufolie einwickeln und vor dem Anschneiden mindestens 2 bis 3 Tage 
+\end_layout
+
+\begin_layout Standard
+ruhen lassen – so entfaltet die Torte ihr typisches,
+ muerbes Aroma.
+\end_layout
+
+\begin_layout Standard
+MMMMM
+\end_layout
+
+\begin_layout Section
+Zum Eindosen
+\end_layout
+
+\begin_layout Subsection
+Linzer Katzengeschrei
+\end_layout
+
+\begin_layout Standard
+Categories:
+ Eintopf
+\end_layout
+
+\begin_layout Standard
+Yield:
+ 4 Servings
+\end_layout
+
+\begin_layout Standard
+150 g Kalbfleisch
+\end_layout
+
+\begin_layout Standard
+150 g Rindfleisch
+\end_layout
+
+\begin_layout Standard
+150 g Schweinefleisch
+\end_layout
+
+\begin_layout Standard
+1 Zwiebel
+\end_layout
+
+\begin_layout Standard
+Reichlich Wurzelwerk
+\end_layout
+
+\begin_layout Standard
+-- (Suppengemuese)
+\end_layout
+
+\begin_layout Standard
+Fett zum Anbraten
+\end_layout
+
+\begin_layout Standard
+Bruehe zum Aufgiessen
+\end_layout
+
+\begin_layout Standard
+Salz
+\end_layout
+
+\begin_layout Standard
+Pfeffer
+\end_layout
+
+\begin_layout Standard
+1 ts Mehl
+\end_layout
+
+\begin_layout Standard
+1/8 l Saure Sahne
+\end_layout
+
+\begin_layout Standard
+2 Essig- oder Delikatessgurken
+\end_layout
+
+\begin_layout Standard
+1 tb Kapern
+\end_layout
+
+\begin_layout Standard
+Etwas Zitronenschale,
+\end_layout
+
+\begin_layout Standard
+-- abgerieben
+\end_layout
+
+\begin_layout Standard
+1 pn Zucker
+\end_layout
+
+\begin_layout Standard
+Fleisch und Wurzelwerk in feine Streifen schneiden,
+ Zwiebel fein
+\end_layout
+
+\begin_layout Standard
+hacken,
+ alles zusammen in heissem Fett von allen Seiten rasch
+\end_layout
+
+\begin_layout Standard
+anbraten.
+ Mit Bruehe aufgiessen,
+ salzen,
+ pfeffern und zugedeckt
+\end_layout
+
+\begin_layout Standard
+weich duensten.
+ Zwischendurch das Mehl mit der sauren sahne
+\end_layout
+
+\begin_layout Standard
+verquirlen und,
+ wenn das Fleisch weich ist,
+ dazugeben.
+ Gurken fein
+\end_layout
+
+\begin_layout Standard
+hacken und zusammen mit den Kapern unter die Sauce ruehren.
+ Mit
+\end_layout
+
+\begin_layout Standard
+Zitronenschale und Zucker abrunden.
+\end_layout
+
+\begin_layout Standard
+Als Beilage passen Nockerln oder Spaetzle.
+\end_layout
+
+\begin_layout Standard
+Aus:
+ Franz Maier-Bruck
+\end_layout
+
+\begin_layout Standard
+Wuerzige Eintoepfe,
+ einfach und exotisch
+\end_layout
+
+\begin_layout Standard
+Prisma Verlag Guetersloh,
+ 1980,
+ ISBN 3-570-01712-5
+\end_layout
+
+\begin_layout Standard
+12.12.1993
 \end_layout
 
 \begin_layout Standard
@@ -2490,7 +4613,7 @@ linewithtext{Ende des eigentlichen Textes}
 
 \end_layout
 
-\begin_layout Subsubsection*
+\begin_layout Section*
 Notizen:
 \end_layout
 

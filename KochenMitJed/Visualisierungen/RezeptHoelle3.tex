@@ -1,28 +1,34 @@
 %% LyX 2.5.2 created this file.  For more info, see https://www.lyx.org/.
 %% Do not edit unless you really know what you are doing.
-\documentclass[a4paper,ngerman,year=2024, month=April]{article}
+\documentclass[14pt,twoside,ngerman,year=2026, month=October]{extarticle}
 \PassOptionsToPackage{obeyFinal}{todonotes}
 \usepackage{fontspec}
 \setcounter{secnumdepth}{3}
 \setcounter{tocdepth}{3}
 \usepackage{enotez}
 \usepackage{todonotes}
+\usepackage[a4paper]{geometry}
+\geometry{verbose,lmargin=22mm,rmargin=22mm}
 \usepackage[authoryear]{natbib}
 
 \makeatletter
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LyX specific LaTeX commands.
-% Backwards compatibility for LuaTeX < 0.90
-\@ifundefined{pageheight}{\let\pageheight\pdfpageheight}{}
-\@ifundefined{pagewidth}{\let\pagewidth\pdfpagewidth}{}
-\pageheight\paperheight
-\pagewidth\paperwidth
-
+\newcommand{\noun}[1]{\textsc{#1}}
 \providecommand\textquotedblplain{%
   \bgroup\addfontfeatures{RawFeature=-tlig}\char34\egroup}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Textclass specific LaTeX commands.
-\usepackage{maa-monthly-todo}
+\usepackage{jedzia-kocht}
+\usepackage{scrextend}
+
+% LyX setzt den Catcode von @ hier automatisch auf 11. Kein \makeatletter nutzen!
+\@ifclasswith{extarticle}{13pt}{\changefontsizes{13pt}}{}
+\@ifclasswith{extarticle}{14pt}{\changefontsizes{14pt}}{}
+\@ifclasswith{extarticle}{15pt}{\changefontsizes{15pt}}{}
+\@ifclasswith{extarticle}{16pt}{\changefontsizes{16pt}}{}
+\@ifclasswith{extarticle}{18pt}{\changefontsizes{18pt}}{}
+\@ifclasswith{extarticle}{20pt}{\changefontsizes{20pt}}{}
 \numberwithin{equation}{section}
 \numberwithin{figure}{section}
 
@@ -85,9 +91,20 @@
 \usepackage{polyglossia}
 \setdefaultlanguage[variant=german,spelling=new,babelshorthands=true]{german}
 \begin{document}
+%\makeatletter
+%% Holt die globalen Optionen der article-Klasse und prüft, ob "twoside" drinsteht
+%\@ifclasswith{article}{twoside}{%
+%  % Dieser Code wird ausgeführt, wenn twoside in den Dokumentenklassen-Optionen aktiv ist
+%  \newcommand{\twosidedmode}{1} 
+%}{%
+%  % Dieser Code wird ausgeführt, wenn twoside NICHT aktiv ist
+%  \newcommand{\twosidedmode}{0} 
+%}
+%\makeatother
+
 \makeatletter
 % Holt die globalen Optionen der article-Klasse und prüft, ob "twoside" drinsteht
-\@ifclasswith{article}{twoside}{%
+\@ifclasswith{extarticle}{twoside}{%
   % Dieser Code wird ausgeführt, wenn twoside in den Dokumentenklassen-Optionen aktiv ist
   \newcommand{\twosidedmode}{1} 
 }{%
@@ -97,45 +114,69 @@
 \makeatother
 
 
+%% soll robuster und dokumentklassen unabhaengig sein ... 
+%% ... und funktioniert nicht, diese SCHEISSE!
+%\makeatletter
+%\if@twoside
+%  \newcommand{\twosidedmode}{1}
+%\else
+%  \newcommand{\twosidedmode}{0}
+%\fi
+%\makeatother
+
 \renewcommand\textHeadAssoc{Käthe Kolwitz}
 \renewcommand\textHeadJournal{Jedzia Monthly}
-\renewcommand\textFootAssoc{Mälscher Brieh}
+\renewcommand\textFootAssoc{Jed Monthly}
+\renewcommand\textFootCopyright{Kochen mit Wut}
+
 
 % Setzt das Jahr (z.B. 2024)
 \setcounter{annual}{2026}
 
 % Setzt den Monat (1=January, 2=February, 3=March, 4=April, ...)
-\setcounter{issue}{10} 
+\setcounter{issue}{8} 
 
 \makeatletter
 
 % Forces a larger base font size (e.g., 14pt) and scales everything up
-\changefontsizes[16pt]{14pt} % 12pt document size, 14pt line spacing
-%\changefontsizes[12pt]{11pt} % 12pt document size, 14pt line spacing
+%\changefontsizes[14pt]{12pt} % 12pt document size, 14pt line spacing
+%\changefontsizes[8pt]{7pt} % 12pt document size, 14pt line spacing
+%\changefontsizes[18pt]{16pt} % 12pt document size, 14pt line spacing
+%\changefontsizes[24pt]{16pt} %
 
 % Wenn zweiseitig mit angepasstem Layout und Randnoten
 \ifnum\twosidedmode=1
  % Wenn 1: Aktivierte das zweiseitige Layout und passe die Ränder an
   %\geometry{twoside, outer=4cm, inner=2cm, marginparwidth=3cm, marginparsep=3mm}
+%SEITENMODUS=ZWEIFACH
 
-%\hsize26pc\textwidth26pc
-%\hsize152mm
-%\setlength\textwidth{139mm}      % 210mm - 2*26mm = 158mm Textbreite
-\setlength\oddsidemargin  {2mm}
-\setlength\evensidemargin {18mm}
+\setlength\oddsidemargin  {4mm}
+\setlength\evensidemargin {20mm}
 % Seitenrand
-%\setlength{\marginparsep}{3mm} % Verringert den Abstand zum Text auf 3 Millimeter
-\setlength{\marginparsep}{5mm} % Verringert den Abstand zum Text auf 3 Millimeter
+%\setlength{\marginparsep}{-3mm} % Verringert den Abstand zum Text auf 3 Millimeter
+
+\let\alt@addmarginpar\@addmarginpar
+\def\@addmarginpar{%
+    \ifodd\c@page
+	  \setlength{\marginparwidth}{3.6cm}
+      \setlength{\marginparsep}{-4mm}%
+   \else
+	  \setlength{\marginparwidth}{3.6cm}
+      \setlength{\marginparsep}{-4mm}%
+    \fi
+  \alt@addmarginpar
+}
+
 % Todo Notes
-\renewcommand{\@todonotes@textwidth}{2cm}
+\renewcommand{\@todonotes@textwidth}{2.8cm}
 % 1. Die physische Breite für alle Randnotizen (\marginpar) auf 4cm setzen
-\setlength{\marginparwidth}{2cm}
+%\setlength{\marginparwidth}{4cm}
 
 
-
-%\else
-
-%\setlength{\marginparsep}{3mm} % Verringert den Abstand zum Text auf 3 Millimeter
+\else
+%SEITENMODUS=EINFACH
+\setlength{\marginparwidth}{3.6cm}
+\setlength{\marginparsep}{-3mm} % Verringert den Abstand zum Text auf 3 Millimeter
 \fi
 
 
@@ -221,28 +262,41 @@
 }
 \makeatother
 
-\title{Muscheln}
+\title{Oraler LD50}
 \author{von Stefanie Heinzmann}
 \date{3. Oktober 2026}
-\markright{Schalentiere}
+\markright{Kochwut}
+
 \maketitle
+\makeatletter
+\renewcommand{\tableofcontents}{\@starttoc{toc}}
+\makeatother
+
+\setcounter{secnumdepth}{3} % Aktiviert Nummern für Section, Subsection, Subsubsection
+\setcounter{tocdepth}{3}    % Zeigt diese Ebenen auch nummeriert im Inhaltsverzeichnis an
+
+\tableofcontents
 \begin{abstract}
-Test.\todo{Idee von Riviera. {*}Überkompliziert{*} aber gut}
+Test.
 \end{abstract}
 \begin{claim}
 MMMMM-{}-{}-{}-{}- Recipe via Meal-Master (tm) v8.06, „Netzmarder“
 wird hier nicht als Wort verändert!
 
-Sondern alle „tb“'s in Essloeffel transferiert! (EL).
+Sondern alle „tb“'s in Essloeffel transferiert! (EL).\todo[inline, color=yellow]{Der Anfang ...}
 \end{claim}
 
 
-\section{Muscheln in Wuerzsud}
+\section{Muscheln}
+
+\subsection{Muscheln in Wuerzsud}
+
+Mal ne Note: \todo{Riviera ist schuld. {*}Überkompliziert{*} aber gut}
 
 Categories: Weichtier, Salzwasser, Muschel
 
 Yield: 4 Servings
-
+\begin{jedziaingredients}
 3 kg Muscheln
 
 250 g Zwiebeln
@@ -260,7 +314,7 @@ Cayennepfeffer
 1/4 l Weisswein
 
 1 Zitrone; Saft
-
+\end{jedziaingredients}
 Muscheln in reichlich kaltes Wasser geben, einige Stunden darin liegen
 
 lassen; das Wasser ab und zu erneuern, die Muscheln anschliessend
@@ -296,17 +350,19 @@ Erfasst und gepostet von Klaus Wehnert@2:2457/145.10, 29.04.94,
 
 textlich etwas angepasst
 
-\section{Miesmuschelnsuppe 'Chez Benoit'}
+\subsection{Miesmuschelnsuppe 'Chez Benoit'}
+
+Test test Note: \todo{Noch eine Randnotiz der Marke PostIt}
+
+Und hier das Rezept:
 
 Categories: Suppen
 
 Yield: 4 Servings
-
+\begin{jedziaingredients}
 1 kg Frische Miesmuscheln
 
-1 1/4 dl Weisswein, trocken (z.B.
-
--{}- Muscadet)
+1 1/4 dl Weisswein, trocken (z.B. Muscadet)
 
 1 1/4 dl Rahm
 
@@ -316,30 +372,21 @@ Yield: 4 Servings
 
 2 sm Moehren, in duennen Scheiben
 
-2 Stuecke Lauch (nur den
-
--{}- weissen Teil nehmen),
-
--{}- in duennen Ringen
+2 Stuecke Lauch (nur den weissen Teil nehmen), in duennen Ringen
 
 100 g Speck, fein geschnitten
 
-100 g Geraeuchertes Schinken,
-
--{}- fein geschnitten
+100 g Geraeuchertes Schinken, fein geschnitten
 
 5 dl Fisch- oder Gefluegelfond
 
-100 g Blanchierte Bohnen, schraeg
-
--{}- geschnitten, Stuecke von
-
--{}- ca. 15 mm Laenge (1)
-
+100 g Blanchierte Bohnen, schraeg geschnitten, Stuecke von ca. 15
+mm Laenge (1)
+\end{jedziaingredients}
 Blanchieren: Die Bohnen 4 Minuten in reichlich kochendem Salzwasser
 
-erwaermen, anschliessend mit kaltem Wasser so lange abspuelen, bis
-die
+erwaermen, anschliessend \todo{Helter Skelter, wenn er reitet dann fällt er.}
+mit kaltem Wasser so lange abspuelen, bis die
 
 Bohnen kalt sind.
 
@@ -389,19 +436,14 @@ Aus: Patricia Wells, Bistro cooking, Arrow London 1992, ISBN
 
 09.12.1993
 
-\section{Toskanische Fischsuppe (Cacciucco alla toscana)}
+\subsection{Toskanische Fischsuppe (Cacciucco alla toscana)}
 
 Categories: Suppen, Fisch
 
 Yield: 99 Servings
-
-1 1/2 kg Seefische, wie Makrelen,
-
--{}- Seehecht, Goldbrassen,
-
--{}- Merlan, Schellfisch,
-
--{}- Barsch, Sardinen
+\begin{jedziaingredients}
+1 1/2 kg Seefische, wie Makrelen, Seehecht, Goldbrassen, Merlan, Schellfisch,
+Barsch, Sardinen
 
 10 Krebse oder Garnelen
 
@@ -413,27 +455,21 @@ Yield: 99 Servings
 
 1 sm Peperoni
 
-500 g Dosen-Tomaten (keine
-
--{}- Hollandtomaten)
+500 g Dosen-Tomaten (keine Hollandtomaten)
 
 1/4 l Weisswein z.B. Frascati
 
-1 ct Fleischsuppe oder die
-
--{}- entsprechende Menge Fond
+1 ct Fleischsuppe oder die entsprechende Menge Fond
 
 1/2 ts Paprika
 
-1/4 ts Thymian, am besten frisch
-
--{}- (ca. ein Zweig)
+1/4 ts Thymian, am besten frisch (ca. ein Zweig)
 
 Olivenoel
 
 4 sl (-8) Weissbrot oder Baguette
-
-Die Fischsorten - moeglichst 4-6 verschiedene - kuechenfertig
+\end{jedziaingredients}
+Die Fischsorten - moeglichst 4-6 verschiedene - \textbf{kuechenfertig}
 
 vorbereiten und in Stuecke schneiden. Die Muscheln und Krebse
 
@@ -471,12 +507,12 @@ Beilagen : Fruchtiger Weisswein
 
 07.01.1994
 
-\section{Sommersalat mit Meeresfruechten}
+\subsection{Sommersalat mit Meeresfruechten}
 
 Categories: Salate, Fisch
 
 Yield: 4 Servings
-
+\begin{jedziaingredients}
 1 Eisbergsalat
 
 4 Feste Tomaten
@@ -510,7 +546,7 @@ Yield: 4 Servings
 Pfeffer
 
 Salz
-
+\end{jedziaingredients}
 Eisbergsalat putzen und in ca. 4 cm grosse Stuecke schneiden, dann
 
 eine flache Salatschuessel damit auslegen. Tomaten in Spalten
@@ -533,31 +569,23 @@ Beilage : Baguette
 
 07.01.1994
 
-\section{Gefuellte Gebackene Muscheln}
+\subsection{Gefuellte Gebackene Muscheln}
 
 Categories: Vorspeisen, Fisch
 
 Yield: 8 Servings
+\begin{jedziaingredients}
+20 Frische Zehen Knoblauch, oder mehr (!)
 
-20 Frische Zehen Knoblauch,
+3 cn Muscheln a' 180 g, abgegossen und gehackt
 
--{}- oder mehr (!)
-
-3 cn Muscheln a' 180 g,
-
--{}- abgegossen und gehackt
-
-1 1/2 c Frische Muscheln, gekocht
-
--{}- und gehackt
+1 1/2 c Frische Muscheln, gekocht und gehackt
 
 150 g Weiche Butter
 
 1 tb Oregano
 
-2 tb Spinat, gekocht und
-
--{}- ausgedrueckt
+2 tb Spinat, gekocht und ausgedrueckt
 
 4 tb Sherry
 
@@ -567,9 +595,7 @@ Yield: 8 Servings
 
 2 tb Zitronensaft
 
-2 tb Pinienkerne oder gehackte
-
--{}- Walnuesse
+2 tb Pinienkerne oder gehackte Walnuesse
 
 Muskat
 
@@ -578,7 +604,7 @@ Cayenne-Pfeffer
 Salz
 
 Pfeffer aus der Muehle
-
+\end{jedziaingredients}
 Den Knoblauch fein hacken, durch die Presse geben und in einer
 
 Schuessel mit allen Zutaten bis auf die Pinienkerne und den
@@ -599,7 +625,7 @@ heiss (!) servieren.
 
 08.01.1994
 
-\section{\textcolor{red}{Allgemeines zu Miesmuscheln}}
+\subsection{\textcolor{red}{Allgemeines zu Miesmuscheln}}
 
 Categories: Weichtiere
 
@@ -655,12 +681,12 @@ Pfanne !
 
 12.01.1994
 
-\section{Moules a la mariniere (Grundrezept)}
+\subsection{Moules a la mariniere (Grundrezept)}
 
 Categories: Weichtiere
 
 Yield: 4 Servings
-
+\begin{jedziaingredients}
 2 kg Miesmuscheln
 
 2 tb Olivenoel
@@ -686,7 +712,7 @@ MMMMM-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-SE
 Zitronenspalten
 
 Knoblauchbrot
-
+\end{jedziaingredients}
 Miesmuscheln vorbereiten: siehe Anleitung.
 
 Olivenoel in einer hohen Pfanne erhitzen, Zwiebel,
@@ -723,21 +749,15 @@ Knoblauchbrot servieren.
 
 12.01.1994
 
-\section{Muschelrisotto mit Fenchel}
+\subsection{Muschelrisotto mit Fenchel}
 
 Categories: Weichtiere, Gemuese
 
 Yield: 4 Servings
+\begin{jedziaingredients}
+2 kg Moules a la mariniere, siehe Grundrezept
 
-2 kg Moules a la mariniere, siehe
-
--{}- Grundrezept
-
-750 g Fenchel, geputzt, klein
-
--{}- gewuerfelt
-
--{}- Etwas Fenchelkraut hacken
+750 g Fenchel, geputzt, klein gewuerfelt. Etwas vom Fenchelkraut hacken
 
 2 tb Olivenoel
 
@@ -749,8 +769,8 @@ Yield: 4 Servings
 
 50 g Parmesan, gerieben
 
-Weisser Pfeffer
-
+Weisser Pfeffer \todo{Notiz. Test Test}
+\end{jedziaingredients}
 Die Miesmuscheln nach dem Grundrezept, aber ohne Butter
 
 zubereiten. Die Muscheln in ein Sieb schuetten, den Sud auffangen.
@@ -775,7 +795,1088 @@ anrichten. Beiseite gelegte Muscheln in der Schale darauf legen und
 
 sofort servieren. 
 
-12.01.1994
+12.01.1994 
+
+\section{Zeusch mit Bohnenkraut ... weil's reinhaut!}
+
+\subsection{Linsensuppe mit Kartoffeln und Kraeutern}
+
+Categories: Suppen
+
+Yield: 2 - 4 port.
+\begin{jedziaingredients}
+1 sm Zwiebel
+
+1 ts Weizenkeimoel
+
+75 g Schwarze Linsen
+
+3/4 l Gemuesebruehe
+
+300 g Kartoffeln
+
+150 g Sahne
+
+Salz
+
+Schwarzer Pfeffer; frisch gemahlen
+
+1 bn Bohnenkraut
+
+1 bn Schnittlauch
+\end{jedziaingredients}
+Zwiebel schaelen, fein hacken und im Oel mit den Linsen unter Ruehren
+
+einige Sekunden anbraten. Gemuesebruehe dazu, aufkochen lassen und
+
+zugedeckt bei schwacher Hitze 20-30 Min. garen, bis die Linsen
+
+halbweich sind. Dann die gewuerfelten Kartoffeln dazu geben und
+
+erneut aufkochen und weitere 10-15 min garen bis Linsen und
+
+Kartoffeln gar sind. Nun die Sahne hinzugiessen und bis knapp unter
+
+den Siedepunkt erhitzen. Die Suppe mit Salz und Pfeffer abschmecken.
+
+Mit Schnittlauch und Bohnenkraut bestreuen.
+
+15.04.1994 (MS)
+
+\subsection{Spaghetti mit Schinken und Bohnen}
+
+Categories: Teigwaren, Italien
+
+Yield: 4 Servings
+\begin{jedziaingredients}
+400 g Spaghetti
+
+2 lg Fleischtomaten
+
+1 md Zwiebel
+
+1 cn Bohnen, dick (750 g)
+
+20 g Margarine
+
+3/8 l Huehnerbruehe
+
+1 tb Senf, mittelscharf
+
+1/2 ct Schlagsahne (100 g)
+
+200 g Katenschinken
+
+3 tb Sossenbinder, hell
+
+1/2 ts Bohnenkraut, getrocknet
+
+Salz
+
+Petersilie (zum Garnieren)
+\end{jedziaingredients}
+Die Spaghetti im kochenden Salzwasser 12 Minuten garen.
+
+Tomaten kurz in kochendes Wasser geben. Abschrecken, die Haut
+
+abziehen und die Tomaten wuerfeln. Zwiebel schaelen und fein hacken.
+
+Bohnen auf einem Sieb abtropfen lassen. Fett in einem Topf erhitzen,
+
+und die Zwiebel- und Tomatenwuerfel darin anduensten. Die
+
+Huehnerbruehe zugiessen und aufkochen lassen. Bohnen, Senf und Sahne
+
+zufuegen und alles 5 Minuten bei schwacher Hitze garen.
+
+In der Zwischenzeit Schinken in Wuerfel schneiden. Saucenbinder unter
+
+Ruehren in die Sauce einstreuen und aufkochen lassen. Mit Salz,
+
+Pfeffer und Bohnenkraut abschmecken. Schinkenwuerfel zum Gemuese
+
+geben. Spaghetti mit dem Bohnengemuese zusammen auf einer Platte
+
+anrichten und servieren. Mit Petersilie garnieren.
+
+Portion 3190 Joule
+
+Tip: Schinken laesst sich leichter und schneller wuerfeln, wenn Sie
+
+ihn vorher leicht anfrieren. Dann in Streifen und danach in Wuerfel
+
+schneiden.
+
+Source: Neue Revue 2/94
+
+Gepostet von: Joachim M. Meng @ 2:245/6606.6 am 16.04.94
+
+\section{Ihr KRAUTS!}
+
+\subsection{Fraenkischer Reiberdatschi}
+
+Categories: Eintopf, Regional
+
+Yield: 1 Rezept
+\begin{jedziaingredients}
+18 md Kartoffeln
+
+750 g Schweinefleisch oder Surfleisch
+
+1 Ei
+
+2 tb Kartoffelmehl; (gehaeufte EL)
+
+1 tb Creme fraiche; oder die doppelte Menge
+
+Salz
+
+Pfeffer
+\end{jedziaingredients}
+Das Fleisch in kleine, fingergrosse Wuerfel schneiden, gleichmaessig
+
+auf eine Raine verteilen, salzen und pfeffern, nach Geschmack bei
+
+sehr magerem Fleisch ein wenig Butterfett oder Oel dazugeben.
+
+Die Kartoffeln reiben, Ei, Mehl, Creme fraiche und das Salz darunter-
+
+ruehren. Diese Masse auf das Fleisch verteilen und glattstreichen.
+
+Bei 200 bis 220 Grad im E-Herd goldgelb backen, ca. 1 Stunde lang.
+
+Falls sich Blaeschen bilden, diese aufstechen.
+
+Dieses Gericht serviert man in Portionsstuecken, pur, mit Salat,
+
+Sauerkraut oder Apfelmus.
+
+Quelle: BAYERNTEXT (KOCH- U. BACKKUENSTE DER LANDFRAUEN DES
+
+PARKSTEINER LANDES)
+
+Erfasst und gepostet von Ulli Fetzer @ 2:246/1401.62 am 11.04.1994
+
+\subsection{Hessischer Edelsaecker}
+
+Categories: Einfach, Fleisch, Regional
+
+Yield: 4 Servings
+\begin{jedziaingredients}
+1 1/2 kg Ausgeloestes Kotelettstueck
+
+100 g Gekochtes Sauerkraut
+
+4 Gewuerfelte Gewuerzgurken
+
+200 g Gewuerfelter Raeucherspeck
+
+2 Gewuerfelte Zwiebeln
+
+2 ts Senf
+
+;Salz
+
+;Pfeffer
+
+100 g Mehl
+
+100 g Fett
+
+1/8 l Fleischbruehe
+\end{jedziaingredients}
+Das Fleisch tief einschneiden, damit eine grosse Tasche entsteht.
+Eine
+
+Fuellung bereiten aus Sauerkraut, Gewuerzgurken, Raeucherspeck,
+
+Zwiebeln, Senf und Gewuerzen. Alles gut miteinander durchkneten, in
+
+die Fleischtasche geben und mit Zwirnsfaden zunaehen. Den Edelsaecker
+
+in Mehl wenden und knusprig in heissem Fett backen. Mit Fleischbruehe
+
+angiessen. Den Deckel schliessen und das Fleisch 1 1/2 Stunden
+
+schmoren.
+
+\emph{Source: Leichte Kueche Rhein}
+
+Gepostet von: \noun{Joachim M. Meng} @ 2:245/6606.6 am 16.04.94
+
+\subsection{Perlhuhn mit Sektkraut}
+
+Categories: Gourmet, Gefluegel, Huhn
+
+Yield: 4 Servings
+\begin{jedziaingredients}
+1 Perlhuhn
+
+80 g Schweineschmalz
+
+1 Zwiebel; gewuerfelt
+
+6 Wacholderbeeren
+
+100 g Raeucherspeck; gewuerfelt
+
+;Salz
+
+;Pfeffer
+
+1/8 l Suesse Sahne
+
+500 g Sauerkraut
+
+1 Lorbeerblatt
+
+2 Wacholderbeeren
+
+50 g Schweineschmalz
+
+1/2 l Bruehe
+
+1/4 l Sekt
+\end{jedziaingredients}
+Zuerst das Schweineschmalz fuer das Sauerkraut erhitzen. Kraut mit
+
+Lorbeerblatt und Wacholderbeeren zufuegen, leicht anschmoren.
+
+Die Bruehe aufgiessen, den Deckel schliessen und etwa 40 bis 50
+
+Minuten duensten. 10 Minuten vor Garende den Sekt zufuegen.
+
+In der Zwischenzeit das Perlhuhn mit der Zwiebel und dem
+
+Raeucherspeck im heissen Schmalz anbraten. Gewuerze und
+
+Wacholderbeeren zugeben und zugedeckt 50 Minuten schmoren. Danach
+die
+
+Sosse abschmecken und mit Sahne verfeinern. Das gekochte Sauerkraut
+
+auf eine Platte legen. Das Perlhuhn vierteln, daraufsetzen und mit
+
+der Sosse uebergiessen.
+
+Source: Leichte Kueche Rhein
+
+Gepostet von: Joachim M. Meng @ 2:245/6606.6 am 16.04.94
+
+\subsection{Elsaessischer Sauerkrautauflauf}
+
+Categories: Auflauf, Fleisch, Schwein, Regional
+
+Yield: 4 Servings
+\begin{jedziaingredients}
+2 kg Eisbein (gut gepoekelt)
+
+5 Nelken
+
+3 Lorbeerblaetter
+
+3 Zwiebel
+
+250 g Butter
+
+1 kg Sauerkraut
+
+1/8 l Lieblicher Weisswein
+
+600 g Kartoffeln
+
+70 g Scharfer Senf
+
+1 pn Pfeffer
+
+1 pn Salz
+
+1 pn Muskat
+
+300 g Creme fraiche
+
+Fleisch
+\end{jedziaingredients}
+1 Zwiebel mit Lorbeer und 5 Nelken spicken, mit 2 gut durchgepoekelten
+
+Eisbeinen (a 1 kg) in ungesalzenes Wasser - ca. 2 Stunden kochen.
+2
+
+Stunden Kochen. Herausnehmen und das Fleisch vom Fett und Knochen
+
+loesen, in nussgrosse Stuecke zerteilen. Knochen und Fett entsorgen.
+
+Sauerkraut
+
+2 mittlere Zwiebeln in Streifen schneiden, in 50 g. Butter
+
+anduensten, 1kg. Sauerkraut dazu, mit 1/8 l. lieblichem Weisswein
+
+auffuellen, zugedeckt ca. 10 min. kochen lassen und dann 125 g. kalte
+
+Butter unterruehren.
+
+Kartoffelbrei
+
+600 g. Kartoffeln kochen und danach durchpressen oder stampfen. Mit
+
+75 g. kalter Butter, 50-75 g scharfem Senf, Pfeffer, Salz und Muskat
+
+verruehren. 200-300 g. Creme fraiche dazu.
+
+Nun alles in eine Auflaufform geben und zwar zuerst das Sauerkraut,
+
+dann eine Lage mit dem fettfreien Fleisch und dann den Kartoffelbrei.
+
+Bei 250 oC fuer etwa 25 min. ueberbacken.
+
+Bon appetit
+
+Gepostet: Peter Zoll @ 2:244/1502.9 am 18.04.94
+
+\subsection{Bayerische Grillhaxe}
+
+Categories: Fleisch, Schwein, Regional
+
+Yield: 1 Servings
+\begin{jedziaingredients}
+1 Grillhaxe; vorgebraten
+
+1 tb Estragon
+
+1 tb Rosmarin
+
+1 tb Thymian
+
+500 g Sauerkraut
+
+300 g Semmelknoedel
+
+Bier
+\end{jedziaingredients}
+Die Grillhaxe auftauen und mit Estragon, Rosmarin und Thymian
+
+einreiben, auf den Rost legen und im vorgeheizten Backofen bei 200
+oC
+
+ca. 30 Minuten erhitzen. Zwischendurch immer wieder mit Bier
+
+bestreichen. Servieren sie dazu zuenftiges Sauerkraut und
+
+Semmelknoedel.
+
+Gepostet von Joachim M. Meng @ 2:245/6606.6 am 23.04.94
+
+\subsection{Sauerkrautsuppe}
+
+Categories: Suppen
+
+Yield: 10 Servings
+\begin{jedziaingredients}
+500 g Sauerkraut
+
+250 g Zwiebeln
+
+250 g Durchwachsener Speck
+
+1 cn (gross) geschaelte Tomaten
+
+8 tb Oel
+
+750 g Gemischtes Mett
+
+3 l Klare Bruehe
+
+1 ts (-2) Kuemmel
+
+Schwarzer Pfeffer
+
+Majoran
+
+Thymian
+
+2 tb (-3) edelsuesser Paprika
+
+1/4 ts Chillipfeffer
+
+Salz
+
+Zucker
+
+1 bn (-2) Petersilie, gehackt
+\end{jedziaingredients}
+Die Menge reicht u.U. nicht fuer 10 Personen.
+
+Das Sauerkraut zerpfluecken. Die Zwiebeln in Ringe schneiden und den
+
+Speck wuerfeln. Die Tomaten abtropfen lassen. Speck und
+
+Zwiebeln in Oel braeunen und dann herausnehmen. Das Mett
+
+braeuenen und ebenfalls herausnehmen. Das Sauerkraut anduensten
+
+(evtl. Oel nachgeben), den Saft der Tomaten, Speck und Zwiebeln,
+
+das Mett und die Bruehe zufuegen. Wuerzen, die Tomaten zugeben
+
+und alles bei geringer Hitze 10 Minuten garen, dann abschmecken.
+
+\section{Die Hexe Schlotterbeck}
+
+\subsection{Kaesekuchen mit Streusel}
+
+Categories: Kuchen, Kaese
+
+Yield: 12 Servings
+\begin{jedziaingredients}
+MMMMM-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-HEFETEIG-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-
+
+500 g Mehl
+
+40 g Hefe
+
+250 ml Milch
+
+100 g Zucker
+
+100 g Butter
+
+1 Ei
+
+Salz
+
+MMMMM-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-BELAG-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-
+
+1000 g Weisskaese
+
+60 g Butter
+
+3 Eier
+
+125 g Zucker
+
+15 g Weizenmehl
+
+15 g Kartoffelmehl
+
+70 g Korinthen
+
+MMMMM-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-STREUSEL-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-
+
+400 g Mehl
+
+200 g Butter
+
+200 g Zucker
+\end{jedziaingredients}
+Der Hefeteig wird hergestellt. Waehrend er aufgeht, streicht
+
+man den Weisskaese durch ein Sieb, mischt ihn mit den uebrigen
+
+Zutaten und bereitet die Streusel. Den auf gefettetem Blech
+
+ausgerollten Teig bestreicht man mit der Quarkmasse, bedeckt sie
+
+mit Streusel und laesst den Kuchen aufgehen.
+
+Bei Mittelhitze braucht er 30 bis 40 Minuten Backzeit.
+
+Eugenie Erlewein, Hauswirtschaftslehre (1952)
+
+16.11.1993
+
+\subsection{Schokoladen-Kaesekuchen}
+
+Categories: Kuchen
+
+Yield: 1 Servings
+\begin{jedziaingredients}
+MMMMM-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-FUER
+DEN BODEN-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-
+
+125 g Butter
+
+150 g Zucker
+
+1 Ei
+
+1/2 pk Vanillezucker
+
+2 tb Schokoladenpulver
+
+1 tb Nougatcreme
+
+1 Zitrone, Saft
+
+350 g Mehl
+
+1/2 pk Backpulver
+
+MMMMM-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-FUER
+DEN BELAG-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-
+
+750 g Quark
+
+1 Zitrone, Saft
+
+4 Eier
+
+200 g Zucker
+
+25 g Feinen Weizengriess
+
+1/2 pk Vanillezucker
+\end{jedziaingredients}
+Butter, Zucker, Vanillezucker und Ei schaumig ruehren.
+
+Schokoladenpulver, Nougatcreme und Zitronensaft nacheinander zugeben.
+
+Mehl und Backpulver vermischen, daruebersieben und alles zu einem
+
+festen Teig verarbeiten.
+
+Teig in eine gefettete Springform druecken, einen kleinen Rand
+
+hochziehen.
+
+Quark, Zitronensaft und Eigelb glattruehren, nach und nach
+
+Zucker, Vanillezucker und Griess zugeben.
+
+Eiweiss zu Schnee schlagen und unterziehen.
+
+Creme auf den Teig geben, sofort bei 175 Grad ca. 60 min
+
+backen. Der Kaesekuchen soll hell bleiben, damit der Kontrast
+
+zum dunklen Boden erhalten bleibt.
+
+Eventuell mit etwas Schokoblaetter verzieren.
+
+17.11.1993
+
+\subsection{Feuerwehrkuchen (Klassiker aus de.rec.mampf)}
+
+MMMMM-{}-{}-{}-{}- Meal-Master Rezept eingelesen von Koch-Baer v1.02
+
+Categories: Kuchen, Backen, Kirschen, Sahne
+
+Yield: 12 Portionen
+\begin{jedziaingredients}
+MMMMM-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-MUERBETEIG-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-
+
+200 g Weizenmehl
+
+1 TL Backpulver
+
+100 g Butter; weich
+
+100 g Zucker
+
+1 Pck. Vanillezucker
+
+1 Ei (Groesse M)
+
+MMMMM-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-FUELLUNG
+\& STREUSEL-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-
+
+1 Glas Schattenmorellen; ca. 350g Abtropfgewicht
+
+250 ml Kirschsaft (vom Glas aufgefangen)
+
+1 Pck. Vanillepuddingpulver; zum Kochen
+
+110 g Weizenmehl
+
+100 g Zucker
+
+90 g Butter; weich
+
+100 g Mandeln; gemahlen
+
+1 TL Zimt; gemahlen
+
+MMMMM-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-BELAG-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-
+
+400 g Schlagsahne
+
+2 Pck. Sahnesteif
+
+1 Pck. Vanillezucker
+
+Kakaopulver; ungesuesst, zum Bestaeuben
+
+Schokoraspeln; zum Bestreuen
+\end{jedziaingredients}
+From: Fundus de.rec.mampf
+
+Date: Tue, 06 Oct 2026
+
+Newsgroups: de.rec.mampf
+
+ZUBEREITUNG:
+
+1. Fuer den Muerbeteig Mehl und Backpulver mischen. Mit Butter, Zucker, 
+
+Vanillezucker und dem Ei rasch zu einem glatten Teig verkneten. In 
+
+Frischhaltefolie gewickelt fuer ca. 30 Minuten kalt stellen.
+
+2. Eine Springform (26 cm Durchmesser) einfetten. Den Muerbeteig auf 
+
+einer leicht bemehlten Arbeitsflaeche ausrollen, in die Form legen 
+
+und dabei einen ca. 3 cm hohen Rand hochdruecken.
+
+3. Die Schattenmorellen in einem Sieb gut abtropfen lassen, dabei
+250 ml 
+
+des Kirschsafts auffangen. Das Puddingpulver mit ca. 4 EL des Safts 
+
+glattruehren. Den restlichen Saft aufkochen, das angeruehrte Pulver 
+
+einruehren und kurz aufkochen lassen. Die Kirschen unterheben und
+die 
+
+Masse gleichmaessig auf dem Teigboden verteilen.
+
+4. Aus Mehl, Zucker, weicher Butter, gemahlenen Mandeln und Zimt mit
+den 
+
+Haenden gleichmaessige Streusel reiben. Diese locker ueber der 
+
+Kirschmasse verteilen.
+
+5. Den Kuchen im vorgeheizten Backofen bei 175 Grad Ober-/Unterhitze 
+
+(Umluft: 160 Grad) auf mittlerer Schiene etwa 50 bis 60 Minuten 
+
+backen, bis die Streusel goldbraun sind. Danach vollstaendig in der 
+
+Form auskuehlen lassen.
+
+6. Fuer den Belag die Schlagsahne mit Sahnesteif und Vanillezucker
+steif 
+
+schlagen. Die Sahne wellenfoermig oder in Tupfen auf dem kalten 
+
+Kuchen verstreichen. Vor dem Servieren dick mit Kakaopulver 
+
+bestaeuben und mit Schokoraspeln verzieren. Bis zum Anschneiden 
+
+kuehl stellen.
+
+\subsection{Linzer Torte (Klassische Usenet-Variante)}
+\begin{verse}
+Die Linzer Torte gilt als das älteste überlieferte Tortenrezept der
+Welt und schmeckt am besten, wenn sie nach dem Backen ein paar Tage
+in Alufolie durchziehen darf.
+\end{verse}
+Categories: Kuchen, Backen, Nuesse, Klassiker
+
+Yield: 12 Portionen
+\begin{jedziaingredients}
+MMMMM-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-TEIG-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-
+
+250 g Weizenmehl
+
+250 g Butter; kalt, in Stuecken
+
+250 g Zucker
+
+250 g Mandeln; oder Haselnuesse, gemahlen
+
+1 Ei (Groesse M)
+
+1 Eigelb (Groesse M)
+
+1 TL Zimt; gemahlen
+
+1 Msp. Nelkenpulver
+
+1 EL Kakao; ungesuesst (fuer die Farbe)
+
+1 Pris Salz
+
+1 TL Zitronenschale; abgerieben
+
+MMMMM-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-FUELLUNG-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-
+
+300 g Johannisbeergelee; rot (alternativ Pflaumenmus)
+
+MMMMM-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-FINISH-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-
+
+1 Eigelb; zum Bestreichen
+
+1 EL Milch; zum Bestreichen
+
+Gehobelte Mandeln; zum Bestreuen (optional)
+\end{jedziaingredients}
+From: Fundus de.rec.mampf
+
+Date: Tue, 06 Oct 2026
+
+Newsgroups: de.rec.mampf
+
+ZUBEREITUNG:
+
+1. Das Mehl mit Zucker, gemahlenen Nuessen, Gewuerzen (Zimt, Nelken,
+Salz,
+
+Zitronenschale) und Kakao auf der Arbeitsflaeche mischen. Die kalte 
+
+Butter in Stueckchen dazugeben. Ei und Eigelb in die Mitte geben und 
+
+alles rasch zu einem geschmeidigen Muerbeteig verkneten. Den Teig
+in 
+
+Frischhaltefolie gewickelt fuer mindestens 1 Stunde kalt stellen.
+
+2. Eine Springform (26 cm Durchmesser) einfetten und bemehlen. Etwa
+2/3 
+
+des Teiges auf dem Formboden ausrollen, dabei einen kleinen Rand von 
+
+ca. 2 cm Hoehe formen.
+
+3. Das rote Johannisbeergelee glattruehren und gleichmaessig auf dem 
+
+Teigboden verstreichen.
+
+4. Den restlichen Teig nochmals kurz durchkneten und auf einer bemehlten 
+
+Arbeitsflaeche ausrollen. In ca. 1 cm breite Streifen schneiden. Die 
+
+Streifen gitterfoermig auf die Marmeladenschicht legen. Aus dem Rest 
+
+einen langen Streifen formen und als Rand um das Gitter legen.
+
+5. Das verbliebene Eigelb mit der Milch verquirlen und die Teigstreifen 
+
+sowie den Rand vorsichtig damit bestreichen. Wer moechte, bestreut
+den 
+
+Rand noch mit gehobelten Mandeln.
+
+6. Im vorgeheizten Backofen bei 180 Grad Ober-/Unterhitze (Umluft:
+160 
+
+Grad) auf der untersten Schiene ca. 40 bis 45 Minuten backen.
+
+7. Den Kuchen vollstaendig in der Form auskuehlen lassen. Danach gut
+in 
+
+Alufolie einwickeln und vor dem Anschneiden mindestens 2 bis 3 Tage 
+
+ruhen lassen -- so entfaltet die Torte ihr typisches, muerbes Aroma.
+
+MMMMM
+
+\section{Zum Eindosen}
+
+\subsection{Linzer Katzengeschrei}
+
+Categories: Eintopf
+
+Yield: 4 Servings
+\begin{jedziaingredients}
+150 g Kalbfleisch
+
+150 g Rindfleisch
+
+150 g Schweinefleisch
+
+1 Zwiebel
+
+Reichlich Wurzelwerk (Suppengemuese)
+
+Fett zum Anbraten
+
+Bruehe zum Aufgiessen
+
+Salz
+
+Pfeffer
+
+1 ts Mehl
+
+1/8 l Saure Sahne
+
+2 Essig- oder Delikatessgurken
+
+1 tb Kapern
+
+Etwas Zitronenschale, abgerieben
+
+1 pn Zucker
+\end{jedziaingredients}
+Fleisch und Wurzelwerk in feine Streifen schneiden, Zwiebel fein
+
+hacken, alles zusammen in heissem Fett von allen Seiten rasch
+
+anbraten. Mit Bruehe aufgiessen, salzen, pfeffern und zugedeckt
+
+weich duensten. Zwischendurch das Mehl mit der sauren sahne
+
+verquirlen und, wenn das Fleisch weich ist, dazugeben. Gurken fein
+
+hacken und zusammen mit den Kapern unter die Sauce ruehren. Mit
+
+Zitronenschale und Zucker abrunden.
+
+Als Beilage passen Nockerln oder Spaetzle.
+
+Aus: Franz Maier-Bruck
+
+Wuerzige Eintoepfe, einfach und exotisch
+
+Prisma Verlag Guetersloh, 1980, ISBN 3-570-01712-5
+
+12.12.1993
+
+\section{Renate haut so was nicht vom Hocker!}
+
+\subsection{Title: DIY Amaro nach Ramazzotti-Art}
+
+Categories: Likoer, Kraeuter, Getraenk
+
+Yield: 1 Liter
+\begin{jedziaingredients}
+1 l Neutraler Alkohol oder Wodka (mind. 40\% Vol.)
+
+2 Bitterorangenschalen (getrocknet)
+
+1 el Suessholzwurzel
+
+2 Sternanis
+
+3 Zimtstangen
+
+4 Gewuerznelken
+
+1 tl Kardamomkapseln (angedrueckt)
+
+1 Stueck Ingwer (getrocknet, klein)
+
+1 tl Enzianwurzel
+
+200 g Zucker
+
+150 ml Wasser
+\end{jedziaingredients}
+1. Mazeration: Alle Kraeuter und Gewuerze in ein grosses,
+
+verschliessbares Glas geben und mit dem Alkohol uebergiessen. Das
+Glas
+
+fest verschliessen und fuer 3 bis 4 Wochen an einem dunklen,
+
+zimmertemperierten Ort ziehen lassen. Taeglich einmal kurz
+
+durchschuetteln.
+
+2. Filtern: Die Fluessigkeit durch ein feines Sieb und anschliessend
+
+durch einen Kaffeefilter giessen, um alle Schwebstoffe zu entfernen.
+
+3. Suessen: Wasser und Zucker in einem Topf aufkochen, bis ein klarer
+
+Zuckersirup entsteht. Den Sirup vollstaendig abkuehlen lassen.
+
+4. Reifen: Den abgekuehlten Sirup mit dem Kraeuterextrakt vermischen.
+
+In sterile Flaschen abfuellen und vor dem ersten Verzehr nochmals
+1
+
+bis 2 Wochen ruhen lassen.
+
+\subsection{Title: Espresso-Ramazzotti-Creme}
+
+Categories: Dessert, Creme, Kaffee, Italien
+
+Yield: 4 Portionen
+\begin{jedziaingredients}
+250 g Mascarpone
+
+50 g Puderzucker
+
+40 ml Ramazzotti
+
+150 ml Espresso (stark, abgekuehlt)
+
+20 ml Ramazzotti (fuer den Espresso)
+
+100 g Cantuccini-Kekse
+
+Kakaopulver zum Bestaeuben
+\end{jedziaingredients}
+1. Die Mascarpone mit dem Puderzucker und 40 ml Ramazzotti in einer
+
+Schuessel glattruehren, bis eine homogene Creme entsteht.
+
+2. Den abgekuehlten Espresso mit den restlichen 20 ml Ramazzotti in
+
+einer flachen Schale mischen.
+
+3. Die Cantuccini-Kekse kurz in der Espresso-Mischung traenken (nicht
+
+vollstaendig durchweichen lassen).
+
+4. In Glaesern abwechselnd die getraenkten Kekse und die Mascarpone-
+
+Creme schichten. Mit einer Cremeschicht abschliessen.
+
+5. Vor dem Servieren fuer mindestens 2 Stunden kalt stellen und direkt
+
+vor dem Verzehr mit Kakaopulver bestaeuben.
+
+\subsection{Title: Ramazzotti-Zwiebel-Chutney}
+
+Categories: Sauce, Beilage, Chutney, Herzhaft
+
+Yield: 1 Glas
+\begin{jedziaingredients}
+500 g Rote Zwiebeln
+
+2 el Butter
+
+3 el Brauner Zucker
+
+80 ml Ramazzotti
+
+50 ml Balsamico-Essig
+
+Salz und Pfeffer
+\end{jedziaingredients}
+1. Die roten Zwiebeln schaelen, halbieren und in feine Streifen
+
+schneiden.
+
+2. Die Butter in einem Topf schmelzen und die Zwiebelstreifen darin
+bei
+
+mittlerer Hitze langsam anduensten, bis sie weich sind.
+
+3. Den braunen Zucker dazugeben und unter Ruehren leicht karamellisieren
+
+lassen.
+
+4. Mit dem Ramazzotti und dem Balsamico-Essig abloeschen. Die Hitze
+
+reduzieren und alles offen einkochen lassen, bis eine dickfluessige,
+
+marmeladenartige Konsistenz entsteht (ca. 20-30 Minuten).
+
+5. Mit Salz und Pfeffer abschmecken, in ein steriles Glas abfuellen
+und
+
+abkuehlen lassen. Passt perfekt zu Kaese oder Burgern.
+
+\subsection{Title: Aprikosen-Millefeuille mit Ramazzotti}
+
+Categories: Dessert, Backen, Frucht
+
+Yield: 4 Portionen
+\begin{jedziaingredients}
+1 pkt Blaetterteig (aus dem Kuehlregal)
+
+250 g Frische Aprikosen (entsteint und geviertelt)
+
+50 ml Ramazzotti
+
+50 ml Orangensaft (frisch gepresst)
+
+2 el Zucker
+
+200 ml Sahne
+
+1 pkt Vanillezucker
+
+2 el Gemahlene Mandeln
+\end{jedziaingredients}
+1. Blaetterteig nach Packungsanleitung in Rechtecke schneiden, auf
+ein
+
+Backblech legen, mit einer Gabel mehrfach einstechen und goldbraun
+und
+
+knusprig backen. Abkuehlen lassen.
+
+2. Die Aprikosenviertel mit Ramazzotti, Orangensaft und Zucker in
+einen
+
+kleinen Topf geben. Bei schwacher Hitze ca. 5 Minuten sanft pochieren,
+
+sodass sie weich werden, aber nicht zerfallen. Aus dem Sud nehmen
+und
+
+abkuehlen lassen. Den Sud sirupartig einkochen lassen.
+
+3. Die Sahne mit dem Vanillezucker steif schlagen. Zum Schluss die
+
+gemahlenen Mandeln vorsichtig unterheben.
+
+4. Zum Anrichten ein Blaetterteig-Rechteck mit Mandelsahne bestreichen,
+
+Aprikosen darauf verteilen, mit etwas abgekuehltem Sirup betraeufeln.
+Ein
+
+zweites Blaetterteig-Rechteck darauflegen und den Vorgang wiederholen.
+
+Mit einem Blaetterteigdeckel abschliessen.
+
+\subsection{Title: Geglaste Entenbrust mit Ramazzotti}
+
+Categories: Hauptspeise, Fleisch, Gefluegel
+
+Yield: 2 Portionen
+\begin{jedziaingredients}
+2 Entenbrustfilets (je ca. 200g)
+
+2 el Honig
+
+4 el Orangensaft
+
+100 ml Entenfond
+
+50 ml Ramazzotti
+
+Salz und Pfeffer
+\end{jedziaingredients}
+1. Die Haut der Entenbrustfilets mit einem scharfen Messer kreuzweise
+
+einschneiden, ohne das Fleisch zu verletzen. Von beiden Seiten mit
+Salz
+
+und Pfeffer wuerzen.
+
+2. Die Entenbrueste mit der Hautseite nach unten in eine kalte Pfanne
+
+legen. Die Pfanne erhitzen und das Fett langsam ausbraten lassen,
+bis
+
+die Haut knusprig braun ist (ca. 5-7 Minuten). Wenden und auf der
+
+Fleischseite weitere 2 Minuten anbraten. Danach aus der Pfanne nehmen.
+
+3. Fuer die Glasur das Bratfett bis auf einen kleinen Rest abgiessen.
+Honig,
+
+Orangensaft, Entenfond und Ramazzotti in die Pfanne geben und bei
+starker
+
+Hitze auf die Haelfte einkochen lassen, bis eine klebrige Sauce entsteht.
+
+4. Die Entenbrueste in eine Auflaufform legen, grosszuegig mit der
+
+Ramazzotti-Glasur bestreichen und im vorgeheizten Ofen bei 160 Grad
+Umluft
+
+ca. 8-10 Minuten fertig garen. Waehrenddessen nochmals mit der Glasur
+
+bestreichen. Vor dem Anschneiden kurz ruhen lassen.
+
+\medskip{}
 
 \todo[inline, color=yellow]{Das Ende ...}
 
@@ -791,7 +1892,7 @@ sofort servieren.
 
 \hspace{2cm}\linewithtext{Ende des eigentlichen Textes}
 
-\subsubsection*{Notizen:}
+\section*{Notizen:}
 
 Test Test Test, 
 \end{document}

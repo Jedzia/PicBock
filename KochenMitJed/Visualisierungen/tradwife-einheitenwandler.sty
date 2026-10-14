@@ -5,19 +5,27 @@
 
 \begin{luacode*}
 local function uebersetze_einheiten(text)
+
+    -- 1) ALLGEMEINE OCR-BEREINIGUNG: Wandelt "Zahl ... (-Zahl)" zu "Zahl-Zahl ..." um
+    -- Funktioniert für "1 Teelöffel (-2)" -> "1-2 Teelföfel" und "4 sl (-8)" -> "4-8 sl"
+    --- text = string.gsub(text, "(%d+)%s*([^%d%s]+)%s*%(%-(%d+)%)", "%1-%3 %2")
+    text = string.gsub(text, "(%d+)%s*([^%d%s]+)%s*%(%-(%d+)%)", "%1 bis %3 %2")
+
     -- RICHTIGE ÜBERSETZUNG: Ersetzt "tb" oder "tbsp" (mit Leerzeichen oder ~) durch "EL"
     text = string.gsub(text, "([%d/]+)[%s~]*tbsp?", "%1 EL")
     -- Ersetzt "tb" oder "tbsp" nach einer Zahl durch "EL"
     text = string.gsub(text, "(%d+)%s*tbsp?", "%1 EL")
     -- RICHTIGE ÜBERSETZUNG: Ersetzt "tb" oder "tbsp" (mit Leerzeichen oder ~) durch "EL"
     -- text = string.gsub(text, "([%d/]+)[%s~]*tb", "%1 EL")
-    text = string.gsub(text, "([%d/]+)[%s~]*tb", "%1 Esslöfel")
-    
-    
+    text = string.gsub(text, "([%d/]+)[%s~]*tb", "%1 Esslöffel")
+
     -- Ersetzt "ts" oder "tsp" nach einer Zahl/einem Bruch durch "TL"
-    text = string.gsub(text, "([%d/]+)%s*tsp?", "%1 TL")    
+    ---- text = string.gsub(text, "(%d+)%s*tsp%s*%(%-(%d+)%)", "%1-%2 tsp")
+    --- text = string.gsub(text, "([%d/]+)%s*tsp?", "%1 TL")    
+    text = string.gsub(text, "([%d/]+)%s*tsp?", "%1 Teelöffel")    
     -- Ersetzt "tsp" nach einer Zahl durch "TL"
-    text = string.gsub(text, "(%d+)%s*tsp", "%1 TL")
+    --- text = string.gsub(text, "(%d+)%s*tsp", "%1 TL")
+    text = string.gsub(text, "(%d+)%s*tsp", "%1 Teelöffel")
     -- Ersetzt "Yield:" oder "yield:"
     text = string.gsub(text, "[Yy]ield:", "Ergibt:")
     -- Ersetzt "Servings:" oder "servings:" durch "Portionen:"
@@ -33,9 +41,9 @@ local function uebersetze_einheiten(text)
     text = string.gsub(text, "%s+or%s+", " oder ")
 
     -- 1) Bereinigt das Format "4 sl (-8)" zu "4-8 sl"
-    text = string.gsub(text, "(%d+)%s*sl%s*%(%-(%d+)%)", "%1-%2 sl")
+---    text = string.gsub(text, "(%d+)%s*sl%s*%(%-(%d+)%)", "%1-%2 sl")
     -- 2) Ersetzt Zahlenbereiche "4-8 sl" durch "4-8 Scheiben"
-    text = string.gsub(text, "(%d+)%-(%d+)%s*sl", "%1-%2 Scheiben")
+---    text = string.gsub(text, "(%d+)%-(%d+)%s*sl", "%1-%2 Scheiben")
     -- 3) Ersetzt einzelne "4 sl" durch "4 Scheiben"
     text = string.gsub(text, "(%d+)%s*sl", "%1 Scheiben")
         
@@ -44,7 +52,8 @@ local function uebersetze_einheiten(text)
     -- Ersetzt "lg" nach einer Zahl durch "große"
     text = string.gsub(text, "(%d+)%s*[Ll]g", "%1 große")
 
-    
+	-- Ersetzt "pn" oder "PN" (Pinch / Prise) nach einer Zahl durch "Prise"
+    text = string.gsub(text, "([%d/]+)[%s~]*[Pp][Nn]", "%1 Prise")    
     
 
     -- AUTOMATISCHE DL-UMRECHNUNG IN ML:
@@ -65,8 +74,69 @@ local function uebersetze_einheiten(text)
         local wert = tonumber(zahl)
         return string.format("%g ml", wert * 100)
     end)    
+  
     
+-- Deutsche Transkriptionen
+    -- Ersetzt "pkt" oder "Pkt" (Paket/Packung) nach einer Zahl durch "Paket"
+    text = string.gsub(text, "([%d/]+)%s*[Pp]kt", "%1 Paket")
+	-- Ersetzt "el" oder "EL" nach einer Zahl/einem Bruch durch "Esslöffel"
+    text = string.gsub(text, "([%d/]+)[%s~]*[Ee][Ll]", "%1 Esslöffel")
+	-- Ersetzt "tl" oder "TL" nach einer Zahl/einem Bruch durch "Teelöffel"
+    text = string.gsub(text, "([%d/]+)[%s~]*[Tt][Ll]", "%1 Teelöffel")
+
+
+ -- Ersetzt "Title: " oder "title: " (inklusive des Leerzeichens danach) durch nichts
+    text = string.gsub(text, "[Tt]itle:%s*", "")
+
+
+
+
+-- Funktion zur Erkennung des richtigen Artikels basierend auf dem Folgewort
+    -- Definieren der Wortliste außerhalb, um Code sauber zu halten
+    local feminine_woerter = {
+        zwiebel=true, zitronen=true, zitrone=true, tomate=true, 
+        gurke=true, zehe=true, stange=true, prise=true, dose=true,
+        knoblauchzehe=true, handvoll=true, messerspitze=true
+    }
+
+    -- Hilfsfunktion für die Ersetzung
+    local function bestimme_artikel(vorzeichen, wort)
+        local wort_klein = string.lower(wort)
+        if feminine_woerter[wort_klein] then
+            return vorzeichen .. "Eine " .. wort
+        else
+            return vorzeichen .. "Ein " .. wort
+        end
+    end
+
+    -- 1) Fall: "1 Zwiebel" mitten im Text (nach einem Leerzeichen oder einer Klammer)
+    text = string.gsub(text, "([^%w/])1%s+([^%d%s]+)", function(vorzeichen, wort)
+        return bestimme_artikel(vorzeichen, wort)
+    end)
+
+    -- 2) Fall: "1 Zwiebel" steht ganz am Anfang der Zeile
+    text = string.gsub(text, "^1%s+([^%d%s]+)", function(wort)
+        return bestimme_artikel("", wort)
+    end)
+
+
+
+ -- 6) SICHERE UMLAUT-KONVERTIERUNG (Ignoriert LaTeX-Systembefehle)
+    -- Wir ersetzen nur, wenn KEIN Backslash, Punkt oder Doppelpunkt direkt vor dem Wort steht
     
+    -- Kleinbuchstaben
+    text = string.gsub(text, "([^\\%.:%a])wuerzsud", "%1würzsud") -- Spezifischer Schutz für dein Hauptwort
+    text = string.gsub(text, "([^\\%.:%a])ae", "%1ä")
+    text = string.gsub(text, "([^\\%.:%a])oe", "%1ö")
+    
+    -- "ue" wird hier besonders geschützt, damit ".value" oder "\value" ganz bleiben
+    text = string.gsub(text, "([^\\%.:%a_])ue", "%1ü")
+
+    -- Großbuchstaben
+    text = string.gsub(text, "([^\\%.:%a])Ae", "%1Ä")
+    text = string.gsub(text, "([^\\%.:%a])Oe", "%1Ö")
+    text = string.gsub(text, "([^\\%.:%a])Ue", "%1Ü")
+
     return text
 end
 
