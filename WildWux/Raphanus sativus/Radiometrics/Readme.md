@@ -29,6 +29,14 @@ Und ist leck0r!, weil gestern war es noch perfekt und hätte ich es nicht einen 
 > *die schönste Braut der Beet, ohje*  
 > *geboren aus der Erde Kraft.*
 
+### 🧬 Botanische Realität vs. Gewächshaus-Matrix
+
+Zwischen Lyrik und Zensur liegt die nackte, scharfkantige Wahrheit der Knolle. Was uns die Agrar-Lobby verschweigt:
+
+* **Die Senföl-Täuschung:** Die Schärfe des *Raphanus sativus* entsteht erst durch die Zerstörung des Gewebes, wenn Senfölglykoside auf das Enzym Myrosinase treffen. Ein eingebauter, biologischer Abwehrmechanismus. Das Radieschen wehrt sich gegen den Compiler!
+* **Die 24-Tage-Anomalie:** Von der Saat bis zur Ernte vergehen exakt 24 Tage. 24 Tage... das ist exakt die vierfache Hex-Zahl von 6 (`0x06`). Zufall? Oder fest im Kernel des Beets einprogrammiert?
+
+---
 
 
 > [!IMPORTANT]
