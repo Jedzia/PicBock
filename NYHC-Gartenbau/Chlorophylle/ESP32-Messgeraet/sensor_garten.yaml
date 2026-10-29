@@ -1,0 +1,282 @@
+esphome:
+  name: garten-feuchtigkeit
+  friendly_name: Garten Feuchtigkeit
+  
+  # STARTUP MANAGEMENT (Erzwingt das Senden aller Daten vor dem Deep Sleep)
+  on_boot:
+    priority: -100
+    then:
+      # 1. Hardware-Sensoren einlesen
+      - component.update: battery_voltage
+      - component.update: enclosure_temp
+      - component.update: garten_lichtsensor
+      - component.update: gy21_sensor        # <-- NEU: GY-21 beim Booten einlesen
+      - delay: 1s
+      
+      # 2. Berechnungen und Templates manuell triggern
+      - component.update: moisture_raw
+      - component.update: moisture_percent
+      - component.update: battery_percent
+      - delay: 5s # Zeitfenster, um die MQTT-Pakete sicher abzusetzen
+      
+      # 3. Kalibrier-Logik abfragen (Wenn Mode-Taster zusätzlich gedrückt wird)
+      - if:
+          condition:
+            binary_sensor.is_on: button_mode
+          then:
+            - logger.log: "Kalibriere: Nasswert 100 Prozent wird gespeichert..."
+            - globals.set:
+                id: cal_wet_volt
+                value: !lambda 'return id(touch_pad_sensor).get_value();'
+            - light.turn_on: status_led
+            - delay: 1.5s
+            - light.turn_off: status_led
+
+      # 4. Aktuelle Kalibrierwerte an Home Assistant/MQTT übermitteln
+      - text_sensor.template.publish:
+          id: ha_cal_dry
+          state: !lambda 'return esphome::to_string(id(cal_dry_volt));'
+      - text_sensor.template.publish:
+          id: ha_cal_wet
+          state: !lambda 'return esphome::to_string(id(cal_wet_volt));'
+      - delay: 2s
+
+      # 5. ENTSCHEIDUNG ÜBER DEEP SLEEP (Taster-Abfrage)
+      - if:
+          condition:
+            binary_sensor.is_on: button_wake
+          then:
+            # Taster an GPIO32 wurde beim Start gedrückt gehalten -> Wechsel in Deep Sleep
+            - logger.log: "Deep Sleep Modus aktiviert!"
+            - if:
+                condition:
+                  lambda: 'return id(enclosure_temp).state < 2.0;'
+                then:
+                  - logger.log: "Frostgefahr! Verlängerter Deep Sleep für 4 Stunden aktiviert."
+                  - deep_sleep.enter:
+                      id: deep_sleep_control
+                      sleep_duration: 4h
+                else:
+                  - logger.log: "Normale Temperatur. Schlafe für 15 Minuten."
+                  - deep_sleep.enter:
+                      id: deep_sleep_control
+                      sleep_duration: 15min
+          else:
+            # Kein Taster gedrückt -> Prototyp-Modus (Dauerhaft aktiv bleiben)
+            - lambda: 'id(api_server).set_reboot_timeout(3600000);'
+            - logger.log: "Prototyp-Modus active: Deep Sleep ausgesetzt. Board bleibt an!"
+
+# ZYKLISCHE MESSUNG IM PROTOTYP-MODUS
+interval:
+  - interval: 60s
+    then:
+      - if:
+          condition:
+            - not:
+                binary_sensor.is_on: button_wake
+          then:
+            - logger.log: "Prototyp-Modus: Aktualisiere Sensoren zyklisch..."
+            
+            # Hardware abfragen
+            - component.update: battery_voltage
+            - component.update: enclosure_temp
+            - component.update: garten_lichtsensor
+            - component.update: gy21_sensor        # <-- NEU: GY-21 zyklisch abfragen
+            - delay: 1s
+            
+            # Berechnungen triggern
+            - component.update: moisture_raw
+            - component.update: moisture_percent
+            - component.update: battery_percent
+
+esp32:
+  board: esp-wrover-kit
+  framework:
+    type: arduino
+
+# Touch Hub Aktivierung
+esp32_touch:
+  setup_mode: false
+
+# One-Wire Bus Setup für DS18B20
+one_wire:
+  - platform: gpio
+    pin: GPIO22
+
+# I2C Bus für den BH1750 Lichtsensor und GY-21 initialisieren
+i2c:
+  sda: GPIO21
+  scl: GPIO25
+  scan: true
+
+# DAUERHAFTER SPEICHER FÜR DIE KALIBRIERWERTE
+globals:
+  - id: cal_dry_volt
+    type: float
+    restore_value: yes
+    initial_value: '80.0'
+  - id: cal_wet_volt
+    type: float
+    restore_value: yes
+    initial_value: '20.0'
+
+# NETZWERK EINSTELLUNGEN
+wifi:
+  ssid: "Datenschlampe"
+  password: "7146995049681115"
+  fast_connect: true     # Optimiert das Verbindungsverhalten im Prototyp-Modus
+
+# MODERNE NATIVE API MIT KORREKTEM 32-BYTE ENCRYPTION KEY
+api:
+  id: api_server  # <-- Macht das API-Objekt für den C++ Code erreichbar
+  #password: "bauer"
+  encryption:
+    key: "6Lg9sWqXhRjP9FmKbYv7JtZ3NxQ2w4eR1uD5v8xKzM0="
+
+# UNLOCKS UPLOAD PROTOCOLS FOR THE COMPILER LAYER
+ota:
+  - platform: esphome
+
+# SMART HOME SCHNITTSTELLEN (MQTT)
+mqtt:
+  broker: 192.168.2.43
+  port: 1883
+  topic_prefix: garten/feuchtigkeit
+  keepalive: 60s         # Hält die Socket-Verbindung dauerhaft im Prototyp-Modus offen
+  reboot_timeout : 0s    # Verhindert automatische Reboots bei MQTT-Verbindungsverlust
+
+logger:
+
+# DEEP SLEEP KONFIGURATION
+deep_sleep:
+  id: deep_sleep_control
+  sleep_duration: 15min
+  esp32_ext1_wakeup:
+    pins:
+      - number: GPIO32
+        allow_other_uses: true
+    mode: ALL_LOW
+
+# FEEDBACK LED
+light:
+  - platform: binary
+    output: led_output
+    id: status_led
+
+output:
+  - platform: gpio
+    pin: GPIO23
+    id: led_output
+
+# HARDWARE INPUTS
+binary_sensor:
+  - platform: gpio
+    pin:
+      number: GPIO32
+      mode: INPUT_PULLUP
+      inverted: true
+      allow_other_uses: true
+    id: button_wake
+  - platform: gpio
+    pin:
+      number: GPIO33
+      mode: INPUT_PULLUP
+      inverted: true
+    id: button_mode
+    
+  - platform: esp32_touch
+    name: "Touchpad Intern"
+    id: touch_pad_sensor
+    pin: GPIO4
+    threshold: 1000
+    internal: true
+
+# TEXT-SENSOREN FÜR DAS DASHBOARD
+text_sensor:
+  - platform: template
+    name: "Kalibrierwert Trocken (0%)"
+    id: ha_cal_dry
+  - platform: template
+    name: "Kalibrierwert Nass (100%)"
+    id: ha_cal_wet
+
+sensor:
+  # BH1750 Lichtsensor Definition
+  - platform: bh1750
+    name: "Garten Helligkeit"
+    id: garten_lichtsensor
+    address: 0x23
+    update_interval: never
+
+  # NEU: GY-21 / HTU21D Kombisensor Definition
+  - platform: htu21d
+    id: gy21_sensor
+    temperature:
+      name: "Garten Lufttemperatur"
+    humidity:
+      name: "Garten Luftfeuchtigkeit"
+    update_interval: never
+
+  # 1. AUSGABE DES TOUCH-ROHWERTS ALS SENSOR
+  - platform: template
+    name: "Bodenfeuchtigkeit Rohwert"
+    id: moisture_raw
+    update_interval: never
+    lambda: |-
+      return id(touch_pad_sensor).get_value();
+
+  # 2. PROZENT-BERECHNUNG DER BODENFEUCHTIGKEIT
+  - platform: template
+    name: "Bodenfeuchtigkeit Prozent"
+    id: moisture_percent
+    unit_of_measurement: "%"
+    device_class: humidity
+    state_class: measurement
+    accuracy_decimals: 0
+    update_interval: never
+    lambda: |-
+      float current = id(touch_pad_sensor).get_value();
+      float dry = id(cal_dry_volt);
+      float wet = id(cal_wet_volt);
+      if (dry == wet) return 0.0;
+      
+      float percent = (current - dry) / (wet - dry) * 100.0;
+      if (percent < 0.0) percent = 0.0;
+      if (percent > 100.0) percent = 100.0;
+      return percent;
+
+  # 3. AKKU IN VOLT (Über den internen Teiler des DollaTek-Boards an GPIO35)
+  - platform: adc
+    pin: GPIO35
+    name: "Batterie Spannung"
+    id: battery_voltage
+    attenuation: 12db
+    update_interval: never
+
+  # 4. AKKU IN PROZENT (Berechnung im Lambda integriert)
+  - platform: template
+    name: "Batterie Prozent"
+    id: battery_percent
+    unit_of_measurement: "%"
+    device_class: battery
+    state_class: measurement
+    accuracy_decimals: 0
+    update_interval: never
+    lambda: |-
+      float volt_raw = id(battery_voltage).state;
+      if (std::isnan(volt_raw)) return 0.0;
+      
+      // Das Board teilt die Spannung intern exakt durch 2.
+      float volt = volt_raw * 2.00f;
+      
+      float percent = (volt - 3.30f) / (4.20f - 3.30f) * 100.0f;
+      if (percent < 0.0f) percent = 0.0f;
+      if (percent > 100.0f) percent = 100.0f;
+      return percent;
+
+  # 5. GEHÄUSETEMPERATUR
+  - platform: dallas_temp
+    address: 0x0000000000000000
+    name: "Gehäuse Temperatur"
+    id: enclosure_temp
+    update_interval: never
